@@ -22,7 +22,9 @@ body{
 header{
     text-align: center;
     display: grid;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.680);
 }
+
 
 .header-nav{
     background-color: white;
