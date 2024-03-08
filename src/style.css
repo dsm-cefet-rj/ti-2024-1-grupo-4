@@ -1,0 +1,39 @@
+*{
+    font-family: "Inter";
+}
+
+.grid-logo{
+    display: grid;
+    grid-template-columns: 1;
+    align-content: center;
+    justify-content: center;
+    background-color: #F67457;
+}
+
+.grid-logo-img{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body{
+    background-color: #FCF5E3;
+}
+
+header{
+    text-align: center;
+    display: grid;
+}
+
+.header-nav{
+    background-color: white;
+    text-align: center;
+}
+
+.header-nav ul{
+    list-style-type: none;
+}
+
+.header-nav ul li{
+    display: inline;
+    margin: 5px;
+}
