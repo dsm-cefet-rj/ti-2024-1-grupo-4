@@ -2,6 +2,11 @@
     font-family: "Inter";
 }
 
+body{
+    background-color: #FCF5E3;
+}
+
+/*Barra de Navegação e afins*/
 .grid-logo{
     display: grid;
     grid-template-columns: 1;
@@ -13,10 +18,6 @@
 .grid-logo-img{
     margin-left: auto;
     margin-right: auto;
-}
-
-body{
-    background-color: #FCF5E3;
 }
 
 header{
@@ -49,4 +50,18 @@ a:hover{
 .header-nav ul li{
     display: inline;
     margin: 5px;
+}
+
+/*Categorias, suas descrições e produtos*/
+.lista-itens{
+    display: none;
+}
+
+h2{
+    cursor: pointer;
+}
+
+.seta{
+    max-width: 15px;
+    max-height: 15px;
 }
