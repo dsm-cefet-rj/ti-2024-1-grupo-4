@@ -7,6 +7,7 @@
     <!--stylesheet-->
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 
     <!--fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,31 +24,39 @@
         </div>
         <nav class="header-nav">
             <ul>
-                <li><span>Categoria 1</span></li>
-                <li><span>Categoria 2</span></li>
-                <li><span>Categoria 3</span></li>
-                <li><span>Categoria 4</span></li>
-                <li><span>Categoria 5</span></li>
-                <li><span>Categoria 6</span></li>
+                <li><a href="#categ1">Categoria1</a></li>
+                <li><a href="#categ2">Categoria2</a></li>
+                <li><a href="#categ3">Categoria3</a></li>
+                <li><a href="#categ4">Categoria4</a></li>
+                <li><a href="#categ5">Categoria5</a></li>
+                <li><a href="#categ6">Categoria6</a></li>
             </ul>
         </nav>
     </header>
     <div>
         <section>
-            <h2>Categoria 1</h2>
-            <h5>Descrição</h5>
+            <h2 onclick="listarItens('categ1')">Categoria 1 <img class="seta" src="seta.png"></h2>
+            <div class="lista-itens" id="categ1">
+                <h5>Descrição</h5>
+            </div>
         </section>
         <section>
-            <h2>Categoria 2</h2>
-            <h5>Descrição</h5>
+            <h2 onclick="listarItens('categ2')">Categoria 2 <img class="seta" src="seta.png"></h2>
+            <div class="lista-itens" id="categ2">
+                <h5>Descrição</h5>
+            </div>
         </section>
         <section>
-            <h2>Categoria 3</h2>
-            <h5>Descrição</h5>
+            <h2 onclick="listarItens('categ3')">Categoria 3 <img class="seta" src="seta.png"></h2>
+            <div class="lista-itens" id="categ3">
+                <h5>Descrição</h5>
+            </div>
         </section>
         <section>
-            <h2>Categoria 4</h2>
-            <h5>Descrição</h5>
+            <h2 onclick="listarItens('categ4')">Categoria 4 <img class="seta" src="seta.png"></h2>
+            <div class="lista-itens" id="categ4">
+                <h5>Descrição</h5>
+            </div>
         </section>
     </div>
     <footer>
