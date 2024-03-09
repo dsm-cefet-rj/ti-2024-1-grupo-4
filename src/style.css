@@ -25,6 +25,17 @@ header{
     box-shadow: 1px 2px 6px rgba(0,0,0,0.680);
 }
 
+a{
+    text-decoration: none;
+}
+
+a:link{
+    color: black;
+}
+
+a:hover{
+    text-decoration: underline;
+}
 
 .header-nav{
     background-color: white;
