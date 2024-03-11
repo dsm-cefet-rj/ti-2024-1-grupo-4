@@ -24,6 +24,7 @@ header{
     text-align: center;
     display: grid;
     box-shadow: 1px 2px 6px rgba(90, 36, 20, 0.68);
+    
 }
 
 a{
@@ -87,5 +88,40 @@ h2{
     margin: 20px;
     padding: 10px;
     box-shadow: 1px 2px 6px rgba(88, 81, 74, 0.68);
+    display: flex;
+    flex-direction: row;
     
+}
+
+.conteudo img{
+    width: 20px;
+    height: 20px;
+    margin: 5px 5px 5px 5px;
+}
+
+.conteudo{
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo a{
+    text-decoration: none;
+}
+
+.conteudo a:visited{
+    color: black;
+}
+
+.preco-carrinho{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.imagem{
+    display: grid;
+    grid-template-columns: 1;
+    align-content: center;
+    justify-content: center;
+    padding: 10px 10px 10px 10px;
 }
