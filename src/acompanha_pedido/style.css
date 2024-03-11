@@ -1,0 +1,54 @@
+*{
+    font-family: "Inter";
+}
+
+.grid-logo{
+    display: grid;
+    grid-template-columns: 1;
+    align-content: center;
+    justify-content: center;
+    background-color: #F67457;
+}
+
+.grid-logo-img{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body{
+   
+    background-color: #FCF5E3;
+    
+}
+
+header{
+    text-align: center;
+    display: grid;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.680);
+}
+
+
+.detalhes-box{
+    text-align: right;
+
+}
+
+.detalhe-extra{
+    font-size: 22px;
+    right: 10px;
+
+}
+
+.detalhe-extra-default{
+    font-size: 11px;
+    right: 10px;
+
+}
+
+h1{
+    font-size:24px; 
+}
+
+.tela-accompanhar{
+    text-align: left;
+}
