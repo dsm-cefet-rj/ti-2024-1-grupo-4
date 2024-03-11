@@ -1,0 +1,178 @@
+:root{
+    --primary:#FCF5E3;
+    --secondary:#F67457;
+    --gray:#d9d9d9;
+    --white: #ffffff;
+    --black: #222222;
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter";
+}
+
+.grid-logo{
+    display: grid;
+    grid-template-columns: 1;
+    align-content: center;
+    justify-content: center;
+    background-color: #F67457;
+}
+
+.grid-logo-img{
+    margin-left: auto;
+    margin-right: auto;
+}
+header{
+    text-align: center;
+    display: grid;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.680);
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+body{
+   
+    background-color: var(--primary);
+    /*display: list-item;*/
+    align-items: center;
+    justify-content: center;
+    
+}
+
+footer{
+    position: fixed;
+    background-color: #F67457;
+    text-align: center;
+    
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.wrapper{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    padding-top: 11px;
+}
+
+.progress-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;/*por center */
+    width: auto;
+}
+
+.progress-container::after{
+    content: "";
+    display: flex;
+    position:absolute;
+    align-items: center;
+    justify-content:space-between;
+
+    height: 3px;
+    width: 100%;
+    max-width:75%;
+    min-width:70%;
+    top: 25%;
+    left: 10%;
+    background-color: var(--gray);
+    z-index: 0;
+}
+
+.progress{
+    position:absolute;
+    left:10%;
+    height: 3px;
+    top: 26%;
+    width:25%;
+    transform: translateY(-50%);
+    background-color: var(--secondary);
+    z-index: 1;
+    transition:width 0.8s;
+    /*
+    justify-content: space-between;
+    margin: auto;
+    */
+}
+
+.progress-step{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-weight: 500;
+    color: var(--black);
+    z-index: 2;
+}
+
+.progress-step .fa-solid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    border: 3px solid var(--gray);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    font-size: 100%;/* 1.3rem;*/
+    background-color: var(--primary);
+    margin-bottom: 10%;
+    margin: auto;
+    transition: border 0.8s, color 0.8s;
+}
+
+.resize{
+    justify-content:space-between;
+    margin:1rem;
+}
+
+.progress-step .fa-solid .path_icon{
+    width: 50%;
+    height: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+    width: 100%; 
+ }
+
+.progress-step .fa-solid.ativo{
+    border: 3px solid var(--secondary);
+    color:var(--secondary) 
+}
+.progress-step .fa-solid.ativo .path_icon{
+    fill:var(--secondary) 
+}
+.btn-container{
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-top: 2rem;
+}
+
+.btn-container .button{
+    padding: 0.5rem 1.5rem;
+    margin: 0 1rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--secondary);
+    color: var(--white);
+    cursor: pointer;
+    border: 1px solid var(--secondary);
+}
+
+.button.desativado{
+    background-color: var(--gray);
+    color: var(--white);
+    cursor: not-allowed;
+}
