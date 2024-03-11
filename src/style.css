@@ -55,6 +55,7 @@ ul{
 /*Categorias, suas descrições e produtos*/
 .lista-itens{
     display: none;
+    padding: 10px;
 }
 
 h2{
