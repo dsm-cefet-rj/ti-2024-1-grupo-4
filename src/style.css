@@ -53,7 +53,7 @@ ul{
 }
 
 /*Categorias, suas descrições e produtos*/
-.lista-itens{
+.lista-items{
     display: none;
 }
 
@@ -71,12 +71,20 @@ h2{
     margin: 5px;
 }
 
-.items{
+.item-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.item{
     background-color: #fff;
-    width: 50%;
-    height: 25%;
-    border-radius: 10px 10px 10px 10px;
-    margin: 20px 20px 20px 20px;
+    position: relative;
+    flex-basis: 400px;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
     box-shadow: 1px 2px 6px rgba(88, 81, 74, 0.68);
     
 }
