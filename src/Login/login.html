@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!--stylesheet-->
-    <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="loginstyle.css">
+    <link rel="stylesheet" href="../normalize.css">
+    <link rel="stylesheet" href="style.css">
 
     <!--fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,7 @@
 <body>
     <header>
         <div class="grid-logo">
-            <img class ="grid-logo-img" src="logo_placeholder.png" alt="" srcset="" width="100" height="100">
+            <img class ="grid-logo-img" src="../logo_placeholder.png" alt="" srcset="" width="100" height="100">
             <span class="NomeRes">Nome do restaurante</span>
         </div>
     </header>
@@ -30,8 +30,9 @@
                 <div class = "input-box">
                     <input type="usuario" placeholder = "Usuário" required>
                 </div>
-                <div class = "input-box">
-                    <input type="senha" placeholder = "Senha" required>
+                <div class = "input-box" id="input-senha">
+                    <input type="senha" placeholder = "Senha" id = "senha" required>
+                    <img src="hide.png" alt="olho fechado" id = "eyeicon">
                 </div>
 
                 <div class = "lembrar-esqueceu">
@@ -46,6 +47,20 @@
                 </div>
             </form>
         </div>
+        <script>
+            let eyeicon = document.getElementById("eyeicon");
+            let password = document.getElementById("senha");
+
+            eyeicon.onclick = function(){
+                if(password.type == "password"){
+                    password.type = "text";
+                    eyeicon.src = "eye.png";
+                }else{
+                    password.type = "password"
+                    eyeicon.src = "hide.png"
+                }
+            }
+        </script>
     
 
     </main>
