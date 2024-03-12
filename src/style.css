@@ -26,7 +26,7 @@ header{
     box-shadow: 1px 2px 6px rgba(90, 36, 20, 0.68);
     
 }
-
+/*Decorações de links*/
 a{
     text-decoration: none;
 }
@@ -39,6 +39,11 @@ a:hover{
     text-decoration: underline;
 }
 
+a:visited{
+    color: black;
+}
+
+/*----*/
 .header-nav{
     background-color: white;
     text-align: center;
