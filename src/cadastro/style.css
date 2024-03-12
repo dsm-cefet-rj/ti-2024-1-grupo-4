@@ -1,0 +1,98 @@
+*{
+    font-family: "Inter";
+}
+
+.NomeRes{
+    font-size: 20px;
+    padding: 10px 0px 10px 0px;
+    color: #FCF5E3;
+    font-weight: 500;
+}
+
+.grid-logo{
+    display: grid;
+    grid-template-columns: 1;
+    align-content: center;
+    justify-content: center;
+    background-color: #F67457;
+}
+
+.grid-logo-img{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body{
+   
+    background-color: #FCF5E3;
+    
+}
+
+header{
+    text-align: center;
+    display: grid;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.680);
+    background-color: #F67457;
+}
+.tela-login{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding-top: 1%;
+}
+h1{
+   font-size:36px; 
+   text-align: center;
+}
+.tela-login .input-box{
+    position: relative;
+    width: 100%;
+    height: 50%;
+    padding: 0px 0px 20px 0px;
+}
+
+.input-box input{
+    height: 100%;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    border: 2px solid rgba(255,255,255, .2);
+    border-radius: 40px;
+    background-color: #efe8cf;
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+    font-size: 125%;
+}
+
+
+
+.tela-login .btn{
+    width: 100%;
+    height: 45px;
+    background: #efe8cf;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, .2);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin: 30px 0;
+}
+
+footer{
+    position: fixed;
+    background-color: #F67457;
+    text-align: center;
+    
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+h2{
+    font-size: 20px;
+    font-weight: normal;
+
+}
