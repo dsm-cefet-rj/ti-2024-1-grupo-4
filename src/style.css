@@ -20,6 +20,13 @@ body{
     margin-right: auto;
 }
 
+.NomeRes{
+    font-size: 20px;
+    padding: 10px 0px 10px 0px;
+    color: #FCF5E3;
+    font-weight: 500;
+}
+
 header{
     text-align: center;
     display: grid;
@@ -68,6 +75,11 @@ h2{
     cursor: pointer;
 }
 
+h5{
+    font-size: 17px;
+    padding: 0px 0px 10px 10px;
+}
+
 .seta{
     max-width: 15px;
     max-height: 15px;
@@ -83,6 +95,12 @@ h2{
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 100%;
+    margin: 10px 10px 10px 10px;
+}
+
+section{
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .item{

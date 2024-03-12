@@ -15,6 +15,13 @@
     margin-right: auto;
 }
 
+.NomeRes{
+    font-size: 20px;
+    padding: 10px 0px 10px 0px;
+    color: #FCF5E3;
+    font-weight: 500;
+}
+
 body{
    
     background-color: #FCF5E3;
