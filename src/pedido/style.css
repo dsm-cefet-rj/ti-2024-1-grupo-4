@@ -100,7 +100,7 @@ footer{
     left:10%;
     height: 3px;
     top: 26%;
-    width:25%;
+    width:0%;
     transform: translateY(-50%);
     background-color: var(--secondary);
     z-index: 1;
@@ -154,7 +154,9 @@ footer{
 
 .progress-step .fa-solid.ativo{
     border: 3px solid var(--secondary);
-    color:var(--secondary) 
+    color:var(--secondary);
+    transition: color 0.9s, border 0.9s;
+
 }
 .progress-step .fa-solid.ativo .path_icon{
     fill:var(--secondary) 
