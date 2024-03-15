@@ -15,6 +15,13 @@
     margin-right: auto;
 }
 
+.NomeRes{
+    font-size: 20px;
+    padding: 10px 0px 10px 0px;
+    color: #FCF5E3;
+    font-weight: 500;
+}
+
 body{
    
     background-color: #FCF5E3;
@@ -52,14 +59,13 @@ h1{
     border-radius: 40px;
     background-color: #efe8cf;
     text-align: center;
-    padding: 1px 1px 1px 1px;
+    padding: 0px 10px 0px 10px;
     font-size: 125%;
 }
-s
+
 div#input-senha{
     display: flex;
     align-items: center;
-
 }
 
 .input-box img{
