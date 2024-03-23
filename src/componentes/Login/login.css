@@ -1,0 +1,44 @@
+#formBasicCheckbox{
+    margin-left: 2%;
+    margin-right: 4%;
+}
+#formBasicCheckbox label{
+    margin-left: 4%;
+}
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+#lembrar-login {
+    display: flex;
+    flex-direction: row;
+}
+#lembrar-login label{
+    margin-left: 10%;
+}
+.wrapper{
+    background-color: #fff;
+    height: 90vh;
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.classe-login{
+
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: min-content;
+    border-radius: 5px;
+    background-color: #fce5c0;
+    padding: 5%;
+}
+.classe-login Form{
+    justify-content: center;
+    align-items: center;
+}
+#root{
+    padding: 0;
+}
