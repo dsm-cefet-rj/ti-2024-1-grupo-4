@@ -1,15 +1,10 @@
-import { useState } from 'react'
-import './App.css'
 import Header from './componentes/Header/Header'
 import Home from './componentes/Home/Home'
 import About from './componentes/about/About'
 import Footer from './componentes/Footer/Footer'
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import '../scss/custom.scss';
 
-
-function App() {
-  const [count, setCount] = useState(0)
-
+function App(){
   return (
     <>
       <div>
@@ -19,7 +14,5 @@ function App() {
       <Footer/>
       </div>
     </>
-  )
-}
-
+  )}
 export default App
