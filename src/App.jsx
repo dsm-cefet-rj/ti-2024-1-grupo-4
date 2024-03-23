@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import './App.css'
-import Header from './componentes/Header/Header'
-import Home from './componentes/Home/Home'
+import Header from './componentes/header/Header'
+import Home from './componentes/home/Home'
 import About from './componentes/about/About'
-import Footer from './componentes/Footer/Footer'
+import Footer from './componentes/footer/Footer'
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 
