@@ -25,6 +25,7 @@ function Login() {
                   <Form.Check type="checkbox" />
                   <Form.Check.Label className="checkbox-label">Lembrar</Form.Check.Label>
                 </Form.Group>
+                
               </div>
               
 
