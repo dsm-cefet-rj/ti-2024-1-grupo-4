@@ -1,0 +1,13 @@
+//base
+@use "../scss/abstracts";
+@use"../src/componentes/Header/header.scss";
+
+//import de funções e variaveis (1-funcao 2-variaveis)
+@import"../node_modules/bootstrap/scss/functions";
+@import"../node_modules/bootstrap/scss/variables";
+//customização geral 
+@import"./abstracts/colors";
+$theme-colors: map-merge($custom_theme_colors_principal , $theme-colors );
+//import
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
