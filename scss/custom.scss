@@ -1,13 +1,61 @@
-//base
-@use "../scss/abstracts";
-@use"../src/componentes/Header/header.scss";
+//override
+//Muda as variaveis de componentes bootstraps aqui 
+@import'./abstracts/variables';
 
-//import de funções e variaveis (1-funcao 2-variaveis)
-@import"../node_modules/bootstrap/scss/functions";
-@import"../node_modules/bootstrap/scss/variables";
-//customização geral 
-@import"./abstracts/colors";
-$theme-colors: map-merge($custom_theme_colors_principal , $theme-colors );
-//import
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+//import functions,variables,mixins
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
 
+
+
+
+//mixins
+@import "../node_modules/bootstrap/scss/mixins";
+
+//import mapas
+//atribuição dos mapas
+@import "../scss/abstracts/map-amends";
+
+//override mixins
+
+
+@import'../node_modules/bootstrap/scss/bootstrap.scss';
+
+//import utilitarios
+@import "../node_modules/bootstrap/scss/utilities/api";
+
+
+
+
+
+/*
+// Custom.scss
+// Option B: Include parts of Bootstrap
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+
+
+// 2. Include any default variable overrides here
+@import"./abstracts/variables";
+
+// 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+
+
+// 4. Include any default map overrides here
+// 5. Include remainder of required parts
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/root";
+
+// 6. Optionally include any other parts as needed
+@import "../node_modules/bootstrap/scss/utilities";
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/type";
+@import "../node_modules/bootstrap/scss/images";
+@import "../node_modules/bootstrap/scss/containers";
+@import "../node_modules/bootstrap/scss/grid";
+@import "../node_modules/bootstrap/scss/helpers";
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+// 8. Add additional custom code here
+*/
