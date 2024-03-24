@@ -1,9 +1,4 @@
 @use'./variables' as var;
-/*
-@import"../../node_modules/bootstrap/scss/functions";
-@import"../../node_modules/bootstrap/scss/variables";
-@import"../../node_modules/bootstrap/scss/mixins";
-*/
 $custom_theme_colors_principal:(
     "brick-red":var.$brick-red,
     "spicy-mix":var.$spicy-mix,
@@ -11,3 +6,5 @@ $custom_theme_colors_principal:(
     "tacao":var.$tacao,
     "banana-mania":var.$banana-mania,
 );
+$theme-colors: map-merge($custom_theme_colors_principal , $theme-colors);
+
