@@ -1,8 +1,6 @@
-@import'../../scss/components/variaveis_sass';
+@import'../../scss/components/variaveis_button_sass';
 .alt-manu{
     $prefix:alt-manu-;
     @include button-variant($banana-mania,$equator);
 
 }
-
-
