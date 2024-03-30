@@ -1,8 +1,7 @@
-import Header from './componentes/Header/Header'
-import Home from './componentes/Home/Home'
-import About from './componentes/about/About'
-import Footer from './componentes/Footer/Footer'
-import '../scss/custom.scss';
+import Header from './componentes/header/Header.jsx';
+import Home from './componentes/home/Home.jsx';
+import About from './componentes/about/About.jsx';
+import Footer from './componentes/footer/Footer.jsx';
 import Form from './componentes/forms/Forms'
 
 function App(){
