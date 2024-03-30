@@ -15,7 +15,8 @@ function getCarrinhoDefault() {
 
 export function CarrinhoProvider(props) {
     const [itemsCarrinho, setItemsCarrinho] = useState(getCarrinhoDefault());
-
+    
+    
     function addToCarrinho(itemId) {
         setItemsCarrinho((prev)=>({...prev, [itemId]: prev[itemId] + 1}))
     }

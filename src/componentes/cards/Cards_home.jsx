@@ -4,6 +4,7 @@ import {CarrinhoContext} from '../../context/CarrinhoContext.jsx';
 function Card(prod) {
     const {addToCarrinho, itemsCarrinho, removeFromCarrinho} = useContext(CarrinhoContext);
     const qtdeItemsCarrinho = itemsCarrinho[prod.id];
+
     return (
         <>
             <div className="card h-100">
@@ -18,6 +19,13 @@ function Card(prod) {
                         ) : 
                             <div className="d-flex align-items-center flex-column g-1">
                                 <div className="d-flex align-items-center justify-content-between gap-3">
+                                    <span className="fs-6 text-muted">
+                                        {qtdeItemsCarrinho !== 0 ? (
+                                            <div>R${(qtdeItemsCarrinho * prod.preco).toFixed(2)}</div>
+                                        ) : 
+                                        <span></span>
+                                        }
+                                    </span>
                                     <button type="button" className="btn btn-tacao" onClick={() => removeFromCarrinho(prod.id)}>-</button>
                                     <span className="fs-5">{qtdeItemsCarrinho}</span>
                                     <button type="button" className="btn btn-tacao" onClick={() => addToCarrinho(prod.id)}>+</button>
