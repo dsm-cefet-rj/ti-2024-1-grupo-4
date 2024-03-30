@@ -1,0 +1,68 @@
+#formBasicCheckbox{
+    margin-left: 2%;
+    margin-right: 4%;
+}
+#formBasicCheckbox label{
+    margin-left: 4%;
+}
+/*.container {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 0 0;
+#lembrar-login {
+    display: flex;
+    flex-direction: row;
+}
+#lembrar-login label{
+    margin-left: 10%;
+}
+}*/
+.classe-input{
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.wrapper{
+    background-color: #fff;
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.classe-login{
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 470px;
+    border-radius: 5px;
+    background-color: #fce5c0;
+    padding: 3%;
+    box-shadow: 4px 4px 8px rgba(105, 87, 48, 0.158);
+    margin: 10px 10px 10px 10px;
+}
+.checkbox-label{
+    color: #000
+}
+.classe-login Form{
+    justify-content: center;
+    align-items: center;
+}
+#root{
+    padding: 0;
+}
+Form .classe-input{
+    width: 100%;
+    border: rgba(0, 0, 0, 0.1);
+}
+Form .classe-input:hover{
+    background-color: aqua;
+}
+h1{
+    text-align: center;
+}
+.icone-svg svg{
+    display: block;
+    margin: 0 auto;
+}
