@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import'../../scss/pages/home/home.scss';
+import'./home.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import Header from '../componentes/header/Header.jsx';
