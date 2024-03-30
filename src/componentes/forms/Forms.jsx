@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Setupconta from './Setupconta';
-
+import Setupendereco from './Setupendereco';
+import Setuppagamento from './Setuppagamento';
 export class Forms extends Component {
     state ={
         step:1,
@@ -19,7 +20,7 @@ export class Forms extends Component {
 
     };
 
-    nextStep=()=>{
+    nextStep = () =>{
         const{ step } = this.state;
         this.setState({step: step + 1});
     };
@@ -46,6 +47,24 @@ export class Forms extends Component {
                   />
                 </div>
               );
+        case 2:
+          return(
+            <Setupendereco
+              nextStep = {this.nextStep}
+              prevStep = {this.prevStep}
+              inputChange={this.inputChange}
+              values = {values}
+            />
+          );
+        case 3:
+          return(
+            <Setuppagamento
+              nextStep = {this.nextStep}
+              prevStep = {this.prevStep}
+              inputChange={this.inputChange}
+              values = {values}
+            />
+          );
     }
   }
 }
