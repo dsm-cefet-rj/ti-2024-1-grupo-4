@@ -5,7 +5,7 @@ export const CarrinhoContext = createContext(null)
 
 function getCarrinhoDefault() {
     let carrinho = {}
-    for (let i = 1; i < itemsLoja.length + 2; i++) { /* +2 no lenght pq não estava pegando o ultimo produto */
+    for (let i = 1; i < itemsLoja.length + 1; i++) { 
         carrinho[i] = 0;
     }
     return carrinho;
