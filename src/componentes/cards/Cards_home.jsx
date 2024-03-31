@@ -20,7 +20,7 @@ function Card(prod) {
                             <div className="d-flex align-items-center flex-column g-1">
                                 <div className="d-flex align-items-center justify-content-between gap-3">
                                     <span className="fs-6 text-muted">
-                                        {qtdeItemsCarrinho !== 0 ? (
+                                        {qtdeItemsCarrinho > 0 ? (
                                             <div>R${(qtdeItemsCarrinho * prod.preco).toFixed(2)}</div>
                                         ) : 
                                         <span></span>
