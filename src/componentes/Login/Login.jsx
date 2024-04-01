@@ -1,22 +1,28 @@
 import './login.scss';
 import { Form, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
-import users from './users';
-//import { verifyUser } from './auth';
+import React, { useEffect, useState } from 'react';
+import  jsonData from './users.json';
 
 
-const Login_page = () => {
-  const [username, setUsername] = useState('');
+function Login_page () {
+  const[username, setUsername] = useState('');
   const[password, setPassword] = useState('');
-  const[error, setError] = useState('');
+  const[contas, setContas] = useState([]);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if(users.find(users.username === username && users.password === password)){
-      return true;
-    } else{
-      return false;
+  useEffect(() => {
+    setContas(jsonData);
+  }, []);
+
+  
+
+  const handleLogin = () => {
+    const foundUser = contas.find(user => user.username === username && user.password === password);
+    
+    if (foundUser) {
+      console.log('Object found:', foundUser);
+    } else {
+      console.log('Object not found.');
     }
   }; 
 
@@ -34,7 +40,6 @@ const Login_page = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>E-mail</Form.Label>
               <Form.Control className = "classe-input" type="email" placeholder="E-mail" value = {username}  onChange={e => setUsername(e.target.value)}/>
-              { error && <Form.Control.Feedback type = "invalid">Login ou Senha errados</Form.Control.Feedback> }
             </Form.Group>
             
 
@@ -44,7 +49,7 @@ const Login_page = () => {
             </Form.Group>
             
             <div className = "botao-login">
-              <Button className = "classe-input custom-button bg-equator" type="submit" onClick={handleLogin}>
+              <Button className = "classe-input custom-button bg-equator" type="button" onClick={handleLogin}>
                 Login
             </Button> 
             </div>
@@ -63,12 +68,3 @@ const Login_page = () => {
 }
 
 export default Login_page;
-
-/*  <div className ="container">
-              <div className = "lembrar-login">
-                <Form.Group className="mb-4 mt-3" controlId="formBasicCheckbox" id = "lembrar-login">
-                  <Form.Check type="checkbox" />
-                  <Form.Check.Label className="checkbox-label">Lembrar</Form.Check.Label>
-                </Form.Group>
-              </div>
-            </div>*/
