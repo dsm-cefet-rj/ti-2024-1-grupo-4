@@ -40,15 +40,13 @@ function Home_Page() {
                         })}
                         <div className="container-fluid d-flex justify-content-between">
                             <h4>Total</h4>
-                            <h5>
+                            <h5>R$
                             {items.map((item) => {
                                 if(itemsCarrinho[item.id] > 0) {
-                                    precoTotal+=(item.preco * itemsCarrinho[item.id]).toFixed(2)
-                                    return (
-                                        precoTotal
-                                    )
+                                    precoTotal+=Number(item.preco * itemsCarrinho[item.id])
                                 }
                             })}
+                            {precoTotal.toFixed(2)}
                             </h5>
                         </div>
                     </div>
