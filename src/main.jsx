@@ -1,9 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client' 
+//import 'bootstrap/dist/css/bootstrap.min.css'; 
 import Home_page from './pages/Home_page.jsx';
 import Login_page from './componentes/Login/Login.jsx';
 import Register_page from './componentes/cadastro/cadastro.jsx';
 import App from './App.jsx';
+import Progressbar from './componentes/progressbar/progressbar.jsx';
 
 
 import { CarrinhoProvider } from './context/CarrinhoContext.jsx';
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
   {
     path:"app",
     element:<App/>,
+  },
+  {
+    path:"app2",
+    element:<Progressbar/>,
   }
 ]);
 

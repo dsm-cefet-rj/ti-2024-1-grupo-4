@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Setupconta from './Setupconta';
 import Setupendereco from './Setupendereco';
 import Setuppagamento from './Setuppagamento';
+import Progressbar from '../progressbar/progressbar';
+
 export class Forms extends Component {
     state ={
         step:1,
@@ -17,7 +19,6 @@ export class Forms extends Component {
         datacartao:'',
         codcartao:'',
         lista_pedido_carrinho:''//precisa ver isso aqui como fica 
-
     };
 
     nextStep = () =>{
@@ -65,6 +66,15 @@ export class Forms extends Component {
               values = {values}
             />
           );
+          case 4:
+            return(
+              <Progressbar
+                nextStep = {this.nextStep}
+                prevStep = {this.prevStep}
+                inputChange={this.inputChange}
+                values = {values}
+              />
+            );
     }
   }
 }

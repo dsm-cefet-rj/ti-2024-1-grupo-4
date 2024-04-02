@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import'../../scss/pages/home/home.scss';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import'../../scss/custom.scss';
 
-import Header from '../componentes/header/Header.jsx';
+import Header from '../componentes/Header/Header.jsx';
 import Produto from '../componentes/cards/Cards_home.jsx';
 import itemsLoja from '../componentes/data/itemsLoja.json';
+
 
 
 function Home_Page() {
