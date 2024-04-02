@@ -1,12 +1,33 @@
-import './login.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import './login.scss';
+import { Form, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import  jsonData from './users.json';
 
-function Login_page() {
+
+function Login_page () {
+  const[username, setUsername] = useState('');
+  const[password, setPassword] = useState('');
+  const[contas, setContas] = useState([]);
+
+  useEffect(() => {
+    setContas(jsonData);
+  }, []);
+
+  
+
+  const handleLogin = () => {
+    const foundUser = contas.find(user => user.username === username && user.password === password);
+    
+    if (foundUser) {
+      console.log('Object found:', foundUser);
+    } else {
+      console.log('Object not found.');
+    }
+  }; 
 
   return (
-    <div className="wrapper">
+    <div className="wrapper container-fluid">
       <div className = "classe-login">
         <div className = "icone-svg">
           <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
@@ -18,15 +39,17 @@ function Login_page() {
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>E-mail</Form.Label>
-              <Form.Control className = "classe-input" type="email" placeholder="E-mail" />
+              <Form.Control className = "classe-input" type="email" placeholder="E-mail" value = {username}  onChange={e => setUsername(e.target.value)}/>
             </Form.Group>
+            
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Senha</Form.Label>
-              <Form.Control className = "classe-input" type="password" placeholder="Senha" />
+              <Form.Control className = "classe-input" type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)}/>
             </Form.Group>
+            
             <div className = "botao-login">
-              <Button className = "classe-input custom-button bg-equator" type="submit">
+              <Button className = "classe-input custom-button bg-equator" type="button" onClick={handleLogin}>
                 Login
             </Button> 
             </div>
@@ -45,12 +68,3 @@ function Login_page() {
 }
 
 export default Login_page;
-
-/*  <div className ="container">
-              <div className = "lembrar-login">
-                <Form.Group className="mb-4 mt-3" controlId="formBasicCheckbox" id = "lembrar-login">
-                  <Form.Check type="checkbox" />
-                  <Form.Check.Label className="checkbox-label">Lembrar</Form.Check.Label>
-                </Form.Group>
-              </div>
-            </div>*/

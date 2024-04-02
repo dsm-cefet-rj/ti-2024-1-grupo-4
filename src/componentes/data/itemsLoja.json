@@ -14,14 +14,14 @@
         "descricao": "Feita com banana e goiaba"
     },
     {
-        "id": 4,
+        "id": 3,
         "nome": "Goiaba de marmelo",
         "imgUrl": "/img/food.jpg",
         "preco": 11.90,
         "descricao": "Feita com goiaba e muita marmelada"
     },
     {
-        "id": 5,
+        "id": 4,
         "nome": "Lorem",
         "imgUrl": "/img/food.jpg",
         "preco": 1.90,
