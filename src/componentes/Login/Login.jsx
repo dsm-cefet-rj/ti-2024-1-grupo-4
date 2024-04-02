@@ -3,6 +3,7 @@ import { Form, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import  jsonData from './users.json';
+import Header from '../header/Header';
 
 
 function Login_page () {
@@ -17,7 +18,7 @@ function Login_page () {
   
 
   const handleLogin = () => {
-    const foundUser = contas.find(user => user.username === username && user.password === password);
+    const foundUser = hand
     
     if (foundUser) {
       console.log('Object found:', foundUser);
@@ -27,6 +28,9 @@ function Login_page () {
   }; 
 
   return (
+    <>
+      <Header></Header>
+    
     <div className="wrapper container-fluid">
       <div className = "classe-login">
         <div className = "icone-svg">
@@ -62,6 +66,7 @@ function Login_page () {
           </Form>  
         </div>
     </div>
+    </>
     
 
   );
