@@ -1,9 +1,5 @@
 import './cadastro.css';
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import Header from '../header/Header';
 
 function Register_page() {
@@ -31,16 +27,65 @@ function Register_page() {
 
   return (
     <>
-    <Header>
-
-    </Header>
-    
-    <div className = "container">
-      <div className = "form-cadastro">
 
       
-      <h2>Cadastro</h2>
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Header/>
+      <div className='container'>
+
+      <div className="container bg-banana-mania row classe-login bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style={{ width: '60%', height: '650px' }}>
+
+
+          <h2>Cadastro</h2>
+          <form class="row g-3 col">
+            <div class="col-md-6">
+              <label htmlFor="inputEmail4" class="form-label" value = {email} onChange={e => setEmail(e.target.value)}>Email</label>
+              <input type="email" class="form-control"></input>
+            </div>
+            <div class="col-md-6">
+              <label htmlFor="inputEmail4" class="form-label" value = {nome} onChange={e => setNome(e.target.value)}>Nome</label>
+              <input type="email" class="form-control"></input>
+            </div>
+            <div class="col-md-6">
+              <label htmlFor="inputPassword4" class="form-label">Senha</label>
+              <input type="password" class="form-control" value={senha} onChange={e => setSenha(e.target.value)} required></input>
+            </div>
+            <div class="col-md-6">
+              <label htmlFor="inputPassword4" class="form-label">Repita a Senha</label>
+              <input type="password" class="form-control" value = {repSenha} onChange={e => setRepSenha(e.target.value)} required></input>
+            </div>
+            <h2>Endereço (Opcional)</h2>
+            <div class="col-12">
+              <label htmlFor="inputAddress" class="form-label">Logradouro</label>
+              <input type="text" class="form-control" placeholder="Ex: Rua, Avenida, etc." value = {logradouro} onChange={e => setLogradouro(e.target.value)}></input>
+            </div>
+            <div class="col-6">
+              <label htmlFor="inputAddress2" class="form-label">Complemento</label>
+              <input type="text" class="form-control" placeholder="Ex: Apto, Bloco, etc." value = {complemento} onChange={e => setComplemento(e.target.value)}></input>
+            </div>
+            <div class="col-6">
+              <label htmlFor="inputAddress2" class="form-label">Número</label>
+              <input type="number" class="form-control" value = {numero} onChange={e => setNumero(e.target.value)}></input>
+            </div>
+
+            <div class="col-md-6">
+              <label htmlFor="inputCity" class="form-label">Cidade</label>
+              <input type="text" class="form-control" value = {cidade} onChange={e => setCidade(e.target.value)}></input>
+            </div>
+            <div class="col-md-6">
+              <label htmlFor="inputState" class="form-label">Bairro</label>
+              <input type="text" class="form-control" value = {bairro} onChange={e => setBairro(e.target.value)}></input>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
+            </div>
+          </form>
+
+        </div>
+        </div>
+    </>
+  );
+}
+/*<Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row className="mb-4">
           <Form.Group as={Col} md="6" controlId="validationCustom01">
             <Form.Label>Nome e Sobrenome</Form.Label>
@@ -107,11 +152,6 @@ function Register_page() {
           <Button type="button" className = "button-register botao bg-equator" onClick = {handleSubmit}>Cadastre-se</Button>
         </div>
         
-      </Form>
-      </div>
-    </div>
-    </>
-  );
-}
+      </Form>*/
 
 export default Register_page;

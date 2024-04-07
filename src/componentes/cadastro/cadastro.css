@@ -1,34 +1,7 @@
 .container{
-    background-color: #fff;
     height: 85vh;
     width: 90vw;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-}
-
-.form-cadastro{
-    justify-content: center;
-    align-items: center;
-    margin: 5px 5px 5px 5px;
-    border-radius: 5px;
-    background-color: #fce5c0;
-    padding: 3%;
-    box-shadow: 4px 4px 8px rgba(105, 87, 48, 0.158);
-}
-h2{
-    text-align: center
-}
-.button-register{
-    border: rgba(0, 0, 0, 0.1);
-    box-shadow: 4px 4px 8px rgba(105, 87, 48, 0.158);
-}
-Form .botao{
-    width: 50%; 
-}
-Form .div-botao-register{
-    text-align: center;
     justify-content: center;
     align-items: center;
 }
