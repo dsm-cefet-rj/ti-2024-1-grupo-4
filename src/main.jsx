@@ -8,7 +8,7 @@ import Pedido from './pages/Pedido.jsx';
 import Progressbar from './componentes/progressbar/progressbar.jsx';
 import Teste from './componentes/progressbar/teste_template.jsx'
 
-import { CarrinhoProvider } from './context/CarrinhoContext.jsx';
+
 
 import {Provider} from "react-redux";
 import store from "./redux/store";
