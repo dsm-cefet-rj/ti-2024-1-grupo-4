@@ -1,12 +1,14 @@
 [
   {
     "id": 1,
-    "username": "emanu@nunu",
-    "password": "nunu"
+    "email": "emanu@nunu",
+    "senha": "nunu",
+    "admin":true
   },
   {
     "id": 2,
-    "username":"jean@jeje",
-    "password":"jeje"
+    "email":"jean@jeje",
+    "senha":"jeje",
+    "admin":false
   }
 ]

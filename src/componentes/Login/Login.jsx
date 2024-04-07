@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import  jsonData from './users.json';
 import Header from '../header/Header';
+import {useSelector, useDispatch} from "react-redux";
+import rootReducer from '../../redux/root-reducer';
 
 
 function Login_page () {
@@ -9,17 +11,23 @@ function Login_page () {
   const[senha, setSenha] = useState('');
   const[contas, setContas] = useState([]);
 
+  const {currentUser} = useSelector((rootReducer) => rootReducer.userReducer);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setContas(jsonData);
   }, []);
 
   
-
+  
   const handleLogin = () => {
-    const foundUser = contas.find(contas.username === username && contas.password === password);
+    const foundUser = contas.find((conta) => conta.email === email && conta.senha === senha);
     
     if (foundUser) {
-      console.log('Object found:', foundUser);
+      dispatch({
+        type:"user/login",
+        payload: {email: email}
+      })
     } else {
       console.log('Object not found.');
     }
