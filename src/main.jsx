@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom/client'
 import Home_page from './pages/Home_page.jsx';
 import Login_page from './componentes/Login/Login.jsx';
 import Register_page from './componentes/cadastro/cadastro.jsx';
-import App from './App.jsx';
+import Pedido from './pages/Pedido.jsx';
 import Progressbar from './componentes/progressbar/progressbar.jsx';
+import Teste from './componentes/progressbar/teste_template.jsx'
 
 
 import { CarrinhoProvider } from './context/CarrinhoContext.jsx';
@@ -29,12 +30,16 @@ const router = createBrowserRouter([
     element: <Register_page/>,
   },
   {
-    path:"app",
-    element:<App/>,
+    path:"Pedido",
+    element:<Pedido/>,
   },
   {
     path:"app2",
     element:<Progressbar/>,
+  },
+  {
+    path:"teste",
+    element:<Teste/>,
   }
 ]);
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import Header from '../componentes/header/Header.jsx';
+import Header from '../componentes/Header/Header.jsx';
 import Card from '../componentes/cards/Cards_home.jsx';
 import itemsLoja from '../componentes/data/itemsLoja.json';
 
