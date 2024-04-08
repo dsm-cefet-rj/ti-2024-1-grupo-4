@@ -7,7 +7,7 @@ import itemsLoja from '../componentes/data/itemsLoja.json';
 
 import { useSelector } from 'react-redux';
 import rootReducer from '../redux/root-reducer.js';
-import CartItem from '../componentes/cartItem/CartItem.jsx';
+import CartItem from '../componentes/cartItem/cartItem.jsx';
 
 function Home_Page() {
     const [items, setItems] = useState([]);
