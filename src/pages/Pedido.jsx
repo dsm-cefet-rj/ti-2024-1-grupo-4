@@ -6,7 +6,7 @@ import Footer from '../componentes/Footer/Footer'
 const Pedido = () => {
   return (
     <>
-      <div className='d-block align-items-center min-vh-100 bg-banana-mania sticky'>
+      <div className='d-block align-items-center min-vh-100  sticky'>
         <Header/>
         <div className='mt-5'></div>
           <Form />

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <>
-         <header className="sticky-top p-2 px-4 shadow-sm bg-white">
+         <header className="sticky-top p-2 px-4 shadow-sm bg-tacao">
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand d-flex align-items-center" href="#">
                         <img src={logo} width="50" height="50" alt=""></img>

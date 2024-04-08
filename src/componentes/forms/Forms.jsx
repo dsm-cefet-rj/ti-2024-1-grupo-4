@@ -6,7 +6,7 @@ import './style.scss';
 
 export class Forms extends Component {
     state ={
-        step:1,
+        step:0,
         user:'',
         password:'',
         cep:'',
@@ -33,6 +33,7 @@ export class Forms extends Component {
         this.setState({[input]: e.target.value});
     }
 
+
   render() {
  
     const { step } = this.state;
@@ -40,58 +41,61 @@ export class Forms extends Component {
     const values = { user, password, cep, logradouro, numEnd, CompEnd, T_pagamento, num_cartao, nome_cartao, datacartao, codcartao, lista_pedido_carrinho };
 
     switch (step) {
-      case 1:
+      case 0:
         return (
           <>
 
-            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-equator shadow-lg' style={{ top: '100px' }}>
+            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-tacao shadow-lg' style={{ top: '100px' }}>
               <div className='mt-10'>
                 <Setupconta
                   nextStep={this.nextStep}
                   inputChange={this.inputChange}
                   values={values}
+                  step={step}
                 />
               </div>
             </div>
           </>
         );
-      case 2:
+      case 1:
         return (
 
           <>
-            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-equator shadow-lg rounded ' style={{ top: '100px' }}>
-              <div className='container-sm col-sm-4 bg-equator mt-10'>
+            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-tacao shadow-lg rounded ' style={{ top: '100px' }}>
+              <div className='mt-10'>
                 <Setupendereco
                   nextStep={this.nextStep}
                   prevStep={this.prevStep}
                   inputChange={this.inputChange}
                   values={values}
+                  step={step}
             />
               
             </div>
             </div>
           </>
         );
-      case 3:
+      case 2:
         return (
           <>
-            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-equator shadow-lg rounded 'style={{top: '100px'}}>
-              <div className='container-sm col-sm-4 bg-equator mb-10'>
+            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-tacao shadow-lg rounded 'style={{top: '100px'}}>
+              <div className='mb-10'>
             <Setuppagamento
               nextStep={this.nextStep}
               prevStep={this.prevStep}
               inputChange={this.inputChange}
               values={values}
+              step={step}
             />
             </div>
                 </div>
           
           </>
         );
-      case 4:
+      case 3:
         return (
           <div className='d-flex align-items-center min-vh-100 bg-banana-mania'>
-          <div className='container-sm col-sm-4 bg-equator mb-10'>
+          <div className='container-sm col-sm-4 bg-tacao mb-10'>
           </div>
           </div>
 
@@ -101,3 +105,20 @@ export class Forms extends Component {
 }
 
 export default Forms
+
+{/*
+  const [step, setStep] = useState('');
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
+  const [cep, setCep] = useState('');
+  const [logradouro, setLogradouro] = useState('');
+  const [numEnd, setNumEnd] = useState('');
+  const [CompEnd, setCompEnd] = useState('');
+  const [T_pagamento, setT_pagamento] = useState('');
+  const [num_cartao, setNum_cartao] = useState('');
+  const [nome_cartao, setNome_cartao] = useState('');
+  const [datacartao, setDatacartao] = useState('');
+  const [codcartao, setCodcartao] = useState('');
+  const [lista_pedido_carrinho, setLista_pedido_carrinho] = useState('');
+
+*/}
