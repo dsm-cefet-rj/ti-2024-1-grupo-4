@@ -1,27 +1,27 @@
 import './cadastro.css';
 import { useState } from 'react';
-import Header from '../header/Header';
 
 function Register_page() {
+  const[validated, setValidated] = useState(false);
   const[senha, setSenha] = useState('');
   const[email, setEmail] = useState('');
   const[nome, setNome] = useState('');
   const[repSenha, setRepSenha] = useState('');
   const[logradouro, setLogradouro] = useState('');
   const[numero, setNumero] = useState('');
-  const[estado,setEstado] = useState('');
-  const[cidade, setCidade] = useState('');
   const[CEP, setCEP] = useState('');
   const[complemento, setComplemento] = useState('');
+  const[repSenhaError, setRepSenhaError] = useState(false);
 
 
   const handleSubmit = (event) => {
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     } else if(senha !== repSenha){
-      
+      setRepSenhaError(true);
     }
   
 
@@ -31,60 +31,56 @@ function Register_page() {
   return (
     <>
 
-
-      <Header />
+      
       <div className='container'>
 
-        <div className="container bg-banana-mania row classe-login bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style={{ width: '60%', height: '675px' }}>
+      <div className="bg-banana-mania row classe-login bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style={{ width: '60%', height: '600px' }}>
 
 
           <h2>Cadastro</h2>
-          <form class="row g-3 col">
-            <div class="col-md-6">
-              <label htmlFor="inputEmail4" class="form-label" >Email</label>
-              <input type="email" class="form-control" placeholder="fulano@silva.com" value={email} onChange={e => setEmail(e.target.value)} required></input>
+          <form className="row g-3 col" onSubmit={handleSubmit}>
+            <div className="col-md-6">
+              <label htmlFor="inputEmail4" className="form-label" >Email</label>
+              <input type="email" className="form-control" placeholder = "fulano@silva.com" value = {email} onChange={e => setEmail(e.target.value)} required></input>
             </div>
-            <div class="col-md-6">
-              <label htmlFor="inputEmail4" class="form-label" >Nome</label>
-              <input type="email" class="form-control" placeholder="fulano da silva" value={nome} onChange={e => setNome(e.target.value)} required></input>
+            <div className="col-md-6">
+              <label htmlFor="inputEmail4" className="form-label" >Nome</label>
+              <input type="text" className="form-control" placeholder = "fulano da silva" value = {nome} onChange={e => setNome(e.target.value)} required></input>
             </div>
-            <div class="col-md-6">
-              <label htmlFor="inputPassword4" class="form-label">Senha</label>
-              <input type="password" class="form-control" value={senha} onChange={e => setSenha(e.target.value)} required></input>
+            <div className="col-md-6">
+              <label htmlFor="inputPassword4" className="form-label">Senha</label>
+              <input type="password" className="form-control" value={senha} onChange={e => setSenha(e.target.value)} required></input>
             </div>
-            <div class="col-md-6">
-              <label htmlFor="inputPassword4" class="form-label">Repita a Senha</label>
-              <input type="password" class="form-control" value={repSenha} onChange={e => setRepSenha(e.target.value)} required></input>
+            <div className="col-md-6">
+              <label htmlFor="inputPassword4" className="form-label">Repita a Senha</label>
+              <input type="password" className={`form-control ${repSenhaError ? 'is-invalid' : ''}`} value = {repSenha} onChange={e => setRepSenha(e.target.value)} required></input>
             </div>
+            {repSenhaError && (
+              <div className="invalid-feedback">
+                As senhas devem ser iguais
+              </div>
+            )}
             <h2>Endereço (Opcional)</h2>
-            <div class="col-md-6">
-              <label htmlFor="inputCity" class="form-label">Estado</label>
-              <input type="text" class="form-control" value={estado} onChange={e => setEstado(e.target.value)}></input>
+            <div className="col-md-4">
+              <label htmlFor="inputState" className="form-label">CEP</label>
+              <input type="text" className="form-control" value = {CEP} onChange={e => setCEP(e.target.value)}></input>
             </div>
-            <div class="col-md-6">
-              <label htmlFor="inputCity" class="form-label">Cidade</label>
-              <input type="text" class="form-control" value={cidade} onChange={e => setCidade(e.target.value)}></input>
+            <div className="col-8">
+              <label htmlFor="inputAddress" className="form-label">Logradouro</label>
+              <input type="text" className="form-control" placeholder="Ex: Rua, Avenida, etc." value = {logradouro} onChange={e => setLogradouro(e.target.value)}></input>
             </div>
-            <div class="col-md-4">
-              <label htmlFor="inputState" class="form-label">CEP</label>
-              <input type="text" class="form-control" value={CEP} onChange={e => setCEP(e.target.value)}></input>
+            <div className="col-6">
+              <label htmlFor="inputAddress2" className="form-label">Complemento</label>
+              <input type="text" className="form-control" placeholder="Ex: Apto, Bloco, etc." value = {complemento} onChange={e => setComplemento(e.target.value)}></input>
             </div>
-            <div class="col-8">
-              <label htmlFor="inputAddress" class="form-label">Logradouro</label>
-              <input type="text" class="form-control" placeholder="Ex: Rua, Avenida, etc." value={logradouro} onChange={e => setLogradouro(e.target.value)}></input>
-            </div>
-            <div class="col-6">
-              <label htmlFor="inputAddress2" class="form-label">Complemento</label>
-              <input type="text" class="form-control" placeholder="Ex: Apto, Bloco, etc." value={complemento} onChange={e => setComplemento(e.target.value)}></input>
-            </div>
-            <div class="col-6">
-              <label htmlFor="inputAddress2" class="form-label">Número</label>
-              <input type="number" class="form-control" value={numero} onChange={e => setNumero(Math.max(0, e.target.value))}></input>
+            <div className="col-6">
+              <label htmlFor="inputAddress2" className="form-label">Número</label>
+              <input type="number" className="form-control" value = {numero} onChange={e => setNumero(Math.max(0,e.target.value))}></input>
             </div>
 
-
-            <div class="col-12">
-              <button type="submit" onClick={handleSubmit} class="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
+            
+            <div className="col-12">
+              <button type="submit" className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
             </div>
           </form>
 
