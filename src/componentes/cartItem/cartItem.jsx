@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeProductFromCart } from '../../redux/cart/actions';
+import { removeProductFromCart, increaseProductQuantity, decreaseProductQuantity } from '../../redux/cart/actions';
 
 function CartItem( {product} ) {
 
@@ -11,11 +11,11 @@ function CartItem( {product} ) {
     }
 
     const handleIncreaseClick = () => {
-        
+        dispatch(increaseProductQuantity(product.id));
     }
 
     const handleDecreaseClick = () => {
-        
+        dispatch(decreaseProductQuantity(product.id));
     }
     
     return (
@@ -29,9 +29,9 @@ function CartItem( {product} ) {
                         <small className="text-muted">R${product.preco}</small>
                         
                         <div className="d-flex align-items-center justify-content-between gap-3">
-                            <button type="button" className="btn btn-tacao">-</button>
+                            <button type="button" className="btn btn-tacao" onClick={handleDecreaseClick}>-</button>
                             <span>{product.quantity}</span>
-                            <button type="button" className="btn btn-tacao">+</button>
+                            <button type="button" className="btn btn-tacao" onClick={handleIncreaseClick}>+</button>
                         </div>
                         
                         

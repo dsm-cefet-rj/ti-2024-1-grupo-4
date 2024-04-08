@@ -4,14 +4,13 @@ import { Link } from 'react-router-dom';
 
 import {useSelector } from 'react-redux';
 import rootReducer from '../../redux/root-reducer';
-import { useMemo } from 'react';
+import { selectProductsCount } from '../../redux/cart/cart.selector';
 
 const Header = () => {
     const { products } = useSelector((rootReducer) => rootReducer.cartReducer);
 
-    const productsCount = useMemo(() => {
-        return products.reduce((acc,curr) => acc + curr.quantity, 0); //Quantidade de produtos no carrinho
-    });
+    const productsCount = useSelector(selectProductsCount);
+    
     
   return (
     <>
