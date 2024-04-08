@@ -18,7 +18,7 @@ export class progress_bar extends Component {
         <div>
             <div class="position-relative m-4">
                 <div class="progress" style={{ height: '1px' }}>
-                    <div class="progress-bar bg-neon-carrot" role="progressbar" style={{ width: (step * 25) +'%' }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-neon-carrot-800" role="progressbar" style={{ width: (step * 25) +'%' }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <button type="button" class={`position-absolute top-0 start-0 translate-middle btn btn-sm rounded-pill ${(step >= 0)?'btn-bolas-ativa':'btn-bolas-desativo'}`} style={{ width: '2.5rem', height: '2.5rem', transition:'width 0.8s '}}>
                     <svg class="path_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

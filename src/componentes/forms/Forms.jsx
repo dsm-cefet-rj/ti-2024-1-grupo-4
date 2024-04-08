@@ -18,6 +18,8 @@ export class Forms extends Component {
         nome_cartao:'',
         datacartao:'',
         codcartao:'',
+        instrucao_pedido:'',
+        bairro:'',
         lista_pedido_carrinho:''//precisa ver isso aqui como fica 
     };
 
@@ -32,20 +34,24 @@ export class Forms extends Component {
     inputChange = input => e => {
         this.setState({[input]: e.target.value});
     }
+    setTipoPagamento = (valor)=>{
+      const {T_pagamento} = this.state;
+      this.setState({T_pagamento:valor});
+    }
 
 
   render() {
  
     const { step } = this.state;
-    const {user, password, cep, logradouro, numEnd, CompEnd, T_pagamento, num_cartao, nome_cartao, datacartao, codcartao, lista_pedido_carrinho } = this.state;
-    const values = { user, password, cep, logradouro, numEnd, CompEnd, T_pagamento, num_cartao, nome_cartao, datacartao, codcartao, lista_pedido_carrinho };
-
+    const {user, password, cep, logradouro, numEnd, CompEnd, T_pagamento, num_cartao, nome_cartao, datacartao,instrucao_pedido,bairro, codcartao, lista_pedido_carrinho } = this.state;
+    const values = {user, password, cep, logradouro, numEnd, CompEnd, T_pagamento, num_cartao, nome_cartao, datacartao,instrucao_pedido,bairro, codcartao, lista_pedido_carrinho };
+    
     switch (step) {
       case 0:
         return (
           <>
 
-            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-tacao shadow-lg' style={{ top: '100px' }}>
+            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-tacao shadow-lg rounded'>
               <div className='mt-10'>
                 <Setupconta
                   nextStep={this.nextStep}
@@ -61,7 +67,7 @@ export class Forms extends Component {
         return (
 
           <>
-            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-tacao shadow-lg rounded ' style={{ top: '100px' }}>
+            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-banana-mania shadow-lg rounded ' style={{ top: '100px' }}>
               <div className='mt-10'>
                 <Setupendereco
                   nextStep={this.nextStep}
@@ -78,12 +84,13 @@ export class Forms extends Component {
       case 2:
         return (
           <>
-            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-tacao shadow-lg rounded 'style={{top: '100px'}}>
+            <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-banana-mania shadow-lg rounded 'style={{top: '100px'}}>
               <div className='mb-10'>
             <Setuppagamento
               nextStep={this.nextStep}
               prevStep={this.prevStep}
               inputChange={this.inputChange}
+              setTipoPagamento = {this.setTipoPagamento}
               values={values}
               step={step}
             />
@@ -94,10 +101,21 @@ export class Forms extends Component {
         );
       case 3:
         return (
-          <div className='d-flex align-items-center min-vh-100 bg-banana-mania'>
-          <div className='container-sm col-sm-4 bg-tacao mb-10'>
+          <>
+          <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-banana-mania shadow-lg rounded 'style={{top: '100px'}}>
+            <div className='mb-10'>
+          <Setuppagamento
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            inputChange={this.inputChange}
+            setTipoPagamento = {this.setTipoPagamento}
+            values={values}
+            step={step}
+          />
           </div>
-          </div>
+              </div>
+        
+        </>
 
         );
     }

@@ -27,7 +27,7 @@ $banana-mania:#FCE5C0;
     @include make-container();
   }
   .btn-bolas-ativa{
-    @include button-variant(mix(black,$neon-carrot,10%),mix(black,$neon-carrot,30%));
+    @include button-variant($neon-carrot-600,$neon-carrot-800);
   }
   .btn-bolas-desativo{
     @include button-variant(mix(white,$neon-carrot,30%),mix(black,$neon-carrot,30%));
