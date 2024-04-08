@@ -3,22 +3,25 @@ import { useState } from 'react';
 import Header from '../header/Header';
 
 function Register_page() {
-  const[validated, setValidated] = useState(false);
   const[senha, setSenha] = useState('');
   const[email, setEmail] = useState('');
   const[nome, setNome] = useState('');
   const[repSenha, setRepSenha] = useState('');
   const[logradouro, setLogradouro] = useState('');
   const[numero, setNumero] = useState('');
+  const[estado,setEstado] = useState('');
   const[cidade, setCidade] = useState('');
-  const[bairro, setBairro] = useState('');
+  const[CEP, setCEP] = useState('');
   const[complemento, setComplemento] = useState('');
+
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+    } else if(senha !== repSenha){
+      
     }
   
 
@@ -32,18 +35,18 @@ function Register_page() {
       <Header/>
       <div className='container'>
 
-      <div className="container bg-banana-mania row classe-login bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style={{ width: '60%', height: '650px' }}>
+      <div className="container bg-banana-mania row classe-login bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style={{ width: '60%', height: '675px' }}>
 
 
           <h2>Cadastro</h2>
           <form class="row g-3 col">
             <div class="col-md-6">
-              <label htmlFor="inputEmail4" class="form-label" value = {email} onChange={e => setEmail(e.target.value)}>Email</label>
-              <input type="email" class="form-control"></input>
+              <label htmlFor="inputEmail4" class="form-label" >Email</label>
+              <input type="email" class="form-control" placeholder = "fulano@silva.com" value = {email} onChange={e => setEmail(e.target.value)} required></input>
             </div>
             <div class="col-md-6">
-              <label htmlFor="inputEmail4" class="form-label" value = {nome} onChange={e => setNome(e.target.value)}>Nome</label>
-              <input type="email" class="form-control"></input>
+              <label htmlFor="inputEmail4" class="form-label" >Nome</label>
+              <input type="email" class="form-control" placeholder = "fulano da silva" value = {nome} onChange={e => setNome(e.target.value)} required></input>
             </div>
             <div class="col-md-6">
               <label htmlFor="inputPassword4" class="form-label">Senha</label>
@@ -54,7 +57,19 @@ function Register_page() {
               <input type="password" class="form-control" value = {repSenha} onChange={e => setRepSenha(e.target.value)} required></input>
             </div>
             <h2>Endereço (Opcional)</h2>
-            <div class="col-12">
+            <div class="col-md-6">
+              <label htmlFor="inputCity" class="form-label">Estado</label>
+              <input type="text" class="form-control" value = {estado} onChange={e => setEstado(e.target.value)}></input>
+            </div>
+            <div class="col-md-6">
+              <label htmlFor="inputCity" class="form-label">Cidade</label>
+              <input type="text" class="form-control" value = {cidade} onChange={e => setCidade(e.target.value)}></input>
+            </div>
+            <div class="col-md-4">
+              <label htmlFor="inputState" class="form-label">CEP</label>
+              <input type="text" class="form-control" value = {CEP} onChange={e => setCEP(e.target.value)}></input>
+            </div>
+            <div class="col-8">
               <label htmlFor="inputAddress" class="form-label">Logradouro</label>
               <input type="text" class="form-control" placeholder="Ex: Rua, Avenida, etc." value = {logradouro} onChange={e => setLogradouro(e.target.value)}></input>
             </div>
@@ -64,19 +79,12 @@ function Register_page() {
             </div>
             <div class="col-6">
               <label htmlFor="inputAddress2" class="form-label">Número</label>
-              <input type="number" class="form-control" value = {numero} onChange={e => setNumero(e.target.value)}></input>
+              <input type="number" class="form-control" value = {numero} onChange={e => setNumero(Math.max(0,e.target.value))}></input>
             </div>
 
-            <div class="col-md-6">
-              <label htmlFor="inputCity" class="form-label">Cidade</label>
-              <input type="text" class="form-control" value = {cidade} onChange={e => setCidade(e.target.value)}></input>
-            </div>
-            <div class="col-md-6">
-              <label htmlFor="inputState" class="form-label">Bairro</label>
-              <input type="text" class="form-control" value = {bairro} onChange={e => setBairro(e.target.value)}></input>
-            </div>
+            
             <div class="col-12">
-              <button type="submit" class="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
+              <button type="submit" onClick = {handleSubmit} class="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
             </div>
           </form>
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client' 
 //import 'bootstrap/dist/css/bootstrap.min.css'; 
-import Home_page from './pages/Home_page.jsx';
+import Home_page from './componentes/home/Home_page.jsx';
 import Login_page from './componentes/Login/Login.jsx';
 import Register_page from './componentes/cadastro/cadastro.jsx';
 import Pedido from './pages/Pedido.jsx';

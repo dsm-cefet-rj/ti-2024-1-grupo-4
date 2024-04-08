@@ -3,12 +3,28 @@
     "id": 1,
     "email": "emanu@nunu",
     "senha": "nunu",
+    "nome":"emanuelle",
+    "estado":"rj",
+    "cidade":"rj",
+    "CEP":22265457,
+    "logradouro":"rua tals",
+    "complemento":"apto tal tal",
+    "numero":5,
     "admin":true
+
+
   },
   {
     "id": 2,
     "email":"jean@jeje",
     "senha":"jeje",
+    "nome":"jean",
+    "estado":"rj",
+    "cidade":"rj",
+    "CEP":22265457,
+    "logradouro":"rua tals",
+    "complemento":"apto tal tal",
+    "numero":5,
     "admin":false
   }
 ]

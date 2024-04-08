@@ -27,7 +27,7 @@ function Login_page () {
     if (foundUser) {
       dispatch({
         type:"user/login",
-        payload: {email: email}
+        payload: foundUser
       })
     } else {
       console.log('Object not found.');
