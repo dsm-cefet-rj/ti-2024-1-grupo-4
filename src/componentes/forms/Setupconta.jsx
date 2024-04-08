@@ -9,12 +9,18 @@ export class Setupconta extends Component {
         e.preventDefault();
         this.props.nextStep();
     };
+    back = e =>{
+      e.preventDefault();
+      this.props.prevStep();
+  };
   render() {
-    const { values, inputChange } = this.props;
+    const { values, inputChange, step} = this.props;
     return (
       <>
       <div className='position-relative pt-2'>
-       <Progressbar/>
+       <Progressbar 
+       step={step}
+       />
        </div>
         <div className="container-fluid position-sticky">
           <div className="bg-equator justify-content-center align-items-center m-1">
@@ -25,6 +31,7 @@ export class Setupconta extends Component {
             </div>
           </div>
         </div>
+        
         <div className='form-group form-control-sm'>
           <div class="form-floating mb-2">
             <input type="text" class="form-control"  name='user' onChange={inputChange('user')} value={values.user} id="floatingInput" placeholder="name@example.com"/>
@@ -36,8 +43,17 @@ export class Setupconta extends Component {
           </div>
         </div>
         <br />
-        <div className='text-right'>
-          <button type="button" className="btn btn-padrao"onClick={this.continue}>Login</button>
+        <div className='d-flex flex-row-reverse'>
+          <div className='col-6'>
+            <div className='text-rigth'>
+              <button type="button" className="btn btn-padrao" onClick={this.continue}>Login</button>
+            </div>
+          </div>
+          <div className='col-6'>
+            <div className='text-right'>
+              <button type="button" className="btn btn-padrao" onClick={this.back}>Anterior</button>
+            </div>
+          </div>
         </div>
       </>
     )

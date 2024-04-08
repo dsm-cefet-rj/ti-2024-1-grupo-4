@@ -5,6 +5,58 @@ $spicy-mix:#806543;
 $equator:#E0B35F;
 $tacao:#F0C286;
 $banana-mania:#FCE5C0;
+$neon-carrot:#FB9943;
+
+$brick-red-100: tint-color($brick-red, 80%);
+$brick-red-200: tint-color($brick-red, 60%);
+$brick-red-300: tint-color($brick-red, 40%);
+$brick-red-400: tint-color($brick-red, 20%);
+$brick-red-500: $brick-red;
+$brick-red-600: shade-color($brick-red, 20%);
+$brick-red-700: shade-color($brick-red, 40%);
+$brick-red-800: shade-color($brick-red, 60%);
+$brick-red-900: shade-color($brick-red, 80%);
+
+$banana-mania-100: tint-color($banana-mania, 80%);
+$banana-mania-200: tint-color($banana-mania, 60%);
+$banana-mania-300: tint-color($banana-mania, 40%);
+$banana-mania-400: tint-color($banana-mania, 20%);
+$banana-mania-500: $banana-mania;
+$banana-mania-600: shade-color($banana-mania, 20%);
+$banana-mania-700: shade-color($banana-mania, 40%);
+$banana-mania-800: shade-color($banana-mania, 60%);
+$banana-mania-900: shade-color($banana-mania, 80%);
+
+$equator-100: tint-color($equator, 80%);
+$equator-200: tint-color($equator, 60%);
+$equator-300: tint-color($equator, 40%);
+$equator-400: tint-color($equator, 20%);
+$equator-500: $equator;
+$equator-600: shade-color($equator, 20%);
+$equator-700: shade-color($equator, 40%);
+$equator-800: shade-color($equator, 60%);
+$equator-900: shade-color($equator, 80%);
+
+$neon-carrot-100: tint-color($neon-carrot, 80%);
+$neon-carrot-200: tint-color($neon-carrot, 60%);
+$neon-carrot-300: tint-color($neon-carrot, 40%);
+$neon-carrot-400: tint-color($neon-carrot, 20%);
+$neon-carrot-500: $neon-carrot;
+$neon-carrot-600: shade-color($neon-carrot, 20%);
+$neon-carrot-700: shade-color($neon-carrot, 40%);
+$neon-carrot-800: shade-color($neon-carrot, 60%);
+$neon-carrot-900: shade-color($neon-carrot, 80%);
+
+$tacao-100: tint-color($tacao, 80%);
+$tacao-200: tint-color($tacao, 60%);
+$tacao-300: tint-color($tacao, 40%);
+$tacao-400: tint-color($tacao, 20%);
+$tacao-500: $tacao;
+$tacao-600: shade-color($tacao, 20%);
+$tacao-700: shade-color($tacao, 40%);
+$tacao-800: shade-color($tacao, 60%);
+$tacao-900: shade-color($tacao, 80%);
+
 
 
 //button manu login

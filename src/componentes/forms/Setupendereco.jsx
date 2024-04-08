@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button'
+import Progressbar from './progress_bar'
 
 export class Setupendereco extends Component {
     continue = e =>{
@@ -11,9 +12,13 @@ export class Setupendereco extends Component {
         this.props.prevStep();
     };
   render() {
-    const{values,inputChange} = this.props;
+    const{values,inputChange,step} = this.props;
     return (
       <>
+       <div className='position-relative pt-2'>
+       <Progressbar step={step} />
+       </div>
+
       <div className='form-container'>
         <div className='form-group'>
             <label htmlFor='cep'>Cep</label>

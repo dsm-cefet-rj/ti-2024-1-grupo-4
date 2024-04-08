@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import  jsonData from './users.json';
 import Header from '../header/Header';
+import Footer from '../footer/Footer';
 import {useSelector, useDispatch} from "react-redux";
 import rootReducer from '../../redux/root-reducer';
 
@@ -66,7 +67,7 @@ function Login_page () {
             </div>
           </div>
         </div>
-
+      <Footer/>
     </>
     
 
