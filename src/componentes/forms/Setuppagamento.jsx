@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button'
+import Progressbar from './progress_bar'
 
 export class Setuppagamento extends Component {
     continue = e =>{
@@ -11,10 +12,14 @@ export class Setuppagamento extends Component {
         this.props.prevStep();
     };
   render() {
-    const{values,inputChange} = this.props;
+    const{values,inputChange,step} = this.props;
       return (
           <>
               <div className='form-container form-control-sm'>
+
+                    <Progressbar 
+                    step={step}
+                    />
                   <div className='form-group'>
                       <label htmlFor='T_pagamento'> /*tipo pagamento, ver depois com botao  */  </label>
                       <div class="btn-group" role="group" aria-label="Basic radio toggle button group">

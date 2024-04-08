@@ -1,10 +1,61 @@
-@import './variables';
+@import "./variables";
 $custom_theme_colors_principal:(
     "brick-red":$brick-red,
     "spicy-mix":$spicy-mix,
     "equator":$equator,
     "tacao":$tacao,
     "banana-mania":$banana-mania,
+    "neon-carrot":$neon-carrot,
+
+    "brick-red-100":$brick-red-100,
+    "brick-red-200":$brick-red-200,
+    "brick-red-300":$brick-red-300,
+    "brick-red-400":$brick-red-400,
+    "brick-red-500":$brick-red-500,
+    "brick-red-600":$brick-red-600,
+    "brick-red-700":$brick-red-700,
+    "brick-red-800":$brick-red-800,
+    "brick-red-900":$brick-red-900,
+
+    "banana-mania-100":$banana-mania-100,
+    "banana-mania-200":$banana-mania-200,
+    "banana-mania-300":$banana-mania-300,
+    "banana-mania-400":$banana-mania-400,
+    "banana-mania-500":$banana-mania-500,
+    "banana-mania-600":$banana-mania-600,
+    "banana-mania-700":$banana-mania-700,
+    "banana-mania-800":$banana-mania-800,
+    "banana-mania-900":$banana-mania-900,
+
+    "tacao-100":$tacao-100,
+    "tacao-200":$tacao-200,
+    "tacao-300":$tacao-300,
+    "tacao-400":$tacao-400,
+    "tacao-500":$tacao-500,
+    "tacao-600":$tacao-600,
+    "tacao-700":$tacao-700,
+    "tacao-800":$tacao-800,
+    "tacao-900":$tacao-900,
+
+    "equator-100":$equator-100,
+    "equator-200":$equator-200,
+    "equator-300":$equator-300,
+    "equator-400":$equator-400,
+    "equator-500":$equator-500,
+    "equator-600":$equator-600,
+    "equator-700":$equator-700,
+    "equator-800":$equator-800,
+    "equator-900":$equator-900,
+
+    "neon-carrot-100":$neon-carrot-100,
+    "neon-carrot-200":$neon-carrot-200,
+    "neon-carrot-300":$neon-carrot-300,
+    "neon-carrot-400":$neon-carrot-400,
+    "neon-carrot-500":$neon-carrot-500,
+    "neon-carrot-600":$neon-carrot-600,
+    "neon-carrot-700":$neon-carrot-700,
+    "neon-carrot-800":$neon-carrot-800,
+    "neon-carrot-900":$neon-carrot-900,
 );
 $theme-colors: map-merge($custom_theme_colors_principal , $theme-colors);
 

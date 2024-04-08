@@ -3,6 +3,7 @@
 //@import 'bootstrap/scss/bootstrap';
 @import '../../../scss/custom.scss';
 @import 'bootstrap/scss/mixins';
+
 /*
 $brick-red:#BF2D3A;
 $spicy-mix:#806543;
@@ -25,7 +26,43 @@ $banana-mania:#FCE5C0;
   .container-forms {
     @include make-container();
   }
+  .btn-bolas-ativa{
+    @include button-variant(mix(black,$neon-carrot,10%),mix(black,$neon-carrot,30%));
+  }
+  .btn-bolas-desativo{
+    @include button-variant(mix(white,$neon-carrot,30%),mix(black,$neon-carrot,30%));
+  }
+  /*
+  .progress-bar{
+    transition-duration: 2s;
+    transition: width 0.2s;
+  }
+*/
+  /*
+  .progress,
+.progress-stacked {
+  // scss-docs-start progress-css-vars
+  --#{$prefix}progress-height: #{$progress-height};
+  @include rfs($progress-font-size, --#{$prefix}progress-font-size);
+  --#{$prefix}progress-bg: #{$progress-bg};
+  --#{$prefix}progress-border-radius: #{$progress-border-radius};
+  --#{$prefix}progress-box-shadow: #{$progress-box-shadow};
+  --#{$prefix}progress-bar-color: #{$progress-bar-color};
+  --#{$prefix}progress-bar-bg: #{$progress-bar-bg};
+  --#{$prefix}progress-bar-transition: #{$progress-bar-transition};
+  // scss-docs-end progress-css-vars
 
+  display: flex;
+  height: var(--#{$prefix}progress-height);
+  overflow: hidden; // force rounded corners by cropping it
+  @include font-size(var(--#{$prefix}progress-font-size));
+  background-color: var(--#{$prefix}progress-bg);
+  @include border-radius(var(--#{$prefix}progress-border-radius));
+  @include box-shadow(var(--#{$prefix}progress-box-shadow));
+}
+  $progress-bar-transition:           width .6s ease;
+  
+  */
 /*
 @mixin make-container($padding-x: $container-padding-x) {
     width: 100%;
