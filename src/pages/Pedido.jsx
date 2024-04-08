@@ -1,7 +1,7 @@
 import React from 'react'
 import Form from '../componentes/forms/Forms'
 import Header from '../componentes/header/Header'
-import Footer from '../componentes/Footer/Footer'
+import Footer from '../componentes/footer/Footer'
 
 const Pedido = () => {
   return (

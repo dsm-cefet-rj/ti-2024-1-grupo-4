@@ -9,7 +9,9 @@ import Progressbar from './componentes/progressbar/progressbar.jsx';
 import Teste from './componentes/progressbar/teste_template.jsx'
 
 
-import { CarrinhoProvider } from './context/CarrinhoContext.jsx';
+
+import {Provider} from "react-redux";
+import store from "./redux/store";
 
 import {
   createBrowserRouter,
@@ -44,9 +46,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <CarrinhoProvider>
+
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <Provider store = {store}>
+        <RouterProvider router={router} />
+      </Provider>
     </React.StrictMode>
-  </CarrinhoProvider>,
+    //tirei o carrinho provider para colocar redux, por favor migrar o carrinho para redux
 )
