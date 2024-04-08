@@ -49,7 +49,7 @@ function Login_page () {
               </svg>
 
               <h1>Login</h1>
-              {Error === true &&
+              {this.Error === true &&
                 <div>{errorMSG}</div>
               }
               <form className="g-3 col">

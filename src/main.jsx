@@ -52,5 +52,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <RouterProvider router={router} />
       </Provider>
     </React.StrictMode>
-    //tirei o carrinho provider para colocar redux, por favor migrar o carrinho para redux
 )
