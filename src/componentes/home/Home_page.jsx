@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import rootReducer from '../../redux/root-reducer.js';
 import CartItem from '../cartItem/CartItem.jsx';
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
+import Footer from '../footer/Footer.jsx';
 
 function Home_Page() {
     const [items, setItems] = useState([]);
@@ -56,6 +57,7 @@ function Home_Page() {
                     </section>
                 </main>
             </div>
+            <Footer></Footer>
         </>
     );
 }
