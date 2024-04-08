@@ -1,8 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import  jsonData from './users.json';
-import Header from '../header/Header';
-import Footer from '../footer/Footer';
 import {useSelector, useDispatch} from "react-redux";
 import rootReducer from '../../redux/root-reducer';
 
@@ -11,6 +9,9 @@ function Login_page () {
   const[email, setEmail] = useState('');
   const[senha, setSenha] = useState('');
   const[contas, setContas] = useState([]);
+  const[errorMSG, setErrorMSG] = useState('');
+  const[error,setError] = useState(false);
+  const history = useNavigate();
 
   const {currentUser} = useSelector((rootReducer) => rootReducer.userReducer);
   const dispatch = useDispatch();
@@ -19,8 +20,6 @@ function Login_page () {
     setContas(jsonData);
   }, []);
 
-  
-  
   const handleLogin = () => {
     const foundUser = contas.find((conta) => conta.email === email && conta.senha === senha);
     
@@ -29,23 +28,30 @@ function Login_page () {
         type:"user/login",
         payload: foundUser
       })
-    } else {
-      console.log('Object not found.');
+      history('/');
+    } else if(contas.find((conta) => conta.email === email)){
+      setError(true);
+      setErrorMSG('Senha incorreta');
+    } else{
+      setError(true);
+      setErrorMSG('E-mail incorreto');
     }
   }; 
 
   return (
     <>
-          <Header></Header>
         
-        <div className="container min-vw-100" style={{ height: '89vh' }}>
-          <div className="classe-login bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style={{ width: '400px', height: '475px' }}>
+        <div className="container">
+          <div className="bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style={{ width: '400px', height: '475px' }}>
             <div className="form col">
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" className="bi bi-person-fill m-3" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
               </svg>
 
               <h1>Login</h1>
+              {Error === true &&
+                <div>{errorMSG}</div>
+              }
               <form className="g-3 col">
                 <div className="mb-3">
                   <label htmlFor="exampleFormControlInput1" className="form-label">Email</label>
@@ -67,7 +73,6 @@ function Login_page () {
             </div>
           </div>
         </div>
-      <Footer/>
     </>
     
 

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import rootReducer from '../redux/root-reducer.js';
-import CartItem from '../componentes/cartItem/CartItem.jsx';
+import CartItem from '../componentes/cartItem/cartItem.jsx';
 import { selectProductsTotalPrice } from '../redux/cart/cart.selector.js';
 
 function Home_Page() {

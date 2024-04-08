@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client' 
 //import 'bootstrap/dist/css/bootstrap.min.css'; 
 import Home_page from './pages/Home_page.jsx';
-import Login_page from './componentes/Login/Login.jsx';
-import Register_page from './componentes/cadastro/cadastro.jsx';
+import Login from './pages/Login.jsx';
+import Registro from './pages/Cadastro.jsx';
 import Pedido from './pages/Pedido.jsx';
 import Progressbar from './componentes/progressbar/progressbar.jsx';
 import Teste from './componentes/progressbar/teste_template.jsx'
@@ -25,11 +25,11 @@ const router = createBrowserRouter([
   },
   {
     path: "Login",
-    element: <Login_page/>,
+    element: <Login/>,
   },
   {
     path: "Cadastro",
-    element: <Register_page/>,
+    element: <Registro/>,
   },
   {
     path:"Pedido",
