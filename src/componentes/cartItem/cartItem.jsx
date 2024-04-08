@@ -35,7 +35,7 @@ function CartItem( {product} ) {
                         </div>
                         
                         
-                        <button type="button" className="btn btn-outline-tacao" onClick={handleRemoveClick}>Remover</button>
+                        <button type="button" className="btn btn-outline-brick-red" onClick={handleRemoveClick}>Remover</button>
                     </div>
                 </div>
             </div>
