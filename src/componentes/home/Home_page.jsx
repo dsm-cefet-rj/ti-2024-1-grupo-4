@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import Header from '../componentes/header/Header.jsx';
-import Card from '../componentes/cards/Cards_home.jsx';
-import itemsLoja from '../componentes/data/itemsLoja.json';
+import Header from '../header/Header.jsx';
+import Card from '../cards/Cards_home.jsx';
+import itemsLoja from '../data/itemsLoja.json';
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
-import rootReducer from '../redux/root-reducer.js';
-import CartItem from '../componentes/cartItem/cartItem.jsx';
-import { selectProductsTotalPrice } from '../redux/cart/cart.selector.js';
+import rootReducer from '../../redux/root-reducer.js';
+import CartItem from '../cartItem/cartItem.jsx';
+import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
+import Footer from '../footer/Footer.jsx';
 
 function Home_Page() {
     const [items, setItems] = useState([]);
@@ -56,6 +57,7 @@ function Home_Page() {
                     </section>
                 </main>
             </div>
+            <Footer></Footer>
         </>
     );
 }
