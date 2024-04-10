@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client' 
 //import 'bootstrap/dist/css/bootstrap.min.css'; 
-import Home_page from './componentes/home/Home_page.jsx';
-import Login from './pages/Login.jsx';
-import Registro from './pages/Cadastro.jsx';
-import Pedido from './pages/Pedido.jsx';
-import Progressbar from './componentes/progressbar/progressbar.jsx';
+import Home_page from './componentes/home/Home_page.jsx'
+import Login from './pages/Login.jsx'
+import Registro from './pages/Cadastro.jsx'
+import Pedido from './pages/Pedido.jsx'
+import Progressbar from './componentes/progressbar/progressbar.jsx'
 import Teste from './componentes/progressbar/teste_template.jsx'
+import Admin_Page from './pages/Admin_Page.jsx'
 
 
 
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path:"teste",
     element:<Teste/>,
+  },
+  {
+    path:"admin",
+    element:<Admin_Page/>,
   }
 ]);
 
