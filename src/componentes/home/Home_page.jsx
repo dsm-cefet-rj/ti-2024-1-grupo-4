@@ -58,7 +58,7 @@ function Home_Page() {
                     )}
                     <div className="container-fluid d-flex justify-content-between">
                         <h4>Total</h4>
-                        <h5>R$ {productsTotalPrice.toFixed(2)}</h5>
+                        <h5>{productsTotalPrice.toLocaleString('pt-br',{style: 'currency', currency:'BRL'})}</h5>
                     </div>
                     <Link to = "/pedido">
                         <span className="btn btn-brick-red w-100">Confirmar</span>
