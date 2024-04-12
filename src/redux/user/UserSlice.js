@@ -1,15 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialState = {
-    currentUser: null
-  };
+    currentUser: null,
+    status: 'not_loaded',
+    error:null
+};
 
-
-function fulfillUserReducer(userState, userFetched){
-    return userFetched;
+function fulfillUserReducer(userState,userFetched){
+    userState.status = 'loaded';
+    userState.users = userFetched;
 }
 
-
+export const updateProjetoServer = createAsyncThunk('users/updateUserServer',
+    async(user) => {
+        let response = await fetch('http://localhost:5173/users' + user.id,
+                                {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content.Type':'application/json;charset-utf-8'
+                                    },
+                                    body: JSON.stringify(user)
+                                });
+        if(response.ok){
+            return user;
+        } else{
+            throw new Error('Erro ao atualizar projeto');
+        }
+});
 
 export const fetchUser = createAsyncThunk('user/fetchUser',
     async() => {
@@ -33,12 +50,22 @@ export const userSlice = createSlice({
             state.currentUser = null;
         }
     },
-    /*extraReducers: {
-        [fetchUser.fulfilled]:(state,action) => {state = action.payload},
-        //fulfilled é o estado do promise, quando o async for complletado o reducer vai ser chamado
-    }*/
+    extraReducers: (builder) => {
+        builder
+          .addCase(fetchUser.pending, (state, action) => {
+            state.status = 'loading';
+          })
+          .addCase(fetchUser.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+          })
+          .addCase(fetchUser.fulfilled, (state, action) => {
+            fulfillUserReducer(state, action.payload);
+          });
 
-})
+        }
+
+});
 
 export const { logarUser, deslogarUser } = userSlice.actions
 export default userSlice.reducer;
