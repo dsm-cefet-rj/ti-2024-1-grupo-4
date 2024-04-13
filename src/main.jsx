@@ -14,6 +14,9 @@ import Admin_Page from './pages/Admin_Page.jsx'
 import {Provider} from "react-redux";
 import store from "./redux/store";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -54,6 +57,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
     <React.StrictMode>
       <Provider store = {store}>
+        <ToastContainer/>
         <RouterProvider router={router} />
       </Provider>
     </React.StrictMode>

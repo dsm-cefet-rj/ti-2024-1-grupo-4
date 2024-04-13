@@ -4,12 +4,13 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Header from '../header/Header.jsx';
 import Card from '../cards/Cards_home.jsx';
 import itemsLoja from '../data/itemsLoja.json';
+import CartItem from '../cartItem/cartItem.jsx';
+import Footer from '../footer/Footer.jsx';
+
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import rootReducer from '../../redux/root-reducer.js';
-import CartItem from '../cartItem/cartItem.jsx';
-import Footer from '../footer/Footer.jsx';
 
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js'; //c
 import { selectProductsCount } from '../../redux/cart/cart.selector.js';
@@ -62,6 +63,7 @@ function Home_Page() {
             
             
             <div>
+                
                 {/* Loja */}
                 <div className="bg-banana-mania py-4 px-2">
                     <main>

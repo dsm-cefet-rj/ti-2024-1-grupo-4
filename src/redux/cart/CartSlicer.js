@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState = {
     products: [],
@@ -20,6 +21,10 @@ const cartSlice = createSlice({
             } else {
                 const tempProduct = {...action.payload, quantity: 1};
                 state.products.push(tempProduct);
+                toast.success(action.payload.nome + " adicionado ao carrinho", {
+                    position: "bottom-left",
+                    className: "text-spicy-mix bg-banana-mania shadow",
+                });
             }
         },
         removeProductFromCart(state, action) {
