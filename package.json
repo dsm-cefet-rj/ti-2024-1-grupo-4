@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "json server":"json-server --watch src/componentes/Login/users.json --port 5173"
+    "json server":"json-server --watch src/componentes/Login/users.json --port 5173 --delay 2000"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

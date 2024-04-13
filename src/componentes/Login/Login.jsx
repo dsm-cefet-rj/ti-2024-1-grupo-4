@@ -1,8 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import  jsonData from './users.json';
 import {useSelector, useDispatch} from "react-redux";
-import { logarUser } from '../../redux/user/UserSlice'
+import { logarUser, fetchUser, userSlice } from '../../redux/user/UserSlice'
 
 
 function Login_page () {
@@ -11,14 +10,19 @@ function Login_page () {
   const[contas, setContas] = useState([]);
   const[errorMSG, setErrorMSG] = useState('');
   const[error,setError] = useState(false);
+  const userState = useSelector(state => state.user);
   const history = useNavigate();
+  const status = userState.status;
+  const erro = userState.error;
 
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setContas(jsonData);
-  }, []);
+    if(status === 'not_loaded'){
+      dispatch(fetchUser())
+    }
+  }, [status,dispatch]);
 
   const handleLogin = () => {
     const foundUser = contas.find((conta) => conta.email === email && conta.senha === senha);
