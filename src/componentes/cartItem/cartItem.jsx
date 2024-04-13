@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeProductFromCart, increaseProductQuantity, decreaseProductQuantity } from '../../redux/cart/actions';
+import { removeProductFromCart, addProductToCart, decreaseProductQuantity } from '../../redux/cart/CartSlicer.js'; //cartSlicer
 
 function CartItem( {product} ) {
 
@@ -11,7 +11,7 @@ function CartItem( {product} ) {
     }
 
     const handleIncreaseClick = () => {
-        dispatch(increaseProductQuantity(product.id));
+        dispatch(addProductToCart(product));
     }
 
     const handleDecreaseClick = () => {
@@ -26,7 +26,9 @@ function CartItem( {product} ) {
                     <h5 className="card-title">{product.nome}</h5>
                     <p className="card-text">{product.descricao}</p>
                     <div className="d-flex justify-content-between align-items-center">
-                        <small className="text-muted">{product.preco.toLocaleString('pt-br',{style: 'currency', currency:'BRL'})}</small>
+                        <small className="text-muted">
+                            {product.preco.toLocaleString('pt-br',{style: 'currency', currency:'BRL'})}
+                        </small>
                         
                         <div className="d-flex align-items-center justify-content-between gap-3">
                             <button type="button" className="btn btn-tacao" onClick={handleDecreaseClick}>-</button>
@@ -37,6 +39,9 @@ function CartItem( {product} ) {
                         
                         <button type="button" className="btn btn-outline-brick-red" onClick={handleRemoveClick}>Remover</button>
                     </div>
+                    <small className="text-muted">
+                    ({(product.preco * product.quantity).toLocaleString('pt-br',{style: 'currency', currency:'BRL'})})
+                    </small>
                 </div>
             </div>
         </>

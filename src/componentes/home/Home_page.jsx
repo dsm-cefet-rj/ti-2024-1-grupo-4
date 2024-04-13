@@ -9,14 +9,10 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import rootReducer from '../../redux/root-reducer.js';
 import CartItem from '../cartItem/cartItem.jsx';
-import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 import Footer from '../footer/Footer.jsx';
-import { selectProductsCount } from '../../redux/cart/cart.selector';
 
-
-import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
-import Button from 'react-bootstrap/Button';
+import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js'; //c
+import { selectProductsCount } from '../../redux/cart/cart.selector.js';
 
 
 function Home_Page() {
@@ -30,8 +26,6 @@ function Home_Page() {
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
     const productsCount = useSelector(selectProductsCount);
 
-    const [showA, setShowA] = useState(true);
-    const toggleShowA = () => setShowA(!showA);
 
 
     return (
@@ -66,25 +60,10 @@ function Home_Page() {
                 </div>
             </div>
             
-            <Button onClick={toggleShowA} className="mb-2">
-                        Toggle Toast <strong>with</strong> Animation
-            </Button>
-            <div className="position-relative">
-                {/* Toasts */}
-                
-                <div aria-live="polite" aria-atomic="true" className="position-relative top-0 end-0" style={{ minHeight: '240px' }}>
-                    <ToastContainer className="p-3" position="top-end" style={{ zIndex: 1 }}>
-                        <Toast show={showA} onClose={toggleShowA}>
-                            <Toast.Header className="rounded me-2">
-                                <strong className="me-auto">TOAST</strong>
-                                <small>11 min ago</small>
-                            </Toast.Header>
-                        </Toast>
-                    </ToastContainer>
-                </div>
-
+            
+            <div>
                 {/* Loja */}
-                <div className="bg-banana-mania py-4 px-2 position-absolute top-0">
+                <div className="bg-banana-mania py-4 px-2">
                     <main>
                         <section className="container-fluid m-0">
                             <h2 className="mb-4 text-left">Loja</h2>
