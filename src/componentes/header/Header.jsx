@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import logo from '../../assets/img/logo_placeholder.png';
 import { Link, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import rootReducer from '../../redux/root-reducer';
 import { deslogarUser } from '../../redux/user/UserSlice';
 
 const Header = () => {

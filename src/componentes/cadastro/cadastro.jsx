@@ -1,6 +1,10 @@
 import './cadastro.css';
 import React, { useEffect, useState } from 'react';
-import jsonData from '../Login/users.json'
+import { addUserServer } from '../../redux/user/UserSlice';
+import { useDispatch } from 'react-redux';
+import {CadastroSchema} from './CadastroSchema';
+import {yupResolver} from '@hookform/resolvers';
+import {useForm} from "react-hook-form";
 
 function Register_page() {
   const[senha, setSenha] = useState('');
@@ -13,25 +17,16 @@ function Register_page() {
   const[complemento, setComplemento] = useState('');
   const[error, setError] = useState(false);
   const[errorMSG, setErrorMSG] = useState('');
-  const[contas, setContas] = useState([]);
+  const[adm, setAdm] = useState(false);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    setContas(jsonData);
-  }, []);
 
-  const handleRegister = () => {
-
-    if(senha !== repSenha){
-      setError(true);
-      setErrorMSG('As senhas precisam ser iguais');
-      console.log('senhas');
-    } else if(contas.find((conta) => conta.email === email)){
-      setError(true);
-      setErrorMSG('Uma conta já existe com esse email');
-      console.log('email');
-    } else{
-      setError(false);
-      setErrorMSG('');
+  const handleSubmit =  async(e) => {
+    e.preventDefault();
+    try{
+      dispatch(addUserServer({email, senha, nome, adm}));
+    } catch(error){
+      console.error('Error adding user: ', error.message);
     }
   
   };
@@ -48,7 +43,7 @@ function Register_page() {
           <h2>Cadastro</h2>
           {error == true && 
               <div className="bg-brick-red text-banana-mania m-1 p-1 rounded-3 text-center">{errorMSG}</div>}
-          <form className="row g-3 col">
+          <form className="row g-3 col" onSubmit = {handleSubmit}>
             <div className="col-md-6">
               <label className="form-label" >Email</label>
               <input type="email" className="form-control" placeholder = "fulano@silva.com" value = {email} onChange={e => setEmail(e.target.value)} required></input>
@@ -85,7 +80,7 @@ function Register_page() {
 
             
             <div className="col-12">
-              <button type="button"  className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50" onClick = {handleRegister}>Cadastre-se</button>
+              <button type="submit"  className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
             </div>
           </form>
 

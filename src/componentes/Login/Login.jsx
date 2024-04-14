@@ -1,31 +1,32 @@
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import { logarUser, fetchUser, userSlice } from '../../redux/user/UserSlice'
+import { logarUser, fetchUser} from '../../redux/user/UserSlice';
+
 
 
 function Login_page () {
   const[email, setEmail] = useState('');
   const[senha, setSenha] = useState('');
-  const[contas, setContas] = useState([]);
   const[errorMSG, setErrorMSG] = useState('');
   const[error,setError] = useState(false);
-  const userState = useSelector(state => state.user);
+  const userState = useSelector((rootReducer) => rootReducer.userSlice)|| {};
   const history = useNavigate();
   const status = userState.status;
   const erro = userState.error;
 
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(status === 'not_loaded'){
+    if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
       dispatch(fetchUser())
+    } else if(status ==='failed'){
+        setTimeout(()=>dispatch(fetchUser()))
     }
   }, [status,dispatch]);
 
   const handleLogin = () => {
-    const foundUser = contas.find((conta) => conta.email === email && conta.senha === senha);
+    const foundUser = true;
     
     if (foundUser) {
       dispatch(logarUser(foundUser))
