@@ -9,11 +9,12 @@ import Footer from '../footer/Footer.jsx';
 
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import rootReducer from '../../redux/root-reducer.js';
 
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js'; //c
 import { selectProductsCount } from '../../redux/cart/cart.selector.js';
+import { fetchProduto } from '../../redux/produtos/ProdutosSlice.js';
 
 
 function Home_Page() {
@@ -21,13 +22,20 @@ function Home_Page() {
     useEffect(() => {
         setItems(itemsLoja);
     }, []);
-
+    const dispatch = useDispatch();
     const { products } = useSelector((rootReducer) => rootReducer.cartReducer);
+
+    const produtosLojaState = useSelector((rootReducer) => rootReducer.produtosReducer);
+    const statusLoja = produtosLojaState.status;
+    const errorLoja = produtosLojaState.error;
+    useEffect(() => {
+        if(statusLoja === 'not_loaded') {
+            dispatch(fetchProduto());
+        }
+    }, [statusLoja, dispatch]);
 
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
     const productsCount = useSelector(selectProductsCount);
-
-
 
     return (
         <>
