@@ -19,7 +19,7 @@ const Header = () => {
 
     return (
         <>
-            <header className="flex-grow-1">
+            <header className="flex-grow-1 bg-tacao">
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand d-flex align-items-center" href="#">
                         <img src={logo} width="50" height="50" alt=""></img>
