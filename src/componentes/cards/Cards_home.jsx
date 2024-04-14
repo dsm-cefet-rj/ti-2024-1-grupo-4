@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addProductToCart } from '../../redux/cart/actions';
+import { addProductToCart } from '../../redux/cart/CartSlicer.js'; //cartSlicer
 
 
 
@@ -18,7 +18,7 @@ function Card(prod) {
                     <h5 className="card-title">{prod.nome}</h5>
                     <p className="card-text">{prod.descricao}</p>
                     <div className="d-flex justify-content-between align-items-center">
-                        <small className="text-muted">R${prod.preco}</small>
+                        <small className="text-muted">{prod.preco.toLocaleString('pt-br',{style: 'currency', currency:'BRL'})}</small>
                         <button type="button" className="btn btn-outline-tacao" onClick={handleProductClick}>Adicionar</button>
                     </div>
                 </div>

@@ -8,7 +8,11 @@ function Registro(){
         <>
         <div className = 'd-block align-items-center min-vh-100 sticky'>
             <Header/>
-            <Register_page/>
+            <div className = '' >
+                
+                <Register_page/>
+            </div>
+            
             <Footer/>
 
         </div>
@@ -17,3 +21,28 @@ function Registro(){
 }
 
 export default Registro
+
+/*function Registro(){
+    return(
+        <>
+        <div className = 'd-block align-items-center min-vh-100 sticky'>
+            <Header/>
+            <div className = '' >
+                progressbar
+                switch(step){
+                    case 1:
+                        <login>
+                    case 2:
+                        <cadastro>
+                    
+
+                }
+                
+            </div>
+            
+            <Footer/>
+
+        </div>
+        </>
+    )
+}*/
