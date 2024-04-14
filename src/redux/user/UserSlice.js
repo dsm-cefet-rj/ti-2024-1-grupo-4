@@ -15,6 +15,17 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async (_, {getState
     return await httpGet(`${baseUrl}/users`);
 });
 
+export const fetchUserByEmail = createAsyncThunk('users/fetchUSerByEmail', async(payload, {getState}) =>{
+  try{
+    const {email, senha} = payload
+    const response = await fetch(`${baseUrl}/users?email=${email}&senha=${senha}`);
+    const user = await response.json();
+    return user[0];
+  } catch(error){
+    throw error;
+  }
+});
+
 export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async (idUser, {getState}) => {
     await httpDelete(`${baseUrl}/users/${idUser}`);
     return idUser;
@@ -23,7 +34,7 @@ export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async
 export const addUserServer = createAsyncThunk('users/addUserServer', async (user, {getState}) => {
     return await httpPost(`${baseUrl}/users`, user);
 });
-// ver o vídeo para ver se o código está ok
+
 export const updateUserServer = createAsyncThunk('users/updateUsersServer', async (user, {getState}) => {
     return await httpPut(`${baseUrl}/users/${user.id}`, user);
 });
@@ -32,9 +43,6 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        logarUser: (state,action) => {
-            state.currentUser = action.payload;
-        },
         deslogarUser: (state) => {
             state.currentUser = null;
         }
@@ -63,6 +71,10 @@ export const userSlice = createSlice({
           .addCase(updateUserServer.fulfilled, (state, action) => {
             state.status = 'saved';
             userAdapter.upsertOne(state, action.payload);
+          })
+          .addCase(fetchUserByEmail.fulfilled,(state,action) => {
+            state.status = 'saved';
+            state.currentUser = action.payload;
           })
 
         }
