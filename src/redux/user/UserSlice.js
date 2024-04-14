@@ -9,14 +9,10 @@ const initialState = userAdapter.getInitialState({
     status: 'not_loaded',
     error:null
 });
-/* To-do:
-implementar crud cadastro
-depois disso ajudar jean
-implementar hook e yup*/
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async (_, {getState}) => {
     console.log(getState());
-    return await httpGet(`${baseUrl}/user`);
+    return await httpGet(`${baseUrl}/users`);
 });
 
 export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async (idUser, {getState}) => {

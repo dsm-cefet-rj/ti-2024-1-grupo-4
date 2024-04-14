@@ -3,33 +3,32 @@ import React, { useEffect, useState } from 'react';
 import { addUserServer } from '../../redux/user/UserSlice';
 import { useDispatch } from 'react-redux';
 import {CadastroSchema} from './CadastroSchema';
-import {yupResolver} from '@hookform/resolvers';
+import * as yup from 'yup'
 import {useForm} from "react-hook-form";
 
 function Register_page() {
   const[senha, setSenha] = useState('');
   const[email, setEmail] = useState('');
   const[nome, setNome] = useState('');
-  const[repSenha, setRepSenha] = useState('');
+  const[repSenha, setRepSenha] = useState(''); 
   const[logradouro, setLogradouro] = useState('');
   const[numero, setNumero] = useState('');
   const[CEP, setCEP] = useState('');
   const[complemento, setComplemento] = useState('');
   const[error, setError] = useState(false);
   const[errorMSG, setErrorMSG] = useState('');
-  const[adm, setAdm] = useState(false);
+  const[admin, setAdm] = useState(false);
+
   const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: {errors},
+  } = useForm()
 
 
-  const handleSubmit =  async(e) => {
-    e.preventDefault();
-    try{
-      dispatch(addUserServer({email, senha, nome, adm}));
-    } catch(error){
-      console.error('Error adding user: ', error.message);
-    }
-  
-  };
+  const onSubmit = (data) => console.log(data)
 
   return (
     <>
@@ -43,24 +42,27 @@ function Register_page() {
           <h2>Cadastro</h2>
           {error == true && 
               <div className="bg-brick-red text-banana-mania m-1 p-1 rounded-3 text-center">{errorMSG}</div>}
-          <form className="row g-3 col" onSubmit = {handleSubmit}>
-            <div className="col-md-6">
+          <form className="row g-3 col" onSubmit = {handleSubmit(onSubmit)}>
+            <div className="col-md-12">
               <label className="form-label" >Email</label>
-              <input type="email" className="form-control" placeholder = "fulano@silva.com" value = {email} onChange={e => setEmail(e.target.value)} required></input>
+              <input type="email" className="form-control" placeholder = "fulano@silva.com" defaultValue={email} {...register("email")}></input>
             </div>
             <div className="col-md-6">
               <label className="form-label" >Nome</label>
-              <input type="text" className="form-control" placeholder = "fulano da silva" value = {nome} onChange={e => setNome(e.target.value)} required></input>
+              <input type="text" className="form-control" placeholder = "fulano da silva" defaultValue={nome} {...register("nome")}></input>
             </div>
             <div className="col-md-6">
               <label className="form-label">Senha</label>
-              <input type="password" className="form-control" value={senha} onChange={e => setSenha(e.target.value)} required></input>
+              <input type="password" className="form-control" defaultValue={senha} {...register("senha")}></input>
             </div>
-            <div className="col-md-6">
-              <label className="form-label">Repita a Senha</label>
-              <input type="password" className= "form-control" value = {repSenha} onChange={e => setRepSenha(e.target.value)} required></input>
-            </div>
-            <h2>Endereço (Opcional)</h2>
+          </form>
+
+          
+          <h2>Endereço (Opcional)</h2>
+
+
+          <form className="row g-3 col" onSubmit = {handleSubmit(onSubmit)}>
+
             <div className="col-md-4">
               <label className="form-label">CEP</label>
               <input type="text" className="form-control" value = {CEP} onChange={e => setCEP(e.target.value)}></input>

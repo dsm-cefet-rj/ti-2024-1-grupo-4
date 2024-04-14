@@ -1,12 +1,13 @@
-import {string, object, number, setLocale} from 'yup';
-import {ptForm } from 'yup-locale-pt';
+import {string, object} from 'yup';
+//import { ptForm } from 'yup-locale-pt';
 
-setLocale(ptForm)
+//setLocale(ptForm)
 
-export let pprojetoSchema = object().shape(
+export const CadastroSchema = object().shape(
     {
         id: string(),
-        nome: string().required().max(30),
-        sigla: string().required().max(5)
+        email: string().required().max(30),
+        nome: string().required().max(50),
+        senha: string().required().max(20)
     }
 )
