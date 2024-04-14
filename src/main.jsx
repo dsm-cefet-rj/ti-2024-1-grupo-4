@@ -40,10 +40,6 @@ const router = createBrowserRouter([
     element:<Pedido/>,
   },
   {
-    path:"app2",
-    element:<Progressbar/>,
-  },
-  {
     path:"teste",
     element:<Teste/>,
   },

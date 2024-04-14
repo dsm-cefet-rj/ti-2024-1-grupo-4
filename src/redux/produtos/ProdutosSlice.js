@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit'
 import {httpDelete, httpGet, httpPut, httpPost} from '../../utils'
-import {baseUrl} from '../../baseUrl'
+import {baseUrl} from '../../baseUrl';
+import { toast } from 'react-toastify';
 
 const produtoAdapter = createEntityAdapter();
 
