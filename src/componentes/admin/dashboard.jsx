@@ -5,6 +5,7 @@ import { fetchProduto, addProdutoServer, deleteProdutoServer, updateProdutoServe
 import * as Yup from 'yup';
 import { productSchema } from './ProdutoSchema';
 
+
 function Dashboard() {
 
     const handleRegister = () => {
@@ -34,8 +35,8 @@ function Dashboard() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
-          ...formData,
-          [name]: value,
+            ...formData,
+            [name]: value,
         });
     };
 
@@ -63,6 +64,8 @@ function Dashboard() {
         const updatedProduct = { id: product.id, name: 'Updated Product', price: 99.99 };
         dispatch(updateProdutoServer(updatedProduct));
     };
+
+
 
     return(
         <>
@@ -99,35 +102,32 @@ function Dashboard() {
                 </div>
             </div>
             {/* Atualizar Produto/Deletar Produto */}
-            <div className="modal fade" id="atualizarProduto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="atualizarProdutoLabel" aria-hidden="true">
+            <div className="modal fade" id="atualizar/deletarProduto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="atualizar/deletarProdutoLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="atualizarProdutoLabel">Atualizar Produto</h5>
+                            <h5 className="modal-title" id="atualizar/deletarProdutoLabel">Atualizar Produto</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form className="row g-3">
                                 <div className="col-md-6">
-                                    <input className="form-control" list="datalistOptions" placeholder="Escreva para pesquisar nome do Produto..."></input>
-                                    <datalist id="datalistOptions">
-                                        <option value="teste"></option>
-                                    </datalist>
+                                    <input className="form-control" id="nome" name="nome" value={formData.nome} onChange={handleChange} placeholder="Escreva para pesquisar nome do Produto..."></input>
                                 </div>
                                 <div className="col-md-6">
-                                    <input type="number" className="form-control" id="inputPreco" step="any" min="0.1" placeholder="Preço do Produto"></input>
+                                    <input type="number" className="form-control" id="preco" name="preco" value={formData.preco} onChange={handleChange} step="any" min="0.1" placeholder="Preço do Produto"></input>
                                 </div>
                                 <div className="col-12">
                                     <label htmlFor="inputImg" className="form-label">Imagem do Produto</label>
                                     <input type="file" className="form-control" id="inputImg"></input>
                                 </div>
                                 <div className="col-12">
-                                    <textarea className="form-control" id="inputDescricao" rows="5" placeholder="Descrição do Produto"></textarea>
+                                    <textarea className="form-control" id="descricao" name="descricao" value={formData.descricao} rows="5" placeholder="Descrição do Produto"></textarea>
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-tacao" data-bs-toggle="modal" data-bs-dissmis="modal" data-bs-target="#listarProduto">Voltar</button>
                             <button type="button" className="btn btn-brick-red">Deletar</button>
                             <button type="button" className="btn btn-tacao">Atualizar</button>
                         </div>
@@ -136,14 +136,31 @@ function Dashboard() {
             </div>
             {/* Listar Produto */}
             <div className="modal fade" id="listarProduto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="listarProdutoLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="listarProdutoLabel">Listar Produto</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            {/* Listar todos os produtos e depois chamar o atualiza/deletar produto */}
+                            <div className="col">
+                                {Object.values(produtosLoja).map((item) => (
+                                    <div key="item.id" className="row d-flex">
+                                        <div className="card w-100">
+                                            <div className="card-body d-flex justify-content-between">
+                                                <h5 className="card-title">{item.nome}</h5>
+                                                <div className="d-flex justify-content-btween align-items-center">
+                                                    <button type="button" className="btn btn-tacao" data-bs-toggle="modal" data-bs-dissmis="modal" data-bs-target="#atualizar/deletarProduto">Info</button>
+                                                    {/* Fazer um jeito de preencher o formulario com as informações no clique 
+                                                        onClick={setFormData({ nome: item.nome, imgUrl: '/img/food.jpg', preco: item.preco, descricao: item.descricao })}
+                                                        React não deixou eu fazer
+                                                    */}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>
@@ -157,7 +174,7 @@ function Dashboard() {
                 <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
                     className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
                 >Criar produto</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#atualizarProduto"
+                <button type="button" data-bs-toggle="modal" data-bs-target="#atualizar/deletarProduto"
                     className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
                 >Atualizar/Deletar produto</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#listarProduto"
