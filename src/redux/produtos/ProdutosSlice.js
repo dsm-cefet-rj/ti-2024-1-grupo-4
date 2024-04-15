@@ -1,69 +1,119 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit'
-import {httpDelete, httpGet, httpPut, httpPost} from '../../utils'
-import {baseUrl} from '../../baseUrl';
+import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
-const produtoAdapter = createEntityAdapter();
+const productsAdapter = createEntityAdapter();
 
-const initialState = produtoAdapter.getInitialState({
-    status: 'not_loaded',
-    error:null
+export const fetchProducts = createAsyncThunk(
+  'products/fetchProducts',
+  async () => {
+    const response = await fetch('./data/products.json');
+    if (!response.ok) {
+      throw new Error('Failed to fetch products');
+    }
+    const data = await response.json();
+    return data.products;
+  }
+);
+
+export const addProduct = createAsyncThunk(
+  'products/addProduct',
+  async (product) => {
+    const response = await fetch('./data/products.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add product');
+    }
+    toast.success(product.nome + " adicionando com sucesso!", {
+        position: "bottom-left",
+        className: "text-spicy-mix bg-banana-mania shadow",
+        autoClose: 4000,
+      }
+    );
+    const data = await response.json();
+    return data;
+  }
+);
+
+export const removeProduct = createAsyncThunk(
+  'products/removeProduct',
+  async (productId) => {
+    const response = await fetch(`./data/products.json?id=${productId}`, {
+      method: 'DELETE'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to remove product');
+    }
+    toast.warning(productId + " removido com sucesso!", {
+      position: "bottom-left",
+      className: "text-spicy-mix bg-banana-mania shadow",
+      autoClose: 4000,
+    }
+  );
+    return { id: productId };
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  'products/updateProduct',
+  async (product) => {
+    const response = await fetch(`./data/products.json?id=${product.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update product');
+    }
+    toast.info(product.nome + " foi alterado ", {
+      position: "bottom-left",
+      className: "text-spicy-mix bg-banana-mania shadow",
+      autoClose: 4000,
+  });
+    const data = await response.json();
+    return data;
+  }
+);
+
+const productSlice = createSlice({
+  name: 'products',
+  initialState: productsAdapter.getInitialState({
+    status: 'idle',
+    error: null,
+  }),
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        productsAdapter.setAll(state, action.payload);
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        productsAdapter.addOne(state, action.payload);
+      })
+      .addCase(removeProduct.fulfilled, (state, action) => {
+        productsAdapter.removeOne(state, action.payload.id);
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        productsAdapter.updateOne(state, {
+          id: action.payload.id,
+          changes: action.payload
+        });
+      });
+  },
 });
 
-export const fetchProduto = createAsyncThunk('produto/fetchProduto', async (_, {getState}) => {
-    console.log(getState());
-    return await httpGet(`${baseUrl}/produto`);
-});
-
-export const deleteProdutoServer = createAsyncThunk('produto/deleteProdutoServer', async (idProduto, {getState}) => {
-    await httpDelete(`${baseUrl}/produto/${idProduto}`);
-    return idProduto;
-});
-
-export const addProdutoServer = createAsyncThunk('produto/addProdutoServer', async (produto, {getState}) => {
-    return await httpPost(`${baseUrl}/produto`, produto);
-});
-// ver o vídeo para ver se o código está ok
-export const updateProdutoServer = createAsyncThunk('produto/updateProdutoServer', async (produto, {getState}) => {
-    return await httpPut(`${baseUrl}/produto/${produto.id}`, produto);
-});
-
-export const produtoSlice = createSlice({
-    name: 'produto',
-    initialState,
-    extraReducers: (builder) => {
-        builder
-          .addCase(fetchProduto.pending, (state, action) => {
-            state.status = 'loading';
-          })
-          .addCase(fetchProduto.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
-          })
-          .addCase(fetchProduto.fulfilled, (state, action) => {
-            state.status = 'loaded';
-            produtoAdapter.setAll(state, action.payload);
-          })
-          .addCase(deleteProdutoServer.fulfilled, (state,action) => {
-            state.status = 'deleted';
-            produtoAdapter.removeOne(state, action.payload);
-          })
-          .addCase(addProdutoServer.fulfilled, (state,action) => {
-            state.status = 'saved';
-            produtoAdapter.addOne(state,action.payload);
-          })
-          .addCase(updateProdutoServer.fulfilled, (state, action) => {
-            state.status = 'saved';
-            produtoAdapter.upsertOne(state, action.payload);
-          })
-
-        }
-
-});
-
-export const {
-    selectAll: selectAllProduto,
-    selectById: selectProdutoById,
-    selectIds: selectProdutosIds
-} = produtoAdapter.getSelectors(state => state.produtos)
-export default produtoSlice.reducer
+export default productSlice.reducer;

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, addProduct, removeProduct, updateProduct } from '../../redux/produtos/ProdutosSlice';
 
+import * as Yup from 'yup';
+import { productSchema } from './ProdutoSchema';
 
 function Dashboard() {
 
@@ -7,7 +11,61 @@ function Dashboard() {
         console.log('teste');
     }
 
-    return (
+    const dispatch = useDispatch();
+    const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
+    const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
+    const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
+
+    useEffect(() => {
+        if (status === 'idle') {
+          dispatch(fetchProducts());
+        }
+    }, [dispatch, status]);
+
+    const [formData, setFormData] = useState({
+        id: '',
+        nome: '',
+        imgUrl: '/img/food.jpg',
+        preco: '',
+        descricao: '',
+    });
+
+    const [errors, setErrors] = useState({});
+    
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+    };
+
+    const handleAddProduct = async (e) => {
+        e.preventDefault();
+        try {
+            await productSchema.validate(formData, { abortEarly: false });
+            dispatch(addProduct(formData));
+            setFormData({ id: '', nome: '', imgUrl: '/img/food.jpg', preco: '', descricao: '' });
+            setErrors({});
+        } catch (error) {
+            const newErrors = {};
+            error.inner.forEach(err => {
+            newErrors[err.path] = err.message;
+            });
+            setErrors(newErrors);
+        }
+    };
+    
+    const handleRemoveProduct = (productId) => {
+        dispatch(removeProduct(productId));
+    };
+    
+    const handleUpdateProduct = (productId) => {
+        const updatedProduct = { id: productId, name: 'Updated Product', price: 99.99 };
+        dispatch(updateProduct(updatedProduct));
+    };
+
+    return(
         <>
             {/* Criar Produto */}
             <div className="modal fade" id="criarProduto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="criarProdutoLabel" aria-hidden="true">
@@ -20,23 +78,23 @@ function Dashboard() {
                         <div className="modal-body">
                             <form className="row g-3">
                                 <div className="col-md-6">
-                                    <input type="text" className="form-control" id="inputNome" placeholder="Nome do Produto"></input>
+                                    <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={handleChange} placeholder="Nome do Produto"></input>
                                 </div>
                                 <div className="col-md-6">
-                                    <input type="number" className="form-control" id="inputPreco" step="any" min="0.1" placeholder="Preço do Produto"></input>
+                                    <input type="number" className="form-control" id="preco" name="preco" value={formData.preco} onChange={handleChange} step="any" min="0.1" placeholder="Preço do Produto"></input>
                                 </div>
                                 <div className="col-12">
                                     <label htmlFor="inputImg" className="form-label">Imagem do Produto</label>
                                     <input type="file" className="form-control" id="inputImg"></input>
                                 </div>
                                 <div className="col-12">
-                                    <textarea className="form-control" id="inputDescricao" rows="5" placeholder="Descrição do Produto"></textarea>
+                                    <textarea className="form-control" id="descricao" name="descricao" value={formData.descricao} onChange={handleChange} rows="5" placeholder="Descrição do Produto"></textarea>
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-tacao">Confirmar</button>
+                            <button type="button" className="btn btn-tacao" onClick={handleAddProduct}>Adicionar produto</button>
                         </div>
                     </div>
                 </div>
