@@ -2,11 +2,22 @@ import './cadastro.css';
 import React, { useEffect, useState } from 'react';
 import { addUserServer } from '../../redux/user/UserSlice';
 import { useDispatch } from 'react-redux';
-import {CadastroSchema} from './CadastroSchema';
+//import {CadastroSchema} from './CadastroSchema';
 import * as yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm} from "react-hook-form";
 
+const schema =  yup.object().shape(
+  {
+      email: yup.string().email().required().max(30),
+      nome: yup.string().required().max(50),
+      senha: yup.string().required().min(5).max(20),
+      repSenha: yup.string().oneOf([yup.ref("password"), null]).required()
+
+  }
+);
 function Register_page() {
+
   const[senha, setSenha] = useState('');
   const[email, setEmail] = useState('');
   const[nome, setNome] = useState('');
@@ -19,16 +30,20 @@ function Register_page() {
   const[errorMSG, setErrorMSG] = useState('');
   const[admin, setAdm] = useState(false);
 
+
   const dispatch = useDispatch();
   const {
     register,
-    handleSubmit,
-    watch,
-    formState: {errors},
-  } = useForm()
+    handleSubmit
+  } = useForm({
+    resolver: yupResolver(schema)
+    });
+
+    const[projetoOnLoad] = useState(
+      id? projetoFound ?? schema.cast({}): schema.cast({}));
 
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = (data) => {console.log(data)}
 
   return (
     <>
@@ -43,17 +58,21 @@ function Register_page() {
           {error == true && 
               <div className="bg-brick-red text-banana-mania m-1 p-1 rounded-3 text-center">{errorMSG}</div>}
           <form className="row g-3 col" onSubmit = {handleSubmit(onSubmit)}>
-            <div className="col-md-12">
+            <div className="col-md-6">
               <label className="form-label" >Email</label>
-              <input type="email" className="form-control" placeholder = "fulano@silva.com" defaultValue={email} {...register("email")}></input>
+              <input type="email" className="form-control" placeholder = "fulano@silva.com" defaultValue={email} ref = {register}></input>
             </div>
             <div className="col-md-6">
               <label className="form-label" >Nome</label>
-              <input type="text" className="form-control" placeholder = "fulano da silva" defaultValue={nome} {...register("nome")}></input>
+              <input type="text" className="form-control" placeholder = "fulano da silva" defaultValue = {nome} ref = {register}></input>
             </div>
             <div className="col-md-6">
               <label className="form-label">Senha</label>
-              <input type="password" className="form-control" defaultValue={senha} {...register("senha")}></input>
+              <input type="password" className="form-control" defaultValue={senha} ref = {register}></input>
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Senha</label>
+              <input type="password" className="form-control" defaultValue = {repSenha} ref = {register}></input>
             </div>
           </form>
 
@@ -61,7 +80,16 @@ function Register_page() {
           <h2>Endereço (Opcional)</h2>
 
 
-          <form className="row g-3 col" onSubmit = {handleSubmit(onSubmit)}>
+
+          <div className="col-12">
+              <button type="submit"  className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
+            </div>
+        </div>
+      </div>
+    </>
+  );
+}
+/*          <form className="row g-3 col" onSubmit = {handleSubmit(onSubmit)}>
 
             <div className="col-md-4">
               <label className="form-label">CEP</label>
@@ -81,15 +109,6 @@ function Register_page() {
             </div>
 
             
-            <div className="col-12">
-              <button type="submit"  className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
-            </div>
-          </form>
-
-        </div>
-      </div>
-    </>
-  );
-}
-
+            
+          </form>*/
 export default Register_page;

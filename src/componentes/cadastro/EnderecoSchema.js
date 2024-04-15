@@ -1,14 +1,14 @@
-import {string, object, number} from 'yup';
+import * as yup from 'yup';
 //import { ptForm } from 'yup-locale-pt';
 
 //setLocale(ptForm)
 
-export const CadastroSchema = object().shape(
+export const EnderecoSchema = object().shape(
     {
-        id: string(),
-        CEP:number().required().max(8),
-        logradouro:string(),
-        complemento:string().required(),
-        numero: number().required().max(5)
+        id: yup.string(),
+        CEP:yup.number().required().max(8),
+        logradouro:yup.string().required(),
+        complemento:yup.string().required(),
+        numero: yup.number().positive().required()
     }
 )
