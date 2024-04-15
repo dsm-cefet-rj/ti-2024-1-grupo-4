@@ -32,11 +32,13 @@ function Login_page () {
       if(result.payload){
         console.log("logado", result.payload);
         console.log(location);
+        alert('Usuário Logado!');
         if(location.pathname === '/login'){
           history('/');
         }
       }else{
-        console.log("nao ta");
+        setError(true);
+        setErrorMSG("E-mail ou senha inválidos!")
       }
     }).catch((err) => {
       console.log("Error fetching user: ", err)
