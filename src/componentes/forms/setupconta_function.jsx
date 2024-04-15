@@ -1,8 +1,8 @@
 import React from 'react'
 import Progressbar from './progress_bar_function'
 import './botao.scss'
-import {Link} from 'react-router-dom';
-
+//import {Link} from 'react-router-dom';
+import Login from '../../componentes/Login/Login'
 
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -54,6 +54,8 @@ function setupconta_function({prevStep,nextStep,step}) {
 
   //id="floatingInput"
   //id="floatingPassword" 
+  //{currentUser ? (nextStep()) :({}) }
+
   return (
     <>
       <div className='position-relative pt-2'>
@@ -61,7 +63,18 @@ function setupconta_function({prevStep,nextStep,step}) {
           step={step}
         />
       </div>
-     
+      <Login/>
+   
+    </>
+  )
+}
+
+export default setupconta_function
+
+{/*onClick={()=>prevStep()}*/   /**/}
+
+{/*
+
         <div className="container-fluid position-sticky">
           <div className="bg-equator justify-content-center align-items-center m-1">
             <div className="icone-svg">
@@ -109,10 +122,6 @@ function setupconta_function({prevStep,nextStep,step}) {
           </div>
         </div>
     
-    </>
-  )
-}
 
-export default setupconta_function
 
-{/*onClick={()=>prevStep()}*/   /**/}
+*/}
