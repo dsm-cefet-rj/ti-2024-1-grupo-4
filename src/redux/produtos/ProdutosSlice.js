@@ -15,16 +15,31 @@ export const fetchProduto = createAsyncThunk('produto/fetchProduto', async (_, {
     return await httpGet(`${baseUrl}/produto`);
 });
 
-export const deleteProdutoServer = createAsyncThunk('produto/deleteProdutoServer', async (idProduto, {getState}) => {
-    await httpDelete(`${baseUrl}/produto/${idProduto}`);
-    return idProduto;
+export const deleteProdutoServer = createAsyncThunk('produto/deleteProdutoServer', async (produto, {getState}) => {
+    await httpDelete(`${baseUrl}/produto/${produto.id}`);
+    toast.warning(produto.nome + " removido!", {
+      position: "bottom-left",
+      className: "text-spicy-mix bg-banana-mania shadow",
+      autoClose: 4000,
+    });
+    return produto.id;
 });
 
 export const addProdutoServer = createAsyncThunk('produto/addProdutoServer', async (produto, {getState}) => {
+    toast.success(produto.nome + " criado com sucesso!", {
+      position: "bottom-left",
+      className: "text-spicy-mix bg-banana-mania shadow",
+      autoClose: 4000,
+    });
     return await httpPost(`${baseUrl}/produto`, produto);
 });
 // ver o vídeo para ver se o código está ok
 export const updateProdutoServer = createAsyncThunk('produto/updateProdutoServer', async (produto, {getState}) => {
+    toast.info(produto.nome + " foi alterado!", {
+      position: "bottom-left",
+      className: "text-spicy-mix bg-banana-mania shadow",
+      autoClose: 4000,
+    });
     return await httpPut(`${baseUrl}/produto/${produto.id}`, produto);
 });
 

@@ -14,7 +14,7 @@ import rootReducer from '../../redux/root-reducer.js';
 
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js'; //c
 import { selectProductsCount } from '../../redux/cart/cart.selector.js';
-import { fetchProducts } from '../../redux/produtos/ProdutosSlice.js';
+import { fetchProduto } from '../../redux/produtos/ProdutosSlice.js';
 
 
 function Home_Page() {
@@ -30,10 +30,10 @@ function Home_Page() {
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
 
     useEffect(() => {
-        if (status === 'idle') {
-          dispatch(fetchProducts());
+        if (status === 'not_loaded') {
+          dispatch(fetchProduto());
         }
-    }, [dispatch, status]);
+    }, [status, dispatch]);
 
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
     const productsCount = useSelector(selectProductsCount);

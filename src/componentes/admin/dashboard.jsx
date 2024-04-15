@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, addProduct, removeProduct, updateProduct } from '../../redux/produtos/ProdutosSlice';
+import { fetchProduto, addProdutoServer, deleteProdutoServer, updateProdutoServer } from '../../redux/produtos/ProdutosSlice';
 
 import * as Yup from 'yup';
 import { productSchema } from './ProdutoSchema';
@@ -17,16 +17,15 @@ function Dashboard() {
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
 
     useEffect(() => {
-        if (status === 'idle') {
-          dispatch(fetchProducts());
+        if (status === 'not_loaded') {
+          dispatch(fetchProduto());
         }
-    }, [dispatch, status]);
+    }, [status, dispatch]);
 
     const [formData, setFormData] = useState({
-        id: '',
         nome: '',
         imgUrl: '/img/food.jpg',
-        preco: '',
+        preco: 0,
         descricao: '',
     });
 
@@ -44,8 +43,8 @@ function Dashboard() {
         e.preventDefault();
         try {
             await productSchema.validate(formData, { abortEarly: false });
-            dispatch(addProduct(formData));
-            setFormData({ id: '', nome: '', imgUrl: '/img/food.jpg', preco: '', descricao: '' });
+            dispatch(addProdutoServer(formData));
+            setFormData({ nome: '', imgUrl: '/img/food.jpg', preco: 0, descricao: '' });
             setErrors({});
         } catch (error) {
             const newErrors = {};
@@ -56,13 +55,13 @@ function Dashboard() {
         }
     };
     
-    const handleRemoveProduct = (productId) => {
-        dispatch(removeProduct(productId));
+    const handleRemoveProduct = (product) => {
+        dispatch(deleteProdutoServer(product));
     };
     
-    const handleUpdateProduct = (productId) => {
-        const updatedProduct = { id: productId, name: 'Updated Product', price: 99.99 };
-        dispatch(updateProduct(updatedProduct));
+    const handleUpdateProduct = (product) => {
+        const updatedProduct = { id: product.id, name: 'Updated Product', price: 99.99 };
+        dispatch(updateProdutoServer(updatedProduct));
     };
 
     return(
