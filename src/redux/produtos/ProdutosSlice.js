@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const productsAdapter = createEntityAdapter();
 
@@ -27,6 +28,12 @@ export const addProduct = createAsyncThunk(
     if (!response.ok) {
       throw new Error('Failed to add product');
     }
+    toast.success(product.nome + " adicionando com sucesso!", {
+        position: "bottom-left",
+        className: "text-spicy-mix bg-banana-mania shadow",
+        autoClose: 4000,
+      }
+    );
     const data = await response.json();
     return data;
   }
@@ -41,6 +48,12 @@ export const removeProduct = createAsyncThunk(
     if (!response.ok) {
       throw new Error('Failed to remove product');
     }
+    toast.warning(productId + " removido com sucesso!", {
+      position: "bottom-left",
+      className: "text-spicy-mix bg-banana-mania shadow",
+      autoClose: 4000,
+    }
+  );
     return { id: productId };
   }
 );
@@ -58,6 +71,11 @@ export const updateProduct = createAsyncThunk(
     if (!response.ok) {
       throw new Error('Failed to update product');
     }
+    toast.info(product.nome + " foi alterado ", {
+      position: "bottom-left",
+      className: "text-spicy-mix bg-banana-mania shadow",
+      autoClose: 4000,
+  });
     const data = await response.json();
     return data;
   }
