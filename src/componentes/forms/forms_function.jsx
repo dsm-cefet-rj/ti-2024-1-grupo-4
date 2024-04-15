@@ -3,9 +3,11 @@ import Setupconta from './setupconta_function';
 import Setupendereco from './setupendereco_function';
 import Setuppagamento from './setuppagamento_function';
 import Setuppedido from './setuppedido_function';
+import {useSelector, useDispatch} from 'react-redux';
 
 
 function forms_function() {
+    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const [step, setStep] = useState(0);
 
     const nextStep = () => {
@@ -14,7 +16,6 @@ function forms_function() {
     const prevStep = () => {
         setStep(step - 1);
     }
-
   
     switch (step) {
         case 0:

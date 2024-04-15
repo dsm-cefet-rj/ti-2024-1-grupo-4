@@ -3,6 +3,8 @@ import Form from '../componentes/forms/forms_function'
 import Header from '../componentes/header/Header'
 import Footer from '../componentes/footer/Footer'
 
+//currentUser?(setStep({step:step+1})):{}
+
 const Pedido = () => {
   return (
     <>
