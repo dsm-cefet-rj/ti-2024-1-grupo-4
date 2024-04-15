@@ -1,21 +1,13 @@
 import './cadastro.css';
 import React, { useEffect, useState } from 'react';
-import { addUserServer } from '../../redux/user/UserSlice';
-import { useDispatch } from 'react-redux';
+import { addUserServer, emailExistServer, fetchUser } from '../../redux/user/UserSlice';
+import { useDispatch, useSelector } from 'react-redux';
 //import {CadastroSchema} from './CadastroSchema';
 import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm} from "react-hook-form";
 
-const schema =  yup.object().shape(
-  {
-      email: yup.string().email().required().max(30),
-      nome: yup.string().required().max(50),
-      senha: yup.string().required().min(5).max(20),
-      repSenha: yup.string().oneOf([yup.ref("password"), null]).required()
 
-  }
-);
 function Register_page() {
 
   const[senha, setSenha] = useState('');
@@ -29,21 +21,42 @@ function Register_page() {
   const[error, setError] = useState(false);
   const[errorMSG, setErrorMSG] = useState('');
   const[admin, setAdm] = useState(false);
+  const userState = useSelector((rootReducer) => rootReducer.userSlice)|| {};
+  const users = userState.entities;
+  const status = userState.status;
 
 
   const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit
-  } = useForm({
-    resolver: yupResolver(schema)
+  useEffect(() => {
+    if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
+      dispatch(fetchUser())
+    } else if(status ==='failed'){
+        setTimeout(()=>dispatch(fetchUser()))
+    }
+  }, [status,dispatch]);
+
+
+
+  const handleSubmit = (e) => {
+    if (!email || !senha) {
+      e.preventDefault();
+      setErrorMSG("Preencha todos os campos");
+      setError(true);
+      return;
+    }
+    e.preventDefault();
+
+    dispatch(emailExistServer(email)).then((result) => {
+      if(result.payload){
+        setErrorMSG('Este e-mail já está cadastrado');
+        setError(true);
+      } else{
+        dispatch(addUserServer({nome, email, senha, admin}));
+        history('/');
+      }
     });
 
-    const[projetoOnLoad] = useState(
-      id? projetoFound ?? schema.cast({}): schema.cast({}));
-
-
-  const onSubmit = (data) => {console.log(data)}
+  }; 
 
   return (
     <>
@@ -56,23 +69,23 @@ function Register_page() {
 
           <h2>Cadastro</h2>
           {error == true && 
-              <div className="bg-brick-red text-banana-mania m-1 p-1 rounded-3 text-center">{errorMSG}</div>}
-          <form className="row g-3 col" onSubmit = {handleSubmit(onSubmit)}>
+              <div className="bg-brick-red text-banana-mania rounded-3 text-center">{errorMSG}</div>}
+          <form className="row g-3 col">
             <div className="col-md-6">
               <label className="form-label" >Email</label>
-              <input type="email" className="form-control" placeholder = "fulano@silva.com" defaultValue={email} ref = {register}></input>
+              <input type="email" className="form-control" placeholder = "fulano@silva.com" value={email} onChange={e => setEmail(e.target.value)}></input>
             </div>
             <div className="col-md-6">
               <label className="form-label" >Nome</label>
-              <input type="text" className="form-control" placeholder = "fulano da silva" defaultValue = {nome} ref = {register}></input>
+              <input type="text" className="form-control" placeholder = "fulano da silva" value={nome} onChange={e => setNome(e.target.value)}></input>
             </div>
             <div className="col-md-6">
               <label className="form-label">Senha</label>
-              <input type="password" className="form-control" defaultValue={senha} ref = {register}></input>
+              <input type="password" className="form-control" value={senha} onChange={e => setSenha(e.target.value)}></input>
             </div>
             <div className="col-md-6">
-              <label className="form-label">Senha</label>
-              <input type="password" className="form-control" defaultValue = {repSenha} ref = {register}></input>
+              <label className="form-label">Repita Senha</label>
+              <input type="password" className="form-control" value={repSenha} onChange={e => setRepSenha(e.target.value)}></input>
             </div>
           </form>
 
@@ -82,7 +95,7 @@ function Register_page() {
 
 
           <div className="col-12">
-              <button type="submit"  className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
+              <button type="button" onClick = {handleSubmit}  className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50">Cadastre-se</button>
             </div>
         </div>
       </div>
@@ -110,5 +123,14 @@ function Register_page() {
 
             
             
-          </form>*/
+          </form>
+          const schema =  yup.object().shape(
+  {
+      email: yup.string().email().required().max(30),
+      nome: yup.string().required().max(50),
+      senha: yup.string().required().min(5).max(20),
+      repSenha: yup.string().oneOf([yup.value("password"), null]).required()
+
+  }
+);*/
 export default Register_page;

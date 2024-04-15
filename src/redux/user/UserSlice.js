@@ -31,6 +31,12 @@ export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async
     return idUser;
 });
 
+export const emailExistServer = createAsyncThunk('users/emailExistServer', async (email, {getState}) => {
+  const response = await fetch (`${baseUrl}/users?email=${email}`);
+  const existe = await response.json();
+  return existe.length > 0;
+});
+
 export const addUserServer = createAsyncThunk('users/addUserServer', async (user, {getState}) => {
     return await httpPost(`${baseUrl}/users`, user);
 });
@@ -76,12 +82,16 @@ export const userSlice = createSlice({
             state.status = 'saved';
             state.currentUser = action.payload;
           })
+          .addCase(emailExistServer.fulfilled,(state,action) =>{
+            state.status = 'saved';
+            
+          })
 
         }
 
 });
 
-export const { logarUser, deslogarUser } = userSlice.actions
+export const { deslogarUser } = userSlice.actions
 export const {
     selectAll: selectAllUser,
     selectById: selectUserById,

@@ -13,7 +13,8 @@ const Header = () => {
    
 
     const handleDeslogar = () => {
-        dispatch(deslogarUser())
+        dispatch(deslogarUser());
+        history('/');
     };
     const handleLogin = () => {
         history('/login');

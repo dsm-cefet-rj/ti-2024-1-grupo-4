@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 
-function Dashboard(){
+function Dashboard() {
 
-    const handleRegister = () =>{
+    const handleRegister = () => {
         console.log('teste');
     }
 
-
-    return(
+    return (
         <>
             {/* Criar Produto */}
             <div className="modal fade" id="criarProduto" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="criarProdutoLabel" aria-hidden="true">
@@ -99,20 +98,20 @@ function Dashboard(){
 
             <div className="container">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
-                className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 " 
+                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
                 >Criar produto</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#atualizarProduto"
-                className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 " 
+                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
                 >Atualizar/Deletar produto</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#listarProduto"
-                className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 " 
+                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
                 >Listar produto</button>
-                <button type="button"  
-                className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 " 
+                <button type="button"
+                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
                 >Listar Cliente</button>
             </div>
         </>
-        
+
     );
 }
 

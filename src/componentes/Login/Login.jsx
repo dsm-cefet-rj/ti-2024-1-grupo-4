@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import { logarUser, fetchUser, selectUserById, fetchUserByEmail} from '../../redux/user/UserSlice';
+import { fetchUser, fetchUserByEmail} from '../../redux/user/UserSlice';
 import store from '../../redux/store'
 
 
@@ -13,10 +13,13 @@ function Login_page () {
   const userState = useSelector((rootReducer) => rootReducer.userSlice)|| {};
   const history = useNavigate();
   const status = userState.status;
+  const users = userState.entities;
   const erro = userState.error;
   const location = useLocation();
 
   const dispatch = useDispatch();
+  console.log(users)
+  
 
   useEffect(() => {
     if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
@@ -25,6 +28,7 @@ function Login_page () {
         setTimeout(()=>dispatch(fetchUser()))
     }
   }, [status,dispatch]);
+  
 
   const handleLogin = (e) => {
     e.preventDefault();
