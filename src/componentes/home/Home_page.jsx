@@ -3,7 +3,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import Header from '../header/Header.jsx';
 import Card from '../cards/Cards_home.jsx';
-import itemsLoja from '../data/itemsLoja.json';
+//import itemsLoja from '../data/itemsLoja.json';
 import CartItem from '../cartItem/cartItem.jsx';
 import Footer from '../footer/Footer.jsx';
 
@@ -14,25 +14,26 @@ import rootReducer from '../../redux/root-reducer.js';
 
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js'; //c
 import { selectProductsCount } from '../../redux/cart/cart.selector.js';
-import { fetchProduto } from '../../redux/produtos/ProdutosSlice.js';
+import { fetchProducts } from '../../redux/produtos/ProdutosSlice.js';
 
 
 function Home_Page() {
-    const [items, setItems] = useState([]);
+    /*const [items, setItems] = useState([]);
     useEffect(() => {
         setItems(itemsLoja);
-    }, []);
-    const dispatch = useDispatch();
-    const { products } = useSelector((rootReducer) => rootReducer.cartReducer);
+    }, []);*/
+    const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
 
-    const produtosLojaState = useSelector((rootReducer) => rootReducer.produtosReducer);
-    const statusLoja = produtosLojaState.status;
-    const errorLoja = produtosLojaState.error;
+    const dispatch = useDispatch();
+    const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
+    const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
+    const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
+
     useEffect(() => {
-        if(statusLoja === 'not_loaded') {
-            dispatch(fetchProduto());
+        if (status === 'idle') {
+          dispatch(fetchProducts());
         }
-    }, [statusLoja, dispatch]);
+    }, [dispatch, status]);
 
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
     const productsCount = useSelector(selectProductsCount);
@@ -78,7 +79,7 @@ function Home_Page() {
                         <section className="container-fluid m-0">
                             <h2 className="mb-4 text-left">Loja</h2>
                             <div className="row g-3">
-                                {items.map((item) => (
+                                {Object.values(produtosLoja).map((item) => (
                                     <div key="item.id" className="col-md-4 col-lg-3 d-flex">
                                         <Card {...item} />
                                     </div>

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, addProduct, removeProduct, updateProduct } from '../../redux/produtos/ProdutosSlice';
 
 
 function Dashboard(){
@@ -7,6 +9,30 @@ function Dashboard(){
         console.log('teste');
     }
 
+    const dispatch = useDispatch();
+    const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
+    const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
+    const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
+
+    useEffect(() => {
+        if (status === 'idle') {
+          dispatch(fetchProducts());
+        }
+    }, [dispatch, status]);
+
+    const handleAddProduct = () => {
+        const newProduct = { id: Date.now(), name: 'New Product', price: 0 };
+        dispatch(addProduct(newProduct));
+    };
+    
+    const handleRemoveProduct = (productId) => {
+        dispatch(removeProduct(productId));
+    };
+    
+    const handleUpdateProduct = (productId) => {
+        const updatedProduct = { id: productId, name: 'Updated Product', price: 99.99 };
+        dispatch(updateProduct(updatedProduct));
+    };
 
     return(
         <>
