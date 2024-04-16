@@ -52,9 +52,9 @@ function Login_page () {
   return (
     <>
         
-        <div className="container" onSubmit = {handleLogin}>
-          <div className="bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style={{ width: '30%', height: '500px' }}>
-            <div className="form col">
+        <div className="container d-flex" onSubmit = {handleLogin}>
+          <div className="bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg">
+            <div className="form col" style= {{width:"300px"}}>
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" className="bi bi-person-fill m-3" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
               </svg>

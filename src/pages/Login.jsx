@@ -6,7 +6,7 @@ import Login_page from '../componentes/Login/Login'
 function Login(){
     return(
         <>
-        <div className = 'd-block align-items-center min-vh-100 sticky'>
+        <div className='position-relative'>
             <Header/>
             <Login_page/>
             <Footer/>
