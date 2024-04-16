@@ -42,5 +42,60 @@
       "preco": "12.3",
       "descricao": "OlaTeste"
     }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "email": "emanu@nunu",
+      "senha": "nunu",
+      "nome": "emanuelle",
+      "admin": true
+    },
+    {
+      "id": "2",
+      "email": "jean@jeje",
+      "senha": "jeje",
+      "nome": "jean",
+      "admin": false
+    },
+    {
+      "id": "14dd",
+      "email": "emanuellegmnsa@gmail.com",
+      "senha": "wdwqdqw",
+      "nome": "Emanuelle Gomes Martins da Nóbrega Santa Ana",
+      "adm": false
+    },
+    {
+      "id": "0556",
+      "nome": "fdwedwqd",
+      "email": "emanuema@gmail.com",
+      "senha": "wqdqw",
+      "admin": false
+    },
+    {
+      "id": "f7d5",
+      "nome": "dwqdw",
+      "email": "emanumnsa@gmail.com",
+      "senha": "dwqwd",
+      "admin": false
+    }
+  ],
+  "endereco": [
+    {
+      "CEP": 22265457,
+      "logradouro": "rua tals",
+      "complemento": "apto tal tal",
+      "numero": 5,
+      "userKey": 2,
+      "id": "d250"
+    },
+    {
+      "CEP": 22265457,
+      "logradouro": "rua tals",
+      "complemento": "apto tal tal",
+      "numero": 5,
+      "userKey": 1,
+      "id": "70df"
+    }
   ]
 }
