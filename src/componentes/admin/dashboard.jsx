@@ -57,12 +57,6 @@ function Dashboard() {
             setErrors(newErrors);
         }
     };
-    
-    
-    const handleUpdateProduct = (product) => {
-        const updatedProduct = { id: product.id, name: 'Updated Product', price: 99.99 };
-        dispatch(updateProdutoServer(updatedProduct));
-    };
 
 
 
