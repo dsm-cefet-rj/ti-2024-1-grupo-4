@@ -40,8 +40,8 @@ $banana-mania:#FCE5C0;
   @include button-outline-variant(
     $neon-carrot-600,
     $color-hover: color-contrast($banana-mania-700),
-    $active-background: $tacao-700,
-    $active-border: $tacao-700,
+    $active-background: $brick-red-400,
+    $active-border: $neon-carrot-600,
     $active-color: color-contrast($tacao-700)
   );
   &:hover {
