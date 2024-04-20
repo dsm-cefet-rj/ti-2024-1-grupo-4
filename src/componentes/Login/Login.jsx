@@ -34,9 +34,6 @@ function Login_page () {
     e.preventDefault();
     dispatch(fetchUserByEmail({email,senha})).then((result) => {
       if(result.payload){
-        console.log("logado", result.payload);
-        console.log(location);
-        alert('Usuário Logado!');
         if(location.pathname === '/login'){
           history('/');
         }
