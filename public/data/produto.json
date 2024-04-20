@@ -2,10 +2,10 @@
   "produto": [
     {
       "id": "1",
-      "nome": "Marmelada de banana",
+      "nome": "Marmelada de banana Novo",
       "imgUrl": "/img/food.jpg",
-      "preco": 15.9,
-      "descricao": "Feita com banana e muita marmelada"
+      "preco": "16.9",
+      "descricao": "Feita com banana e muita marmelada Novo"
     },
     {
       "id": "2",
@@ -27,20 +27,6 @@
       "imgUrl": "/img/food.jpg",
       "preco": 1.9,
       "descricao": "Feita com Lorem Ipsum"
-    },
-    {
-      "id": "5",
-      "nome": "Aleluia Funcionou",
-      "imgUrl": "/img/food.jpg",
-      "preco": 6.9,
-      "descricao": "Feita com dedicação"
-    },
-    {
-      "id": "f6cb",
-      "nome": "Ola123",
-      "imgUrl": "/img/food.jpg",
-      "preco": "12.3",
-      "descricao": "OlaTeste"
     }
   ],
   "users": [

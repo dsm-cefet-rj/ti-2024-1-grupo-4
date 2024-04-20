@@ -1,6 +1,7 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, createEntityAdapter, current } from '@reduxjs/toolkit'
 import {httpDelete, httpGet, httpPut, httpPost} from '../../utils'
 import {baseUrl} from '../../baseUrl'
+import { toast } from "react-toastify";
 
 const userAdapter = createEntityAdapter();
 
@@ -51,6 +52,11 @@ export const userSlice = createSlice({
     reducers: {
         deslogarUser: (state) => {
             state.currentUser = null;
+            toast.info("Usuario Deslogado", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+          });
         }
     },
     extraReducers: (builder) => {
@@ -81,6 +87,15 @@ export const userSlice = createSlice({
           .addCase(fetchUserByEmail.fulfilled,(state,action) => {
             state.status = 'saved';
             state.currentUser = action.payload;
+            if(state.currentUser){
+              toast.info("Usuario Logado", {
+                position: "bottom-left",
+                className: "text-spicy-mix bg-banana-mania shadow",
+                autoClose: 2000,
+                })
+            }
+            
+            
           })
           .addCase(emailExistServer.fulfilled,(state,action) =>{
             state.status = 'saved';
