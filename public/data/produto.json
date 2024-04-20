@@ -83,5 +83,26 @@
       "userKey": 1,
       "id": "70df"
     }
+  ],
+
+ "pedido": [
+    {
+        "id": "5",
+        "produtos": [
+            {
+                "descricao":"Feita com banana e goiaba",
+                "id": 2,
+                "imgUrl":"/img/food.jpg",
+                "nome":"Bananada de Goiaba",
+                "preco": 17.9,
+                "quantity": "3"
+            }
+        ],
+        "clienteid": "1",
+        "status": "EM ANDAMENTO",
+        "progresso": "PedidoRegistrado",
+        "imgUrl": "eu passei a imagem pro jean",
+        "valortotal" : 420.69
+    }
   ]
 }
