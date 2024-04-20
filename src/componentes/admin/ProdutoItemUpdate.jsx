@@ -33,7 +33,7 @@ function ProdutoItemUpdate({ produto }) {
                         <h5 className="card-title">{produto.nome}</h5>
                         <div className="d-flex justify-content-between align-items-center gap-2">
                             <button class="btn btn-tacao" type="button" data-bs-toggle="collapse" data-bs-target={"#"+produto.id} aria-expanded="false" aria-controls={produto.id}>Mostrar mais</button>
-                            <button type="button" className="btn btn-brick-red" onClick={handleUpdate}>Atualizar</button>                  
+                            <button type="button" className="btn btn-verde-certo" onClick={handleUpdate}>Atualizar</button>                  
                         </div>
                     </div>
                     <div class="collapse" id={produto.id}>

@@ -7,6 +7,8 @@ import { productSchema } from './ProdutoSchema';
 
 import ProdutoItemDelete from './ProdutoItemDelete';
 import ProdutoItemUpdate from './ProdutoItemUpdate';
+import { fetchUser } from '../../redux/user/UserSlice';
+import ClienteListar from './ClienteListar';
 
 function Dashboard() {
 
@@ -16,12 +18,13 @@ function Dashboard() {
 
     const dispatch = useDispatch();
     const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
+    const users = useSelector((rootReducer) => rootReducer.userSlice.entities);
     const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
-
     useEffect(() => {
         if (status === 'not_loaded') {
           dispatch(fetchProduto());
+          dispatch(fetchUser());
         }
     }, [status, dispatch]);
 
@@ -89,7 +92,7 @@ function Dashboard() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-tacao" onClick={handleAddProduct}>Adicionar produto</button>
+                            <button type="button" className="btn btn-verde-certo" onClick={handleAddProduct}>Adicionar produto</button>
                         </div>
                     </div>
                 </div>
@@ -136,6 +139,27 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
+            {/*Listar Clientes*/}
+            <div className="modal fade" id="listarClientes" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="listarClientesLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="listarClientesLabel">Listar Clientes</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="col">
+                                {Object.values(users).map((item) => (
+                                    <ClienteListar user={item}/>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div className="container">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
@@ -147,9 +171,9 @@ function Dashboard() {
                 <button type="button" data-bs-toggle="modal" data-bs-target="#deletarProduto"
                     className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
                 >Deletar produto</button>
-                <button type="button"
+                <button type="button" data-bs-toggle="modal" data-bs-target="#listarClientes"
                     className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >deletar Cliente</button>
+                >Listar Cliente</button>
             </div>
         </>
 
