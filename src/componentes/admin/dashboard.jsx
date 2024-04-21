@@ -168,18 +168,20 @@ function Dashboard() {
             </div>
 
             <div className="container">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
-                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >Criar produto</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#atualizarProduto"
-                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >Atualizar produto</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#deletarProduto"
-                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >Deletar produto</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#listarClientes"
-                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >Listar Cliente</button>
+                <div className='row justify-content-center'>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
+                        className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                    >Criar produto</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#atualizarProduto"
+                        className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                    >Atualizar produto</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#deletarProduto"
+                        className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                    >Deletar produto</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#listarClientes"
+                        className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                    >Listar Cliente</button>    
+                </div>
             </div>
         </>
 
