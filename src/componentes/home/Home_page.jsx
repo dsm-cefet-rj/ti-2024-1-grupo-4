@@ -3,7 +3,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import Header from '../header/Header.jsx';
 import Card from '../cards/Cards_home.jsx';
-//import itemsLoja from '../data/itemsLoja.json';
 import CartItem from '../cartItem/cartItem.jsx';
 import Footer from '../footer/Footer.jsx';
 
@@ -18,10 +17,6 @@ import { fetchProduto } from '../../redux/produtos/ProdutosSlice.js';
 
 
 function Home_Page() {
-    /*const [items, setItems] = useState([]);
-    useEffect(() => {
-        setItems(itemsLoja);
-    }, []);*/
     const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
 
     const dispatch = useDispatch();
@@ -78,13 +73,15 @@ function Home_Page() {
                     <main>
                         <section className="container-fluid m-0">
                             <h2 className="mb-4 text-left">Loja</h2>
-                            <div className="row g-3">
-                                {Object.values(produtosLoja).map((item) => (
-                                    <div key="item.id" className="col-md-4 col-lg-3 d-flex">
-                                        <Card {...item} />
-                                    </div>
-                                ))}
-                            </div>
+                            { status === 'loading' ? <h1>Carregando...</h1> :
+                                <div className="row g-3">
+                                    {Object.values(produtosLoja).map((item) => (
+                                        <div key="item.id" className="col-md-4 col-lg-3 d-flex">
+                                            <Card {...item} />
+                                        </div>
+                                    ))}
+                                </div>
+                            }
                         </section>
                     </main>
                 </div>
