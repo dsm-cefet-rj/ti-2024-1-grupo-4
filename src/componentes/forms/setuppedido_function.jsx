@@ -46,13 +46,13 @@ function setuppedido_function({ prevStep, nextStep, step }) {
             <h3>Confirmação</h3>
             <hr />
 
-            <div class="d-flex flex-column flex-shrink-0 bg-white py-3 px-3" style={{ width: "500px" }}>
-              <div class="list-group list-group-flush border-bottom scrollarea" style={{ maxHeight: '300px', maxWidth: '500px', overflow: 'auto' }}>
+            <div className="d-flex flex-column flex-shrink-0 bg-white py-3 px-3" style={{ width: "500px" }}>
+              <div className="list-group list-group-flush border-bottom scrollarea" style={{ maxHeight: '300px', maxWidth: '500px', overflow: 'auto' }}>
 
                 {products.map(product =>
 
-                  <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-                    <div class="d-flex align-items-center justify-content-between ps-3 pe-3">
+                  <a href="#" className="list-group-item list-group-item-action py-3 lh-tight">
+                    <div className="d-flex align-items-center justify-content-between ps-3 pe-3">
 
 
                       <div className='grid gap-2 row-gap-2 mb-1'>

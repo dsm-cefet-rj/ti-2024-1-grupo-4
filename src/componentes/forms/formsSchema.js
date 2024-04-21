@@ -1,25 +1,19 @@
 import * as yup from 'yup';
-//import { ptForm } from 'yup-locale-pt';
+import { ptForm } from 'yup-locale-pt';
 
-//yup.setLocale(ptForm)
+yup.setLocale(ptForm)
 
 const erroNumMsg = "O campo deve ser um número.";
 const erro = "O campo ";
 
 export let formsSchema = yup.object().shape({
-    user: yup.string().required('O usuário é obrigatório.'),
-    password: yup.string().required('A senha é obrigatória.').min(8),
-    cep: yup.number().min(8).required('O cep é obrigatório.'),
-    logradouro: yup.string().required('Logradouro é obrigatório.'),
-    numEnd: yup.number().required('O número de Endereço é obrigatório'),
-    compEnd: yup.string().typeError('precisa').required('O complemento é obrigatório.'),
-    bairro: yup.string().notRequired().max(30),
-    T_pagamento: yup.string().required(),
-    num_cartao: yup.number().required(),
-    nome_cartao: yup.string().max(30),
-    datacartao: yup.number().required(),
-    codcartao: yup.number().required(),
+    cep: yup.number().min(8).required('O cep é obrigatório').typeError(erroNumMsg),
+    logradouro: yup.string().required('Logradouro é obrigatório'),
+    numEnd: yup.number().required('O número de Endereço é obrigatório').typeError(erroNumMsg),
+    CompEnd: yup.string().typeError('precisa').required('O complemento é obrigatório'),
+    bairro: yup.string().notRequired().max(30).required("O bairro é obrigatório"),
     instrucao_pedido: yup.string().notRequired(),
+
 })
 
 
