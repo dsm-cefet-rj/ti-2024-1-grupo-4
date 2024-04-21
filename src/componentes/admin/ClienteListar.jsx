@@ -32,8 +32,11 @@ function ClienteListar({ user }) {
                     </div>
                     <div class="collapse" id={user.id}>
                         <div class="card card-body">
-                        <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={handleChange} placeholder="Nome do Produto" disabled></input>
-                            <input type="text" className="form-control" id="preco" name="preco" value={formData.email} onChange={handleChange} step="any" min="0.1" placeholder="Preço do Produto" disabled></input>
+                            <label htmlFor="nome">Nome do Cliente</label>
+                            <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={handleChange} placeholder="Nome do Cliente" disabled></input>
+
+                            <label htmlFor="email">E-mail do Cliente</label>
+                            <input type="text" className="form-control" id="email" name="email" value={formData.email} onChange={handleChange} step="any" min="0.1" placeholder="E-mail do Cliente" disabled></input>
                         </div>
                     </div>
                 </div>

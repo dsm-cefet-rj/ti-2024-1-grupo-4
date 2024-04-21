@@ -34,7 +34,8 @@ const Header = () => {
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <div className="collapse navbar-collapse flex-row-reverse d-flex navbar-nav" id="navbarNavAltMarkup">
+                    <div className="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
+                        <div className="navbar-nav">
                             {isAdmin ? 
                             <>   
                             
@@ -74,6 +75,7 @@ const Header = () => {
                                 <span className='m-2'>Pedidos</span>
                             </Link>
                         </div>
+                    </div>
                 </nav>
             </header>
         </>

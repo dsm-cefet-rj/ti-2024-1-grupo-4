@@ -18,8 +18,6 @@ function Login_page () {
   const location = useLocation();
 
   const dispatch = useDispatch();
-  console.log(users)
-  
 
   useEffect(() => {
     if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
@@ -50,7 +48,7 @@ function Login_page () {
     <>
         
         <div className="container d-flex" onSubmit = {handleLogin}>
-          <div className="bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg">
+          <div className="bg-banana-mania text-center m-5 p-3 rounded-4 shadow">
             <div className="form col" style= {{width:"300px"}}>
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" className="bi bi-person-fill m-3" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
@@ -70,7 +68,7 @@ function Login_page () {
                   <input type="password" className="form-control" id="inputPassword2" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} required></input>
                 </div>
                 <div className=" div-botao col">
-                  <button type="submit" className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow">Login</button>
+                  <button type="submit" className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow-sm">Login</button>
                 </div>
                 <hr />
                 <div>
