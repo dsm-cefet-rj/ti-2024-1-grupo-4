@@ -14,7 +14,7 @@ import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 
 
 
-function setuppedido_function({ prevStep, nextStep, step }) {
+function setupConfirmacao({ prevStep, nextStep, step }) {
   const { register, handleSubmit, setValue } = useForm();
   const [parametroNumCartao, setParametroNumCartao] = useState('');
   const [toggleValue, setToggleValue] = useState(false);
@@ -41,7 +41,7 @@ function setuppedido_function({ prevStep, nextStep, step }) {
         <Progressbar step={step} />
       </div>
       <div className='container-fluid'>
-        <form className='form' onSubmit={handleSubmit(onSubmit)}> {/* HOOKFORM ONSUBMIT */}
+        <form className='form' onSubmit={handleSubmit(onSubmit)}> {/* HOOKFORM ONSUBMIT  ver questoes de ter onsubmit na classname do form e no click do botao*/}
           <div className="align-items-center row bg-banana-mania text-center m-5 ">
             <h3>Confirmação</h3>
             <hr />
@@ -89,4 +89,4 @@ function setuppedido_function({ prevStep, nextStep, step }) {
   )
 }
 
-export default setuppedido_function
+export default setupConfirmacao

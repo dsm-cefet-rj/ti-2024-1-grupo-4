@@ -7,6 +7,7 @@ import Login from '../../componentes/Login/Login'
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import {useSelector, useDispatch} from 'react-redux';
 //import { formsSchema } from './formsSchema';
 
 
@@ -19,9 +20,8 @@ const setupcontaSchema=yup.object().shape({
   teste: yup.string().required().min(3),
 })
 
-
 function setupconta_function({prevStep,nextStep,step}) {
-
+  const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
   const { register, handleSubmit,formState:{errors}} = useForm(
     {validationSchema:setupcontaSchema }
   );
@@ -54,7 +54,7 @@ function setupconta_function({prevStep,nextStep,step}) {
 
   //id="floatingInput"
   //id="floatingPassword" 
-  //{currentUser ? (nextStep()) :({}) }
+  
 
   return (
     <>
@@ -64,6 +64,7 @@ function setupconta_function({prevStep,nextStep,step}) {
         />
       </div>
       <Login/>
+      {currentUser ? (nextStep()) :null }
    
     </>
   )
