@@ -9,18 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { formsSchema } from './formsSchema';
 
-/*
-const schema = yup
-  .object({
-    cep: yup.number().required(),
-    logradouro: yup.string().required(),
-    numEnd: yup.number().positive().required(),
-    bairro: yup.string().required(),
-    CompEnd: yup.string().required(),
-    instrucao_pedido: yup.string().required(),
-  })
-  .required()
- */
+
 
 function setupendereco_function({ prevStep, nextStep, step }) {
 

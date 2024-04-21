@@ -25,7 +25,6 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
     //a
     console.log(data)
     setToggleBotao(true);
-    console.log(toggle_botao)
   }
   const handleSubmitStep = data => {
     nextStep();
@@ -81,7 +80,7 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
 
               <div className='col-md-12'>
                 <div className="form-floating mb-3">
-                  <input type="text" className="form-control"{...register("nomePagamento")} name='nomePagamento'  placeholder=''/>
+                  <input type="text" className="form-control"{...register("nomePagamento")} name='nomePagamento' />
                   <label htmlFor="floatingInput">Nome</label>
                   <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.nomePagamento?.message}</p>
                 </div>
@@ -89,7 +88,7 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
               </div>
               <div className='col-md-12'>
                 <div className="form-floating mb-3">
-                  <input type="text" className="form-control"{...register("cpfPagamento")} name='cpfPagamento'  placeholder=''/>
+                  <input type="text" className="form-control"{...register("cpfPagamento")} name='cpfPagamento' />
                   <label htmlFor="floatingInput">CPF</label>
                   <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.cpfPagamento?.message}</p>
                 </div>
@@ -115,7 +114,7 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
               <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.num_cartao?.message}</p>
               <div className='col-md-12'>
                 <div className="form-floating mb-3">
-                  <input type="email" className="form-control"{...register("nome_cartao")} name='nome_cartao' placeholder="name@example.com" />
+                  <input type="text" className="form-control"{...register("nome_cartao")} name='nome_cartao' placeholder="name@example.com" />
                   <label htmlFor="floatingInput">Nome do Titular</label>
                   <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.nome_cartao?.message}</p>
                 </div>
