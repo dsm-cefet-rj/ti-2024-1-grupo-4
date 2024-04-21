@@ -75,6 +75,21 @@ function forms_function() {
                 </>
 
             );
+            case 4:
+            return (
+                <>
+                    <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-banana-mania shadow-lg rounded ' style={{ top: '100px' }}>
+                        <div className='mb-10'>
+                            <Setuppedido
+                                step={step}
+                                nextStep={nextStep}
+                                prevStep={prevStep}
+                            />
+                        </div>
+                    </div>
+                </>
+
+            );
     }
 }
 
