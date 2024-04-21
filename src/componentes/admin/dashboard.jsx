@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProduto, addProdutoServer, deleteProdutoServer, updateProdutoServer } from '../../redux/produtos/ProdutosSlice';
+import { toast } from 'react-toastify';
 
 import * as Yup from 'yup';
 import { productSchema } from './ProdutoSchema';
@@ -55,7 +56,12 @@ function Dashboard() {
         } catch (error) {
             const newErrors = {};
             error.inner.forEach(err => {
-            newErrors[err.path] = err.message;
+                newErrors[err.path] = err.message;
+                toast.error("ERROR no campo "+err.path+": "+err.message, {
+                    position: "bottom-left",
+                    className: "text-spicy-mix bg-banana-mania shadow",
+                    autoClose: 4000,
+                });
             });
             setErrors(newErrors);
         }
