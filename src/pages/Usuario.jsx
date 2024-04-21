@@ -6,7 +6,7 @@ import Perfil_Usuario from '../componentes/perfil_usuario/perfil_usuario'
 function Usuario(){
     return(
         <>
-        <div className='position-relative'>
+        <div className='d-block align-items-center min-vh-100 sticky'>
             <Header/>
             <Perfil_Usuario/>
             <Footer/>
