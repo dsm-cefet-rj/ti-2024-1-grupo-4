@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button'
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import Header from '../header/Header.jsx';
-import Card from '../cards/Cards_home.jsx';
-import Footer from '../footer/Footer.jsx';
 
 import { fetchProduto } from '../../redux/produtos/ProdutosSlice.js';
 
 import { useDispatch } from 'react-redux';
-import React from 'react';
 
 
 function Lista(ped) {

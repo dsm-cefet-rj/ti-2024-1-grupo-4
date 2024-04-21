@@ -6,6 +6,7 @@ import Login from './pages/Login.jsx'
 import Registro from './pages/Cadastro.jsx'
 import Pedido from './pages/Pedido.jsx'
 import Admin_Page from './pages/Admin_Page.jsx'
+import HistoricoPedido from './pages/HistoricoPedido.jsx'
 
 
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path:"admin",
     element:<Admin_Page/>,
+  },
+  {
+    path: "Historico",
+    element: <HistoricoPedido/>,
   }
 ]);
 

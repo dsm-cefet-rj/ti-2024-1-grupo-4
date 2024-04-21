@@ -1,14 +1,15 @@
 import React from 'react'
-import Header from '../componentes/header/Header'
-import Footer from '../componentes/footer/Footer'
-import Lista from '../componentes/Lista/setuplista_function'
+import Header from '../componentes/header/Header.jsx'
+import Footer from '../componentes/footer/Footer.jsx'
+import Lista from '../componentes/Lista/setuplista_function.jsx'
 
 import { useSelector, useDispatch } from 'react-redux';
-import rootReducer from '../../redux/root-reducer.js';
+import rootReducer from '../redux/root-reducer.js';
 
 
-const pedidosRegistrados = useSelector((rootReducer) => rootReducer.pedidoSlice.entities);
+
 const HistoricoPedido = () => {
+    const pedidosRegistrados = useSelector((rootReducer) => rootReducer.pedidoSlice.entities);
     return (
       <>
         <div className='d-block align-items-center min-vh-100  sticky'>

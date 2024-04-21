@@ -3,7 +3,7 @@ import {httpDelete, httpGet, httpPut, httpPost} from '../../utils'
 import {baseUrl} from '../../baseUrl';
 import { toast } from 'react-toastify';
 
-const ListaPedidoAdapter = createEntityAdapter();
+const ListaAdapter = createEntityAdapter();
 
 const initialState = ListaAdapter.getInitialState({
     status: 'not_loaded',
@@ -97,5 +97,5 @@ export const {
       selectAll: selectAllPedido,
       selectById: selectPedidoById,
       selectIds: selectPedidosIds
-} = ListaPedidoAdapter.getSelectors(state => state.pedidos)
+} = ListaAdapter.getSelectors(state => state.pedidos)
 export default pedidoSlice.reducer
