@@ -25,14 +25,6 @@ function Login_page () {
     
   });
 
-  useEffect(() => {
-    if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
-      dispatch(fetchUser())
-    } else if(status ==='failed'){
-        setTimeout(()=>dispatch(fetchUser()))
-    }
-  }, [status,dispatch]);
-
   const { register, handleSubmit, formState: {errors} } = useForm({
     resolver: yupResolver(schema),
   })

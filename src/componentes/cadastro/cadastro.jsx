@@ -1,6 +1,6 @@
 import './cadastro.css';
 import React, { useEffect, useState } from 'react';
-import { addUserServer, emailExistServer, fetchUser, fetchUserByEmail, userSlice } from '../../redux/user/UserSlice';
+import { addUserServer, emailExistServer, fetchUser, fetchUserByEmail} from '../../redux/user/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 //import {CadastroSchema} from './CadastroSchema';
 import * as yup from 'yup'
@@ -13,18 +13,10 @@ import { addEnderecoServer } from '../../redux/endereco/enderecoSlice';
 
 function Register_page() {
 
-  const[error, setError] = useState(false);
-  const[errorMSG, setErrorMSG] = useState('');
-  const[end, setEnd] = useState(false);
-  const userState = useSelector((rootReducer) => rootReducer.userSlice)|| {};
+
+  const status = useSelector((rootReducer) => rootReducer.userSlice.status)|| {};
   const {currentUser} = useSelector((rootReducer) => rootReducer.userSlice)|| {};
-  const users = userState.entities;
-  const status = userState.status;
-  const userKey = currentUser?.id || null;
   
-
-
-
   const dispatch = useDispatch();
   const history = useNavigate();
   
@@ -130,7 +122,7 @@ function Register_page() {
             </div>
             <div className="col-md-6">
               <label className="form-label" >Nome</label>
-              <input type="text" {...register("email")} className="form-control"></input>
+              <input type="text" {...register("nome")} className="form-control"></input>
               {errors && errors.nome && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.nome.message}</p>}
               
             </div>
