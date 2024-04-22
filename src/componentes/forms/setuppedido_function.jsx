@@ -13,12 +13,17 @@ import CartItem from '../cartItem/cartminimal';
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 
 
+import {setInfo,resetInfo} from "../../redux/compra/compraSlice"
+
+
+
 
 function setuppedido_function({ prevStep, nextStep, step }) {
   const { register, handleSubmit, setValue } = useForm();
   const [parametroNumCartao, setParametroNumCartao] = useState('');
   const [toggleValue, setToggleValue] = useState(false);
   const [value, setData] = useState("");
+  const dispatch = useDispatch();
 
   //carrinho
   const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
@@ -28,6 +33,8 @@ function setuppedido_function({ prevStep, nextStep, step }) {
   const onSubmit = data => {
     //a
     console.log(data)
+    dispatch(setInfo(data))
+    setToggleBotao(true);
   }
   const handleSubmitStep = data => {
     nextStep();
