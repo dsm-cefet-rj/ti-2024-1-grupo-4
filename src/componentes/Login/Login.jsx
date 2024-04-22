@@ -2,14 +2,14 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import { fetchUser, fetchUserByEmail} from '../../redux/user/UserSlice';
-import { store } from '../../redux/store'
+
+import * as yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
+import {useForm} from "react-hook-form";
+import { toast } from 'react-toastify';
 
 
 function Login_page () {
-  const[email, setEmail] = useState('');
-  const[senha, setSenha] = useState('');
-  const[errorMSG, setErrorMSG] = useState('');
-  const[error,setError] = useState(false);
   const userState = useSelector((rootReducer) => rootReducer.userSlice)|| {};
   const history = useNavigate();
   const status = userState.status;
@@ -19,6 +19,12 @@ function Login_page () {
 
   const dispatch = useDispatch();
 
+  const schema = yup.object().shape({
+    email: yup.string().email('Precisa ser um e-mail').required('Preencha o e-mail'),
+    senha: yup.string().required('Preencha a senha'),
+    
+  });
+
   useEffect(() => {
     if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
       dispatch(fetchUser())
@@ -26,28 +32,40 @@ function Login_page () {
         setTimeout(()=>dispatch(fetchUser()))
     }
   }, [status,dispatch]);
+
+  const { register, handleSubmit, formState: {errors} } = useForm({
+    resolver: yupResolver(schema),
+  })
+
   
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const onSubmit= (e) => {
+    const {email, senha} = e;
     dispatch(fetchUserByEmail({email,senha})).then((result) => {
       if(result.payload){
         if(location.pathname === '/login'){
           history('/');
         }
       }else{
-        setError(true);
-        setErrorMSG("E-mail ou senha inválidos!")
+        toast.error("Usuário ou senha inválidos", {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
+        });
       }
     }).catch((err) => {
-      console.log("Error fetching user: ", err)
+      toast.error("Erro: " + err, {
+        position: "bottom-left",
+        className: "text-spicy-mix bg-banana-mania shadow",
+        autoClose: 2000,
+      });
     });
   }; 
 
   return (
     <>
         
-        <div className="container d-flex" onSubmit = {handleLogin}>
+        <div className="container d-flex">
           <div className="bg-banana-mania text-center m-5 p-3 rounded-4 shadow">
             <div className="form col" style= {{width:"300px"}}>
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" className="bi bi-person-fill m-3" viewBox="0 0 16 16">
@@ -55,17 +73,17 @@ function Login_page () {
               </svg>
 
               <h1>Login</h1>
-              {error == true &&
-                <div className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errorMSG}</div>
-              }
-              <form className="g-3 col">
+              <form className="g-3 col" onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
                   <label className="form-label">Email</label>
-                  <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="fulano@silva.com" value={email} onChange={e => setEmail(e.target.value)} required></input>
+                  <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="fulano@silva.com" {...register("email")}></input>
+                  {errors && errors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.email.message}</p>}
+
                 </div>
                 <div className="col">
                   <label className="senha">Senha</label>
-                  <input type="password" className="form-control" id="inputPassword2" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} required></input>
+                  <input type="password" className="form-control" id="inputPassword2" placeholder="Senha" {...register("senha")}></input>
+                  {errors && errors.senha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.senha.message}</p>}
                 </div>
                 <div className=" div-botao col">
                   <button type="submit" className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow-sm">Login</button>

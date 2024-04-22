@@ -52,12 +52,6 @@ function Register_page() {
       resolver: yupResolver(schema),
     })
 
-
-  const handleEndereco = () => {
-    setEnd(!end);
-
-    
-  }
   const onSubmit = (data) => {
     const { email, nome, senha, repSenha, CEP, logradouro, numero, complemento } = data;
   
@@ -130,13 +124,13 @@ function Register_page() {
           <h2 className='p-0 m-0'>Cadastro</h2>
           <form className="row g-3 col" onSubmit={handleSubmit(onSubmit)}>
             <div className="col-md-6">
-              <label className="form-label" >Email</label>
-              <input type="email" {...register("email")} className="form-control"></input>
+              <label className="form-label" htmlFor='email'>Email</label>
+              <input type="email" id = 'email' {...register("email")} className="form-control"></input>
               {errors && errors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.email.message}</p>}
             </div>
             <div className="col-md-6">
               <label className="form-label" >Nome</label>
-              <input type="text" {...register("nome")} className="form-control"></input>
+              <input type="text" {...register("email")} className="form-control"></input>
               {errors && errors.nome && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.nome.message}</p>}
               
             </div>

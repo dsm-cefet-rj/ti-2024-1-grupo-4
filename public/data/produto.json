@@ -32,9 +32,9 @@
   "users": [
     {
       "id": "1",
-      "email": "emanu@nunu",
-      "senha": "nunu",
-      "nome": "emanuelle",
+      "nome": "emanu",
+      "email": "emanu@emanu",
+      "senha": "oioioi",
       "admin": true
     },
     {
@@ -46,9 +46,9 @@
     },
     {
       "id": "0556",
-      "nome": "fdwedwqd",
-      "email": "emanuema@gmail.com",
-      "senha": "wqdqw",
+      "nome": "Jean",
+      "email": "jean@junior2",
+      "senha": "teste3teste",
       "admin": false
     },
     {
