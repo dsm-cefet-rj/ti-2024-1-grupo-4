@@ -3,8 +3,6 @@ import { ptForm } from 'yup-locale-pt';
 
 yup.setLocale(ptForm)
 
-const erroNumMsg = "O campo deve ser um número.";
-const erro = "O campo ";
 
 export let formsSchema = yup.object().shape({
     
@@ -12,7 +10,7 @@ export let formsSchema = yup.object().shape({
     cpfPagamento: yup.string().typeError('O cpf erro  é obrigatório.').when(
         'T_pagamento', {
         is:(value)=> value === 'pix',
-        then: (schema) => schema.min(8).required('O cpf é obrigatório.'),
+        then: (schema) => schema.length(11).required('O cpf é obrigatório.'),
         otherwise: (schema) => schema.notRequired(),
     }),
     nomePagamento: yup.string().typeError().when(

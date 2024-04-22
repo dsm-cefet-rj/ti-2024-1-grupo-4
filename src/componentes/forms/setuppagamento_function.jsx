@@ -8,9 +8,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect } from 'react';
 
 import { formsSchema } from './formspagamentoSchema';
+import {useDispatch} from "react-redux";
+import {setInfo,resetInfo} from "../../redux/compra/compraSlice"
 
-//import {useSelector,useDispatch} from "react-redux";
 //import{nextStep, prevStep,setT_pagamento, setCodcartao, setDatacartao, setNome_cartao, setNum_cartao} from '../../redux/compra/compraSlice';
+
 
 function setuppagamento_function({ prevStep, nextStep, step }) {
   const { register, handleSubmit, setValue,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)});
@@ -20,10 +22,12 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
 
   const [toggle_botao, setToggleBotao] = useState(false);
 
+  const dispatch = useDispatch();
+
 
   const onSubmit = data => {
     //a
-    console.log(data)
+    dispatch(setInfo([data,step-1]))
     setToggleBotao(true);
   }
   const handleSubmitStep = data => {
@@ -31,7 +35,6 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
     handleSubmit(data)();
   }
 
-  //ele ta pegando o valor do botoa pressionado como ON ou OFF
 
   const handleNumeroCartao = (value) => {
     switch (value) {

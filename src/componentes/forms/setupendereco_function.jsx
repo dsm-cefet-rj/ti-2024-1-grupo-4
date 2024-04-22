@@ -6,17 +6,25 @@ import { useState, useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
+
 import { formsSchema } from './formsSchema';
+
+
+import {useDispatch} from "react-redux";
+import {setInfo,resetInfo} from "../../redux/compra/compraSlice"
 
 
 
 function setupendereco_function({ prevStep, nextStep, step }) {
 
+  
     const [toggle_botao, setToggleBotao] = useState(false);
+    
     const { register, handleSubmit,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)});
+    const dispatch = useDispatch();
 
     const onSubmit = data => {
+        dispatch(setInfo([data,step-1]))
         console.log(data)
         setToggleBotao(true);
       }
