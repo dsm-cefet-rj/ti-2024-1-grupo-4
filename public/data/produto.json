@@ -101,7 +101,7 @@
         "clienteid": "1",
         "status": "EM ANDAMENTO",
         "progresso": "PedidoRegistrado",
-        "imgUrl": "eu passei a imagem pro jean",
+        "imgUrl": "/img/food.jpg",
         "valortotal" : 420.69
     }
   ]
