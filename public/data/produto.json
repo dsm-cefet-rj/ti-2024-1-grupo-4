@@ -223,5 +223,26 @@
       "complemento": "oieee",
       "userKey": "6494"
     }
+  ],
+
+ "pedido": [
+    {
+        "id": "5",
+        "produtos": [
+            {
+                "descricao":"Feita com banana e goiaba",
+                "id": 2,
+                "imgUrl":"/img/food.jpg",
+                "nome":"Bananada de Goiaba",
+                "preco": 17.9,
+                "quantity": "3"
+            }
+        ],
+        "clienteid": "1",
+        "status": "EM ANDAMENTO",
+        "progresso": "PedidoRegistrado",
+        "imgUrl": "/img/food.jpg",
+        "valortotal" : 420.69
+    }
   ]
 }
