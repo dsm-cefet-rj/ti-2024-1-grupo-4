@@ -2,31 +2,20 @@ import{createSlice} from "@reduxjs/toolkit";
 const initialState = {
     informacao: [],
 }
-function setUserReducer(state,input){
-    return {
-       state,user:input
-    } ;
-}
-function setBairroReducer(state,input){
-    return state.bairro = input;
-}
 
-function nextStepReducer(state){
-   return state.step+=1;
+function setInfoReducer(state,input){
+    return state.infomacao = input;
 }
-function prevStepReducer(state){
-    return state.step-=1;
+function resetInfoReducer(state){
+    return state.infomacao = [];
 }
 
 const compraSlice = createSlice({
     name:'compra',
     initialState,
     reducers:{
-        setInfo
-
-        setUser:(state,action)=>{
-            setUserReducer(state.user,action.payload)
-        },
+        setInfo:(state,action) => setInfoReducer(state,action.payload),
+        reseInfo:(state)=> resetInfoReducer(state),
        
     },
 });
@@ -35,6 +24,7 @@ export const {
 
 } = compraSlice.actions;
 export default compraSlice.reducer;
+
 /*
 const [step, setStep] = useState(0);
 const [user, setUser] = useState('');

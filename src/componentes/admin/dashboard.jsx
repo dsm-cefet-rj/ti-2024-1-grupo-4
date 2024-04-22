@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProduto, addProdutoServer, deleteProdutoServer, updateProdutoServer } from '../../redux/produtos/ProdutosSlice';
+import { toast } from 'react-toastify';
 
 import * as Yup from 'yup';
 import { productSchema } from './ProdutoSchema';
@@ -55,7 +56,12 @@ function Dashboard() {
         } catch (error) {
             const newErrors = {};
             error.inner.forEach(err => {
-            newErrors[err.path] = err.message;
+                newErrors[err.path] = err.message;
+                toast.error("ERROR no campo "+err.path+": "+err.message, {
+                    position: "bottom-left",
+                    className: "text-spicy-mix bg-banana-mania shadow",
+                    autoClose: 4000,
+                });
             });
             setErrors(newErrors);
         }
@@ -162,18 +168,20 @@ function Dashboard() {
             </div>
 
             <div className="container">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
-                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >Criar produto</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#atualizarProduto"
-                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >Atualizar produto</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#deletarProduto"
-                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >Deletar produto</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#listarClientes"
-                    className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-                >Listar Cliente</button>
+                <div className='row justify-content-center'>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
+                        className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                    >Criar produto</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#atualizarProduto"
+                        className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                    >Atualizar produto</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#deletarProduto"
+                        className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                    >Deletar produto</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#listarClientes"
+                        className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                    >Listar Cliente</button>    
+                </div>
             </div>
         </>
 

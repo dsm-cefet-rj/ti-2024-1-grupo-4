@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import { fetchUser, fetchUserByEmail} from '../../redux/user/UserSlice';
-import store from '../../redux/store'
+import { store } from '../../redux/store'
 
 
 function Login_page () {

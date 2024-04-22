@@ -1,11 +1,35 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateProdutoServer } from '../../redux/produtos/ProdutosSlice';
+import { productSchema } from './ProdutoSchema';
+import { toast } from 'react-toastify';
 
 function ProdutoItemUpdate({ produto }) {
     const dispatch = useDispatch();
-    const handleUpdate = () => {
-        dispatch(updateProdutoServer(formData))
+    const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
+    const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
+    const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
+
+    const [errors, setErrors] = useState({});
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            await productSchema.validate(formData, { abortEarly: false });
+            dispatch(updateProdutoServer(formData));
+            setErrors({});
+        } catch (error) {
+            const newErrors = {};
+            error.inner.forEach(err => {
+                newErrors[err.path] = err.message;
+                toast.error("ERROR no campo "+err.path+": "+err.message, {
+                    position: "bottom-left",
+                    className: "text-spicy-mix bg-banana-mania shadow",
+                    autoClose: 4000,
+                });
+            })
+            setErrors(newErrors);
+        }
     }
 
 
