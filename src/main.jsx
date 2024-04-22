@@ -8,10 +8,11 @@ import Pedido from './pages/Pedido.jsx'
 import Admin_Page from './pages/Admin_Page.jsx'
 
 import HistoricoPedido from './pages/HistoricoPedido.jsx'
-import Usuario from './pages/Usuario.jsx'
+
+
 
 import {Provider} from "react-redux";
-import {store , persistor} from "./redux/store";
+import store from "./redux/store";
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
@@ -20,7 +21,6 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-
 
 const router = createBrowserRouter([
   {
@@ -42,13 +42,17 @@ const router = createBrowserRouter([
   {
     path:"admin",
     element:<Admin_Page/>,
+  },
+  {
+    path: "historico",
+    element: <HistoricoPedido/>,
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
     <React.StrictMode>
-      <Provider store = {store} persistor={persistor}>
+      <Provider store = {store}>
         <ToastContainer limit={4} newestOnTop={true}/>
         <RouterProvider router={router} />
       </Provider>
