@@ -1,23 +1,32 @@
 import './cadastro.css';
 import React, { useEffect, useState } from 'react';
-import { addUserServer, emailExistServer, fetchUser } from '../../redux/user/UserSlice';
+import { addUserServer, emailExistServer, fetchUser, fetchUserByEmail, userSlice } from '../../redux/user/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 //import {CadastroSchema} from './CadastroSchema';
 import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm} from "react-hook-form";
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { addEnderecoServer } from '../../redux/endereco/enderecoSlice';
 
 
 function Register_page() {
 
   const[error, setError] = useState(false);
   const[errorMSG, setErrorMSG] = useState('');
+  const[end, setEnd] = useState(false);
   const userState = useSelector((rootReducer) => rootReducer.userSlice)|| {};
+  const {currentUser} = useSelector((rootReducer) => rootReducer.userSlice)|| {};
   const users = userState.entities;
   const status = userState.status;
+  const userKey = currentUser?.id || null;
+  
+
 
 
   const dispatch = useDispatch();
+  const history = useNavigate();
   
   useEffect(() => {
     if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
@@ -27,47 +36,88 @@ function Register_page() {
     }
   }, [status,dispatch]);
 
-  const schema =  yup.object().shape(
-    {
-        email: yup.string().email().max(30).required(),
-        nome: yup.string().max(50).required(),
-        senha: yup.string().min(5).max(20).required(),
-        repSenha: yup.string().oneOf([yup.ref('senha'),null]).required(),
-        endereco: yup.object().when({
-          is: (endereco) => Object.values(endereco).some(Boolean),
-          then: yup.object().shape({
-            logradouro: yup.string().required('Street is required'),
-            CEP: yup.string().required('City is required'),
-            complemento: yup.string().required('Postal code is required'),
-            numero: yup.string().required('Country is required'),
-          }),
-          otherwise: yup.object().shape({
-            logradouro: yup.string(),
-            CEP: yup.string(),
-            complemento: yup.string(),
-            numero: yup.string(),
-          }),
-        }),
-        
-    }).required()
+  const schema = yup.object().shape({
+    email: yup.string().email('Precisa ser um e-mail').required(),
+    nome: yup.string().max(50).required(),
+    senha: yup.string().min(5, 'A quantidade de caracteres da senha é de no mínimo 5').required(),
+    repSenha: yup.string().oneOf([yup.ref('senha'), null], 'As senhas devem ser iguais').required('Este campo deve ser preenchido'),
+    CEP: yup.string().required('CEP é obrigatório'),
+    logradouro: yup.string().required('Logradouro é obrigatório'),
+    complemento: yup.string(),
+    numero: yup.number().positive().required('Número é obrigatório')
+    
+  });
 
-    const { register, handleSubmit, errors } = useForm({
+    const { register, handleSubmit, formState: {errors} } = useForm({
       resolver: yupResolver(schema),
     })
 
-  const onSubmit = (data) => {
-    const {email, nome, senha, repSenha} = data;
-    dispatch(emailExistServer(email)).then((result) => {
-      if(result.payload){
-        setErrorMSG('Este e-mail já está cadastrado');
-        setError(true);
-      } else{
-        dispatch(addUserServer({nome, email, senha, admin:false}));
-        history('/');
-      }
-    });
 
+  const handleEndereco = () => {
+    setEnd(!end);
+
+    
+  }
+  const onSubmit = (data) => {
+    const { email, nome, senha, repSenha, CEP, logradouro, numero, complemento } = data;
+  
+    dispatch(emailExistServer(email)).then((result) => {
+      if (result.payload) {
+        toast.warning("Este e-mail já está cadastrado", {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
+        });
+      } else {
+        dispatch(addUserServer({ nome, email, senha, admin: false })).then((userAdded) => {
+          if (userAdded.payload) {
+            dispatch(fetchUserByEmail({ email, senha })).then((user) => {
+              if (user.payload) {
+                const userKey = user.payload.id;
+                dispatch(addEnderecoServer({ CEP, logradouro, numero, complemento, userKey })).then((addressAdded) => {
+                  if (addressAdded.payload) {
+                    toast.info("Usuário e endereço cadastrados com sucesso", {
+                      position: "bottom-left",
+                      className: "text-spicy-mix bg-banana-mania shadow",
+                      autoClose: 2000,
+                    });
+                    history('/');
+                  } else {
+                    toast.error("Erro ao adicionar endereço", {
+                      position: "bottom-left",
+                      className: "text-spicy-mix bg-banana-mania shadow",
+                      autoClose: 2000,
+                    });
+                  }
+                });
+              }
+            }).catch((error) => {
+              console.log("Error fetching user: ", error);
+              toast.error("Erro ao buscar usuário", {
+                position: "bottom-left",
+                className: "text-spicy-mix bg-banana-mania shadow",
+                autoClose: 2000,
+              });
+            });
+          } else {
+            toast.error("Erro ao adicionar usuário", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+            });
+          }
+        });
+      }
+    }).catch((error) => {
+      console.log("Error:", error);
+      toast.error("Erro ao cadastrar usuário", {
+        position: "bottom-left",
+        className: "text-spicy-mix bg-banana-mania shadow",
+        autoClose: 2000,
+      });
+    });
   };
+  
 
   return (
     <>
@@ -77,40 +127,42 @@ function Register_page() {
 
       <div className="bg-banana-mania row classe-login bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style= {{width:"900px"}} >
 
-
           <h2 className='p-0 m-0'>Cadastro</h2>
-          {error == true && 
-              <div className="bg-brick-red text-banana-mania rounded-3 text-center">{errorMSG}</div>}
           <form className="row g-3 col" onSubmit={handleSubmit(onSubmit)}>
             <div className="col-md-6">
               <label className="form-label" >Email</label>
               <input type="email" {...register("email")} className="form-control"></input>
+              {errors && errors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.email.message}</p>}
             </div>
             <div className="col-md-6">
               <label className="form-label" >Nome</label>
               <input type="text" {...register("nome")} className="form-control"></input>
+              {errors && errors.nome && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.nome.message}</p>}
               
             </div>
             <div className="col-md-6">
               <label className="form-label">Senha</label>
               <input type="password" {...register("senha")} className="form-control"></input>
+              {errors && errors.senha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.senha.message}</p>}
             </div>
             <div className="col-md-6">
               <label className="form-label">Repita Senha</label>
               <input type="password" {...register("repSenha")} className="form-control"></input>
+              {errors && errors.repSenha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.repSenha.message}</p>}
             </div>
             
           
-
-          
-          <h2>Endereço (Opcional)</h2>
-          <div className="col-md-4">
+              
+              <h2>Endereço</h2>
+            <div className="col-md-4">
               <label className="form-label">CEP</label>
               <input type="text" className="form-control" {...register("CEP")}></input>
+              {errors.endereco?.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.CEP.message}</p>}
             </div>
             <div className="col-8">
               <label className="form-label">Logradouro</label>
               <input type="text" className="form-control" placeholder="Ex: Rua, Avenida, etc." {...register("logradouro")}></input>
+              {errors.endereco?.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.logradouro.message}</p>}
             </div>
             <div className="col-6">
               <label className="form-label">Complemento</label>
@@ -119,7 +171,10 @@ function Register_page() {
             <div className="col-6">
               <label className="form-label">Número</label>
               <input type="number" className="form-control" {...register("numero")}></input>
+              {errors.endereco?.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.endereco.numero.message}</p>}
             </div>
+
+          
 
 
           <div className="col-12">
@@ -131,35 +186,4 @@ function Register_page() {
     </>
   );
 }
-/*          <form className="row g-3 col" onSubmit = {handleSubmit(onSubmit)}>
-
-            <div className="col-md-4">
-              <label className="form-label">CEP</label>
-              <input type="text" className="form-control" value = {CEP} onChange={e => setCEP(e.target.value)}></input>
-            </div>
-            <div className="col-8">
-              <label className="form-label">Logradouro</label>
-              <input type="text" className="form-control" placeholder="Ex: Rua, Avenida, etc." value = {logradouro} onChange={e => setLogradouro(e.target.value)}></input>
-            </div>
-            <div className="col-6">
-              <label className="form-label">Complemento</label>
-              <input type="text" className="form-control" placeholder="Ex: Apto, Bloco, etc." value = {complemento} onChange={e => setComplemento(e.target.value)}></input>
-            </div>
-            <div className="col-6">
-              <label className="form-label">Número</label>
-              <input type="number" className="form-control" value = {numero} onChange={e => setNumero(Math.max(0,e.target.value))}></input>
-            </div>
-
-            
-            
-          </form>
-          const schema =  yup.object().shape(
-  {
-      email: yup.string().email().required().max(30),
-      nome: yup.string().required().max(50),
-      senha: yup.string().required().min(5).max(20),
-      repSenha: yup.string().oneOf([yup.value("password"), null]).required()
-
-  }
-);*/
 export default Register_page;

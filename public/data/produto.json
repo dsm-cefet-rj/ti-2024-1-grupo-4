@@ -45,13 +45,6 @@
       "admin": false
     },
     {
-      "id": "14dd",
-      "email": "emanuellegmnsa@gmail.com",
-      "senha": "wdwqdqw",
-      "nome": "Emanuelle Gomes Martins da Nóbrega Santa Ana",
-      "adm": false
-    },
-    {
       "id": "0556",
       "nome": "fdwedwqd",
       "email": "emanuema@gmail.com",
@@ -71,6 +64,76 @@
       "email": "jean@jeja",
       "senha": "gsdrgedrg",
       "admin": false
+    },
+    {
+      "id": "eb3b",
+      "nome": "gergre",
+      "email": "fsdgvsd@gerer",
+      "senha": "llllll",
+      "admin": false
+    },
+    {
+      "id": "dd7a",
+      "nome": "gergre",
+      "email": "fsdgvsd@gererk",
+      "senha": "llllll",
+      "admin": false
+    },
+    {
+      "id": "e378",
+      "nome": "gregr",
+      "email": "dqwdqwdwq@geegre",
+      "senha": "llllll",
+      "admin": false
+    },
+    {
+      "id": "21a1",
+      "nome": "hrhhtrh",
+      "email": "hrhtr@thtrhtr",
+      "senha": "opopop",
+      "admin": false
+    },
+    {
+      "id": "60de",
+      "nome": "gegerr",
+      "email": "vsdvds@gergre",
+      "senha": "eeeeee",
+      "admin": false
+    },
+    {
+      "id": "25b5",
+      "nome": "umeee",
+      "email": "bfdbfd@fwfwe",
+      "senha": "oioioi",
+      "admin": false
+    },
+    {
+      "id": "9a16",
+      "nome": "emanu",
+      "email": "oii@oii",
+      "senha": "oioioi",
+      "admin": false
+    },
+    {
+      "id": "1ccd",
+      "nome": "ggegr",
+      "email": "gnfgfgf@fger",
+      "senha": "yyyyyy",
+      "admin": false
+    },
+    {
+      "id": "842a",
+      "nome": "hrthtr",
+      "email": "fghfr@hgrthgr",
+      "senha": "yyyyyy",
+      "admin": false
+    },
+    {
+      "id": "6494",
+      "nome": "emanuu",
+      "email": "porfavorvai@pfvrrr",
+      "senha": "123456",
+      "admin": false
     }
   ],
   "endereco": [
@@ -89,6 +152,97 @@
       "numero": 5,
       "userKey": 1,
       "id": "70df"
+    },
+    {
+      "id": "737f",
+      "CEP": "ege",
+      "logradouro": "gerger",
+      "numero": 234123,
+      "complemento": "",
+      "userKey": "5d89"
+    },
+    {
+      "id": "6971",
+      "CEP": "jtydy",
+      "logradouro": "tutdyi",
+      "numero": 5,
+      "complemento": "",
+      "userKey": "eb3b"
+    },
+    {
+      "id": "16f7",
+      "CEP": "4322342",
+      "logradouro": "ghrthr",
+      "numero": 543,
+      "complemento": "",
+      "userKey": null
+    },
+    {
+      "id": "59af",
+      "CEP": "23132",
+      "logradouro": "testeteste",
+      "numero": 555,
+      "complemento": ""
+    },
+    {
+      "id": "5d17",
+      "CEP": "34534",
+      "logradouro": "teste2",
+      "numero": 55,
+      "complemento": "",
+      "userKey": null
+    },
+    {
+      "id": "d120",
+      "CEP": "21341",
+      "logradouro": "oiiii",
+      "numero": 312,
+      "complemento": "",
+      "userKey": null
+    },
+    {
+      "id": "82ec",
+      "CEP": "hrstsh",
+      "logradouro": "teste3",
+      "numero": 54455,
+      "complemento": ""
+    },
+    {
+      "id": "f295",
+      "CEP": "34534",
+      "logradouro": "teste4",
+      "numero": 52233,
+      "complemento": "",
+      "userKey": "842a"
+    },
+    {
+      "id": "3866",
+      "CEP": "031939",
+      "logradouro": "teste5ultimoespero",
+      "numero": 23,
+      "complemento": "oieee",
+      "userKey": "6494"
+    }
+  ],
+
+ "pedido": [
+    {
+        "id": "5",
+        "produtos": [
+            {
+                "descricao":"Feita com banana e goiaba",
+                "id": 2,
+                "imgUrl":"/img/food.jpg",
+                "nome":"Bananada de Goiaba",
+                "preco": 17.9,
+                "quantity": "3"
+            }
+        ],
+        "clienteid": "1",
+        "status": "EM ANDAMENTO",
+        "progresso": "PedidoRegistrado",
+        "imgUrl": "/img/food.jpg",
+        "valortotal" : 420.69
     }
   ]
 }

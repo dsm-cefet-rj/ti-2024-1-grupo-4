@@ -39,7 +39,8 @@ export const emailExistServer = createAsyncThunk('users/emailExistServer', async
 });
 
 export const addUserServer = createAsyncThunk('users/addUserServer', async (user, {getState}) => {
-    return await httpPost(`${baseUrl}/users`, user);
+    await httpPost(`${baseUrl}/users`, user);
+    return user
 });
 
 export const updateUserServer = createAsyncThunk('users/updateUsersServer', async (user, {getState}) => {
