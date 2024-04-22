@@ -42,6 +42,10 @@ const router = createBrowserRouter([
   {
     path:"admin",
     element:<Admin_Page/>,
+  },
+  {
+    path: "historico",
+    element: <HistoricoPedido/>,
   }
 ]);
 
