@@ -5,14 +5,22 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
-import { fetchProduto } from '../../redux/produtos/ProdutosSlice.js';
+import { fetchPedido } from '../../redux/listapedidos/ListaPedidoSlice.js';
 
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 function Lista(ped) {
 
     const dispatch = useDispatch();
+    const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
+
+    useEffect(() => {
+        if (status === 'not_loaded') {
+          dispatch(fetchPedido());
+        }
+    }, [status, dispatch]);
+
     const handleUpdate = () => {
         dispatch(updatePedidoServer(formData))
     }
@@ -28,7 +36,7 @@ function Lista(ped) {
     return (
         <>
             
-                <div class="card mb-3" style="max-width: 540px;">
+                <div class="card mb-3" style= {{maxWidth: '540px;'}}>
                     <div class="row g-0">
                       <div class="col-md-4">
                          <img src="..." class="img-fluid rounded-start" alt="..."></img>

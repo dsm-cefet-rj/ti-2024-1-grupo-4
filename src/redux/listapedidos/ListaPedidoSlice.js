@@ -3,9 +3,9 @@ import {httpDelete, httpGet, httpPut, httpPost} from '../../utils'
 import {baseUrl} from '../../baseUrl';
 import { toast } from 'react-toastify';
 
-const ListaAdapter = createEntityAdapter();
+const pedidoAdapter = createEntityAdapter();
 
-const initialState = ListaAdapter.getInitialState({
+const initialState = pedidoAdapter.getInitialState({
     status: 'not_loaded',
     error:null
 });
@@ -74,19 +74,19 @@ export const pedidoSlice = createSlice({
           })
           .addCase(fetchPedido.fulfilled, (state, action) => {
             state.status = 'loaded';
-            PedidoAdapter.setAll(state, action.payload);
+            pedidoAdapter.setAll(state, action.payload);
           })
           .addCase(deletePedidoServer.fulfilled, (state,action) => {
             state.status = 'deleted';
-            PedidoAdapter.removeOne(state, action.payload);
+            pedidoAdapter.removeOne(state, action.payload);
           })
           .addCase(addPedidoServer.fulfilled, (state,action) => {
             state.status = 'saved';
-            PedidoAdapter.addOne(state,action.payload);
+            pedidoAdapter.addOne(state,action.payload);
           })
           .addCase(updatePedidoServer.fulfilled, (state, action) => {
             state.status = 'saved';
-            PedidoAdapter.upsertOne(state, action.payload);
+            pedidoAdapter.upsertOne(state, action.payload);
           })
 
         }
@@ -97,5 +97,5 @@ export const {
       selectAll: selectAllPedido,
       selectById: selectPedidoById,
       selectIds: selectPedidosIds
-} = ListaAdapter.getSelectors(state => state.pedidos)
+} = pedidoAdapter.getSelectors(state => state.pedidos)
 export default pedidoSlice.reducer

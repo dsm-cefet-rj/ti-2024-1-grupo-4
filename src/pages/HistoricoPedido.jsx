@@ -4,12 +4,24 @@ import Footer from '../componentes/footer/Footer.jsx'
 import Lista from '../componentes/Lista/setuplista_function.jsx'
 
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchPedido } from '../redux/listapedidos/ListaPedidoSlice.js';
 import rootReducer from '../redux/root-reducer.js';
+import { useEffect } from 'react';
 
 
 
 const HistoricoPedido = () => {
     const pedidosRegistrados = useSelector((rootReducer) => rootReducer.pedidoSlice.entities);
+    const dispatch = useDispatch();
+    const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
+    const error = useSelector((rootReducer) => rootReducer.pedidoSlice.error);
+
+    useEffect(() => {
+        if (status === 'not_loaded') {
+          dispatch(fetchPedido());
+        }
+    }, [status, dispatch]);
+
     return (
       <>
         <div className='d-block align-items-center min-vh-100  sticky'>
