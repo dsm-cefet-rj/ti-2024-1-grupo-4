@@ -176,13 +176,13 @@ function setuppagamento_function({ prevStep, nextStep, step,value,handleSetData 
 
   }, [value, setValue]);
 
+  
   useEffect(() => {
     if (toggle_botao) {
         
       nextStep();
     }
   }, [toggle_botao, nextStep]);
-
 
   return (
     <>

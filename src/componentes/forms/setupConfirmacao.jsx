@@ -4,15 +4,14 @@ import './botao.scss'
 import qrcode from '../../assets/img/qr-code-plus.png'
 
 
-import {setInfo,resetInfo,addPedidoServer} from "../../redux/compra/compraSlice"
+import {setInfo,resetInfo,addPedidoServer,setStatus} from "../../redux/compra/compraSlice"
 import {useSelector,useDispatch} from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate,Navigate } from 'react-router-dom';
 import { useEffect } from 'react'
 
 
 
 function setupConfirmacao({step,value}) {
-    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const status = useSelector((rootReducer) => rootReducer.compraSlice.status);
     const pedido = useSelector((rootReducer) => rootReducer.compraSlice.informacao);
     const { user } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
@@ -23,13 +22,19 @@ function setupConfirmacao({step,value}) {
     console.log(status)
     console.log(value)
     const dispatch = useDispatch();
-    //delay simulacao
-    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+
    
     const handlePedidoAdd =()=>{
         dispatch(addPedidoServer({user, endereco, products, pagamento}));
     }
- 
+    const handleSetStatusLoading = ()=>{
+        dispatch(setStatus('loading'));
+    }
+    const handleSetStatusSaved = ()=>
+    {
+        dispatch(setStatus('saved'));
+    }
 
     const renderStatus = (value)=>{
 
@@ -42,6 +47,11 @@ function setupConfirmacao({step,value}) {
                             <path fill='#5a964c' d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
                         </svg>
                         <h3 className='text-verde-certo pt-3'>Pagamento Realizado</h3>
+
+                        <Link to="/">
+                                <span className="btn btn-brick-red w-100 mb-2 pb-2" onClick={setStatus('not_loaded')}>Fechar</span>
+                            </Link>
+                        
                     </>
                 )
             } else if (status == 'loading') {
@@ -79,6 +89,9 @@ function setupConfirmacao({step,value}) {
                             <path fill='#5a964c' d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
                         </svg>
                         <h3 className='text-verde-certo pt-3'>Pagamento Realizado</h3>
+                        <Link to="/">
+                                <span className="btn btn-brick-red w-100 mb-2 pb-2">Fechar</span>
+                            </Link>
                     </>
                )
             }else if(status == 'loading'){
@@ -115,25 +128,29 @@ function setupConfirmacao({step,value}) {
             }
         }  
     }
-    
 
-    useEffect(() => {
-        if (status == 'saved') {
-            renderStatus(value)
-        }
-      }, [status, renderStatus]);
+   useEffect(() => {
+      
+            
+          renderStatus(value);
+       
+      }, [status,setStatus]);
 
   return (
       <>
           <div className='position-relative pt-2'>
               <Progressbar step={step} />
           </div>
+          {console.log(status + " status antes do handlepedido")}
          
           <div className='container-fluid'>
               <div className="align-items-center row bg-banana-mania text-center m-5 pb-5">
                 {renderStatus(value)}
               </div>
+             
               <button className='btn bg-brick-red-300' onClick={handlePedidoAdd}>SIMULACAO</button>
+              <button className='btn bg-brick-red-300' onClick={()=>handleSetStatusLoading()}>SIMULACAO-LOADING</button>
+              <button className='btn bg-brick-red-300' onClick={()=>handleSetStatusSaved()}>SIMULACAO-SAVED</button>
           </div>
       </>
   )

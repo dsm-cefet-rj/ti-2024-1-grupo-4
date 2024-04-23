@@ -91,7 +91,8 @@ function setuppedido_function({ prevStep, nextStep, step }) {
                   <button className='btn btn-padrao bg-tacao-300' onClick={() => prevStep()}>Anterior</button>
                 </div>
                 <div className='col-md-6 pb-3'>
-                  <button type='submit' className='btn btn-padrao bg-tacao-300' >Confirmar</button>
+                  <button type='submit' className={`btn btn-padrao bg-tacao-300  ${(products.length == 0)?'disabled':''}`}  >Confirmar</button>
+                 
                 </div>
 
               </div>

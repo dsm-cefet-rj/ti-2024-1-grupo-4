@@ -92,10 +92,8 @@ function setupendereco_function({ prevStep, nextStep, step }) {
                         <br />
                         <div className='form-container'>
                             <div className='row align-items-center'>
-                                <div className='col-md-6 pb-3'>
-                                    <button className='btn btn-padrao bg-tacao-300' onClick={() => prevStep()}>Anterior</button>
-                                </div>
-                                <div className='col-md-6 pb-3'>
+                               
+                                <div className='col-md-12 pb-3 align-items-center'>
                                     <button type="submit" className='btn btn-padrao bg-tacao-300'>Próximo</button>
                                 </div>
 
@@ -113,4 +111,9 @@ export default setupendereco_function
 {/**
 
 onClick={()=>handleSubmitStep()}
+
+
+ <div className='col-md-6 pb-3'>
+                                    <button className='btn btn-padrao bg-tacao-300' onClick={() => prevStep()}>Anterior</button>
+                                </div>
 */}
