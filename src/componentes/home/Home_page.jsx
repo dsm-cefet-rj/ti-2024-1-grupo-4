@@ -69,7 +69,7 @@ function Home_Page() {
             <div>
                 
                 {/* Loja */}
-                <div className="bg-banana-mania py-4 px-2">
+                <div className="bg-banana-mania py-4 px-2 min-vh-100">
                     <main>
                         <section className="container-fluid m-0">
                             <h2 className="mb-4 text-left">Loja</h2>

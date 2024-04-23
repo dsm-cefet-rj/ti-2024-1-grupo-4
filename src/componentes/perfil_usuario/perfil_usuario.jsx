@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addEnderecoServer, fetchEnderecoByUser, updateEnderecoServer } from '../../redux/endereco/enderecoSlice';
 import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm} from "react-hook-form";
-import { updateUserServer, fetchUser, fetchUserByEmail, deleteUserServer } from '../../redux/user/UserSlice';
-
+import { updateUserServer, fetchUserByEmail, deleteUserServer } from '../../redux/user/UserSlice';
 import { toast } from 'react-toastify';
-import rootReducer from '../../redux/root-reducer';
 import Endereco_Card from './Endereco_Card';
 import { useNavigate } from 'react-router-dom';
 
