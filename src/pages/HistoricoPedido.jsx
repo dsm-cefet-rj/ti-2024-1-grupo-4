@@ -31,7 +31,7 @@ const HistoricoPedido = () => {
           <div className="row g-3">
                 {pedidos? Object.values(pedidos).map((Pedido) => (
                         
-                    <div key="Pedido.id" className="col-md-4 col-lg-3 d-flex">
+                    <div key="Pedido.id" className="col-md-4 col-lg-3 d-flex m-3">
                         <Lista {...Pedido} />
                     </div>
                 )):<span>Você não tem pedidos</span>}
