@@ -25,7 +25,7 @@ function Home_Page() {
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
 
     useEffect(() => {
-        if (status === 'not_loaded') {
+        if (status === 'not_loaded'  || status === 'saved' || status === 'deleted') {
           dispatch(fetchProduto());
         }
     }, [status, dispatch]);
