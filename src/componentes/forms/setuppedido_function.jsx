@@ -22,7 +22,9 @@ function setuppedido_function({ prevStep, nextStep, step }) {
   const { register, handleSubmit, setValue } = useForm();
   const [parametroNumCartao, setParametroNumCartao] = useState('');
   const [toggleValue, setToggleValue] = useState(false);
+  const [toggle_botao, setToggleBotao] = useState(false);
   const [value, setData] = useState("");
+  const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
   const dispatch = useDispatch();
 
   //carrinho
@@ -33,14 +35,27 @@ function setuppedido_function({ prevStep, nextStep, step }) {
   const onSubmit = data => {
     //a
     console.log(data)
-    dispatch(setInfo(data))
+    dispatch(setInfo([data,step-1]))
     setToggleBotao(true);
   }
-  const handleSubmitStep = data => {
-    nextStep();
-    handleSubmit(data)();
-  }
+  const handleSubmitStepConfirmacao = ()=>{
 
+    nextStep();
+    onSubmit(products);
+  }
+  useEffect(() => {
+    if (toggle_botao) {
+        
+      nextStep();
+    }
+  }, [toggle_botao, nextStep]);
+    //useEffect para passagem da informação do usuario 
+    useEffect(()=>{
+
+      if(step == 4){
+        dispatch(setInfo([currentUser,step-1]))
+      }
+    },[step,setInfo]);
 
   return (
     <>
@@ -48,7 +63,7 @@ function setuppedido_function({ prevStep, nextStep, step }) {
         <Progressbar step={step} />
       </div>
       <div className='container-fluid'>
-        <form className='form' onSubmit={handleSubmit(onSubmit)}> {/* HOOKFORM ONSUBMIT */}
+        <form className='form'onSubmit={handleSubmit(handleSubmitStepConfirmacao)} > {/* HOOKFORM ONSUBMIT */}
           <div className="align-items-center row bg-banana-mania text-center m-5 ">
             <h3>Confirmação</h3>
             <hr />
@@ -84,7 +99,7 @@ function setuppedido_function({ prevStep, nextStep, step }) {
                   <button className='btn btn-padrao bg-tacao-300' onClick={() => prevStep()}>Anterior</button>
                 </div>
                 <div className='col-md-6 pb-3'>
-                  <button className='btn btn-padrao bg-tacao-300' onClick={() => handleSubmitStep(onSubmit)}>Confirmar</button>
+                  <button type='submit' className='btn btn-padrao bg-tacao-300' >Confirmar</button>
                 </div>
 
               </div>
@@ -97,3 +112,12 @@ function setuppedido_function({ prevStep, nextStep, step }) {
 }
 
 export default setuppedido_function
+
+
+
+
+{/**
+
+onSubmit={handleSubmit(onSubmit)}
+
+*/}

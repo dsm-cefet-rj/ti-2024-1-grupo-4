@@ -19,6 +19,8 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
   const [parametroNumCartao, setParametroNumCartao] = useState('');
   const [toggleValue, setToggleValue] = useState(false);
   const [value, setData] = useState("");
+ 
+
 
   const [toggle_botao, setToggleBotao] = useState(false);
 
@@ -180,6 +182,7 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
       nextStep();
     }
   }, [toggle_botao, nextStep]);
+
 
   return (
     <>

@@ -3,11 +3,11 @@ import Setupconta from './setupconta_function';
 import Setupendereco from './setupendereco_function';
 import Setuppagamento from './setuppagamento_function';
 import Setuppedido from './setuppedido_function';
-import {useSelector, useDispatch} from 'react-redux';
+import SetupConfirmacao from './setupConfirmacao';
+
 
 
 function forms_function() {
-    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const [step, setStep] = useState(0);
 
     const nextStep = () => {
@@ -81,6 +81,21 @@ function forms_function() {
                     <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-banana-mania shadow-lg rounded ' style={{ top: '100px' }}>
                         <div className='mb-10'>
                             <Setuppedido
+                                step={step}
+                                nextStep={nextStep}
+                                prevStep={prevStep}
+                            />
+                        </div>
+                    </div>
+                </>
+
+            );
+            case 5:
+            return (
+                <>
+                    <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-banana-mania shadow-lg rounded ' style={{ top: '100px' }}>
+                        <div className='mb-10'>
+                            <SetupConfirmacao
                                 step={step}
                                 nextStep={nextStep}
                                 prevStep={prevStep}

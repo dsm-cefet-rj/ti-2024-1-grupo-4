@@ -9,6 +9,7 @@ const middleware = (getDefaultMiddleware) => getDefaultMiddleware().concat(logge
 const persistConfig = {
     key: 'root',
     storage,
+    blacklist:['compraSlice']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
