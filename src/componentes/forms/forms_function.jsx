@@ -16,6 +16,12 @@ function forms_function() {
     const prevStep = () => {
         setStep(step - 1);
     }
+    const [value, setData] = useState("");
+
+    function handleSetData(e){
+        setData(e);
+    }
+
   
     switch (step) {
         case 0:
@@ -53,6 +59,8 @@ function forms_function() {
                         <div className='mb-10'>
                             <Setuppagamento
                                 step={step}
+                                value={value}
+                                handleSetData={handleSetData}
                                 nextStep={nextStep}
                                 prevStep={prevStep}
                             />
@@ -75,27 +83,13 @@ function forms_function() {
                 </>
 
             );
-            case 4:
-            return (
-                <>
-                    <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-banana-mania shadow-lg rounded ' style={{ top: '100px' }}>
-                        <div className='mb-10'>
-                            <Setuppedido
-                                step={step}
-                                nextStep={nextStep}
-                                prevStep={prevStep}
-                            />
-                        </div>
-                    </div>
-                </>
-
-            );
-            case 5:
+        case 4:
             return (
                 <>
                     <div className='d-block align-items-center rounded container-sm  col-sm-4 bg-banana-mania shadow-lg rounded ' style={{ top: '100px' }}>
                         <div className='mb-10'>
                             <SetupConfirmacao
+                                value={value}
                                 step={step}
                                 nextStep={nextStep}
                                 prevStep={prevStep}

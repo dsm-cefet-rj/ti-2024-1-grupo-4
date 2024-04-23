@@ -14,11 +14,11 @@ import {setInfo,resetInfo} from "../../redux/compra/compraSlice"
 //import{nextStep, prevStep,setT_pagamento, setCodcartao, setDatacartao, setNome_cartao, setNum_cartao} from '../../redux/compra/compraSlice';
 
 
-function setuppagamento_function({ prevStep, nextStep, step }) {
+function setuppagamento_function({ prevStep, nextStep, step,value,handleSetData }) {
   const { register, handleSubmit, setValue,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)});
   const [parametroNumCartao, setParametroNumCartao] = useState('');
   const [toggleValue, setToggleValue] = useState(false);
-  const [value, setData] = useState("");
+  //const [value, setData] = useState("");
  
 
 
@@ -155,15 +155,15 @@ function setuppagamento_function({ prevStep, nextStep, step }) {
   const handleToggle = (e) => {
     switch (e) {
       case '1':
-        setData("cartao_credito");
+        handleSetData("cartao_credito");//
         setToggleValue(e);
         break;
       case '2':
-        setData("cartao_debito");
+        handleSetData("cartao_debito");//
         setToggleValue(e);
         break;
       case '3':
-        setData("pix");
+        handleSetData("pix");//
         setToggleValue(e);
         break;
     }
