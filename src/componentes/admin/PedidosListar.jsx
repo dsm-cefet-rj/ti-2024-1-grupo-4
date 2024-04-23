@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { deletePedidoServer } from '../../redux/listapedidos/ListaPedidoSlice';
+import { deletePedidoServer, updatePedidoServer } from '../../redux/listapedidos/ListaPedidoSlice';
 
 
 function PedidosListar({ pedido }) {
@@ -28,7 +28,14 @@ function PedidosListar({ pedido }) {
     };
 
     const updateStatus = (value) => {
-        
+        const id = pedido.id;
+        const user = pedido.user;
+        const endereco = pedido.endereco;
+        const products = pedido.products;
+        const pagamento = pedido.pagamento;
+        const valorTotal = pedido.valorTotal;
+        const status = value
+        dispatch(updatePedidoServer({id, user, endereco, products, pagamento, valorTotal, status}))
     }
     
 
@@ -46,12 +53,11 @@ function PedidosListar({ pedido }) {
                     </div>
                     <div class="collapse" id={pedido.id}>
                         <div class="card card-body">
-                            <span></span>
                             <span>Nome do Cliente: {pedido.user.nome} </span>
                             <span>Valor total: {pedido.valorTotal}</span>
                             <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Status</label>
-                            <select class="form-select" id="inputGroupSelect01" value = {pedido.status} onChange={updateStatus(value)}>
+                            <select class="form-select" id="inputGroupSelect01">
                                 <option selected value = {pedido.status} onChange={(e) => updateStatus(value)}>{pedido.status}</option>
                                 <option value="Avaliando Pedido">Avaliando Pedido</option>
                                 <option value="Pedido Aceito">Pedido Aceito</option>
