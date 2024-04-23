@@ -9,35 +9,34 @@ import { fetchPedidosByUser } from '../redux/listapedidos/ListaPedidoSlice.js';
 
 
 const HistoricoPedido = () => {
-  const { pedidos } = useSelector((rootReducer) => rootReducer.pedidoSlice);
-  const dispatch = useDispatch();
-  const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
-  const error = useSelector((rootReducer) => rootReducer.pedidoSlice.error);
-  const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
+    const {pedidos} = useSelector((rootReducer)=> rootReducer.pedidoSlice);
+    const dispatch = useDispatch();
+    const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
+    const error = useSelector((rootReducer) => rootReducer.pedidoSlice.error);
+    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
 
-  useEffect(() => {
-    if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
-      dispatch(fetchPedidosByUser(currentUser.id));
-    }
-  }, [status, dispatch]);
+    useEffect(() => {
+        if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
+          dispatch(fetchPedidosByUser(currentUser.id));
+        }
+    }, [status, dispatch]);
 
-  return (
-    <>
-      <div className='d-block align-items-center min-vh-100  sticky'>
-        <Header />
-        <div className="row g-3">
-          {pedidos ? Object.values(pedidos).map((Pedido) => (
-
-            <div key="Pedido.id" className="col-md-4 col-lg-3 d-flex m-3">
-              <Lista {...Pedido} />
-            </div>
-          )) : <span>Você não tem pedidos</span>}
+    return (
+      <>
+        <div className=''>
+          <Header/>
+          <div className="d-flex flex-column">
+                {pedidos? Object.values(pedidos).map((Pedido) => (
+                        
+                    <div key="Pedido.id" className="card m-2 p-2 bg-banana-mania">
+                        <Lista {...Pedido} />
+                    </div>
+                )):<span>Você não tem pedidos</span>}
+          </div>
+          <Footer/>
         </div>
-        <div className='mt-5'></div>
-        <Footer />
-      </div>
-    </>
-  )
-}
-
-export default HistoricoPedido
+      </>
+    )
+  }
+  
+  export default HistoricoPedido
