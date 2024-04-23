@@ -26,7 +26,7 @@ function setupConfirmacao({step,value}) {
 
    
     const handlePedidoAdd =()=>{
-        dispatch(addPedidoServer({user, endereco, products, pagamento}));
+        dispatch(addPedidoServer({user, endereco, products, pagamento, status:'Avaliando pedido'}));
     }
     const handleSetStatusLoading = ()=>{
         dispatch(setStatus('loading'));
