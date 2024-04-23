@@ -17,7 +17,12 @@ export const fetchPedido = createAsyncThunk('pedido/fetchPedido', async (_, {get
 });
 
 export const deletePedidoServer = createAsyncThunk('pedido/deletePedidoServer', async (pedido, {getState}) => {
-    await httpDelete(`${baseUrl}/pedido/${pedido}`);
+    await httpDelete(`${baseUrl}/pedido/${pedido.id}`);
+    toast.warning(pedido.id + " removido!", {
+      position: "bottom-left",
+      className: "text-spicy-mix bg-banana-mania shadow",
+      autoClose: 4000,
+    });
     return pedido.id;
 });
 
@@ -30,11 +35,13 @@ export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async 
     return await httpPost(`${baseUrl}/pedido`, pedido);
 });
 
-export const fetchPedidosByUser = createAsyncThunk('endereco/fetchEnderecoByUser', async(payload, {getState}) =>{
+export const fetchPedidosByUser = createAsyncThunk('pedido/fetchPedidoByUser', async(payload, {getState}) =>{
   try{
     //Pega todos os pedidos do user
-    const response = await fetch(`${baseUrl}/pedido/user?id=${payload}`);
-    const pedidoByUser = await response.json();
+    const response = await fetch(`${baseUrl}/pedido/`);
+    const pedidos = await response.json();
+
+    const pedidoByUser = pedidos.filter(pedido => pedido.user.id === payload);
     return pedidoByUser;
   } catch(error){
     throw error;
