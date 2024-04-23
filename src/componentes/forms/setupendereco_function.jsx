@@ -11,7 +11,7 @@ import { formsSchema } from './formsSchema';
 
 
 import {useDispatch} from "react-redux";
-import {setInfo,resetInfo} from "../../redux/compra/compraSlice"
+import {setInfo,resetInfo, setEndereco} from "../../redux/compra/compraSlice"
 
 
 
@@ -24,7 +24,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
     const dispatch = useDispatch();
 
     const onSubmit = data => {
-        dispatch(setInfo([data,step-1]))
+        dispatch(setEndereco(data));
         console.log(data)
         setToggleBotao(true);
       }

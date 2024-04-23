@@ -15,6 +15,10 @@ function setupConfirmacao({step,value}) {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const status = useSelector((rootReducer) => rootReducer.compraSlice.status);
     const pedido = useSelector((rootReducer) => rootReducer.compraSlice.informacao);
+    const { user } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
+    const { endereco } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
+    const { pagamento } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
+    const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
 
     console.log(status)
     console.log(value)
@@ -23,7 +27,7 @@ function setupConfirmacao({step,value}) {
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
    
     const handlePedidoAdd =()=>{
-        dispatch(addPedidoServer(pedido));
+        dispatch(addPedidoServer({user, endereco, products, pagamento}));
     }
  
 

@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {useSelector, useDispatch} from 'react-redux';
+import { setUser } from '../../redux/compra/compraSlice';
 //import { formsSchema } from './formsSchema';
 
 
@@ -20,14 +21,17 @@ const setupcontaSchema=yup.object().shape({
   teste: yup.string().required().min(3),
 })
 
+
 function setupconta_function({prevStep,nextStep,step}) {
   const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
   const { register, handleSubmit,formState:{errors}} = useForm(
     {validationSchema:setupcontaSchema }
   );
+  const dispatch = useDispatch();
   const onSubmit = data => {
-    //a
+    dispatch(setUser(currentUser))
     console.log(data)
+    nextStep();
   }
   const handleSubmitStep=data=>{
     handleSubmit(data)();
@@ -64,7 +68,7 @@ function setupconta_function({prevStep,nextStep,step}) {
         />
       </div>
       <Login/>
-      {currentUser ? (nextStep()) :null }
+      {currentUser ? (onSubmit()) :null }
    
     </>
   )

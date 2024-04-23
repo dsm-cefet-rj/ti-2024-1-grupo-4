@@ -2,12 +2,17 @@ import{createSlice,createAsyncThunk, createEntityAdapter} from "@reduxjs/toolkit
 import {httpDelete, httpGet, httpPut, httpPost} from '../../utils';
 import {baseUrl} from '../../baseUrl';
 
-const initialState = {
-    informacao: Array.from({ length: 4 }).fill([]),
+const compraAdapter = createEntityAdapter();
+const initialState = compraAdapter.getInitialState({
+    user: null,
+    endereco: null,
+    pagamento: null,
+    produtos: null,
+    step:0,
     status:'not_loaded',
     error:null
 
-}
+})
 //'loading'
 //'failed'
 //'saved'
@@ -26,9 +31,6 @@ function setInfoReducer(state,input){
 
 }
 
-function resetInfoReducer(state){
-    return { ...state, informacao: Array.from({ length: 4 }).fill([]) };
-}
 
 
 export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async (pedido, {getState}) => {
@@ -41,11 +43,27 @@ const compraSlice = createSlice({
     name:'compra',
     initialState,
     reducers:{
-        setInfo:{
-            reducer:(state, action) => setInfoReducer(state,action.payload),
-            prepare: (data) => ({payload: {data}})
+        setEndereco: (state, action)=>{
+            state.endereco = action.payload;
         },
-        resetInfo:(state)=> resetInfoReducer(state),
+        setUser:(state,action)=>{
+            state.user = action.payload;
+        },
+        setPagamento:(state, action)=>{
+            state.pagamento = action.payload;
+        },
+        setProdutos:(state,action)=>{
+            state.produtos = action.payload;
+        },
+        resetInfo:(state)=> {
+            state.informacao = [];
+        },
+        stepMais: (state)=>{
+            state.step = state.step + 1;
+        },
+        stepMenos: (state)=>{
+            state.step = state.step - 1;
+        }
        
     },
     extraReducers:
@@ -58,9 +76,8 @@ const compraSlice = createSlice({
                 state.status ='failed';
             })
             .addCase(addPedidoServer.fulfilled,(state,action)=>{
-                setTimeout(()=>{
-                    state.status ='saved';
-                },2000);
+                state.status = 'saved';
+                
             })
 
         }
@@ -71,6 +88,10 @@ const compraSlice = createSlice({
 export const { 
 setInfo,
 resetInfo,
+setEndereco,
+setPagamento,
+setProdutos,
+setUser
 } = compraSlice.actions;
 export default compraSlice.reducer;
 

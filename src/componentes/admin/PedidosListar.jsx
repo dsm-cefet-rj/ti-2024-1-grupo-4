@@ -42,10 +42,10 @@ function PedidosListar({ pedido }) {
                     </div>
                     <div class="collapse" id={pedido.id}>
                         <div class="card card-body">
-                            <span>Status: #{pedido.status}</span>
-                            <span>Nome do Cliente: </span>
-                            <span>Endereço: </span>
-                            <span>Valor total: R${pedido.valortotal} </span>
+                            <span></span>
+                            <span>Nome do Cliente: {pedido.user.nome} </span>
+                            <span>Endereço:</span>
+                            <span>Valor total: R$</span>
                         </div>
                     </div>
                 </div>

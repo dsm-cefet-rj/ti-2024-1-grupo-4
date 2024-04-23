@@ -35,7 +35,6 @@ function setuppedido_function({ prevStep, nextStep, step }) {
   const onSubmit = data => {
     //a
     console.log(data)
-    dispatch(setInfo([data,step-1]))
     setToggleBotao(true);
   }
   const handleSubmitStepConfirmacao = ()=>{
@@ -49,12 +48,6 @@ function setuppedido_function({ prevStep, nextStep, step }) {
       nextStep();
     }
   }, [toggle_botao, nextStep]);
-    //useEffect para passagem da informação do usuario 
-    useEffect(()=>{
-      if(step == 3){
-        dispatch(setInfo([currentUser,step]))
-      }
-    },[step,setInfo]);
 
   return (
     <>

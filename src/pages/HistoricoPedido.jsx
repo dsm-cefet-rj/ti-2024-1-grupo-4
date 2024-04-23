@@ -4,11 +4,8 @@ import Footer from '../componentes/footer/Footer.jsx'
 import Lista from '../componentes/Lista/setuplista_function.jsx'
 
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPedido } from '../redux/listapedidos/ListaPedidoSlice.js';
-import rootReducer from '../redux/root-reducer.js';
 import { useEffect } from 'react';
-import { fetchEnderecoByUser } from '../redux/endereco/enderecoSlice.js';
-
+import { fetchPedidosByUser } from '../redux/listapedidos/ListaPedidoSlice.js';
 
 
 const HistoricoPedido = () => {
@@ -20,7 +17,7 @@ const HistoricoPedido = () => {
 
     useEffect(() => {
         if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
-          dispatch(fetchEnderecoByUser(currentUser.id));
+          dispatch(fetchPedidosByUser(currentUser.id));
         }
     }, [status, dispatch]);
 

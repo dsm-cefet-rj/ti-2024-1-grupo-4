@@ -25,6 +25,7 @@ function Dashboard() {
     const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.entities);
     const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
+    console.log(pedidos)
     useEffect(() => {
         if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
           dispatch(fetchProduto());

@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 
 import { formsSchema } from './formspagamentoSchema';
 import {useDispatch} from "react-redux";
-import {setInfo,resetInfo} from "../../redux/compra/compraSlice"
+import {setInfo,resetInfo, setPagamento} from "../../redux/compra/compraSlice"
 
 //import{nextStep, prevStep,setT_pagamento, setCodcartao, setDatacartao, setNome_cartao, setNum_cartao} from '../../redux/compra/compraSlice';
 
@@ -29,7 +29,7 @@ function setuppagamento_function({ prevStep, nextStep, step,value,handleSetData 
 
   const onSubmit = data => {
     //a
-    dispatch(setInfo([data,step-1]))
+    dispatch(setPagamento(data))
     setToggleBotao(true);
   }
   const handleSubmitStep = data => {

@@ -38,7 +38,7 @@ export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async 
 export const fetchPedidosByUser = createAsyncThunk('endereco/fetchEnderecoByUser', async(payload, {getState}) =>{
   try{
     //Pega todos os pedidos do user
-    const response = await fetch(`${baseUrl}/pedido?clienteid=${payload}`);
+    const response = await fetch(`${baseUrl}/pedido/user/${payload}`);
     const pedidoByUser = await response.json();
     return pedidoByUser;
   } catch(error){
@@ -64,7 +64,7 @@ export const pedidoIDExistServer = createAsyncThunk('pedido/pedidoExistServer', 
 export const fetchPedidoByID = createAsyncThunk('pedido/fetchPedidoByID', async(idPedido, {getState}) =>{
   try{
     const {id} = idPedido
-    const response = await fetch(`${baseUrl}/pedido?email=${id}`);
+    const response = await fetch(`${baseUrl}/pedido/3/data?id=${id}`);
     const pedidobusca = await response.json();
     return pedidobusca[0];
   } catch(error){
