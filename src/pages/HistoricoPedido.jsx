@@ -7,18 +7,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchPedido } from '../redux/listapedidos/ListaPedidoSlice.js';
 import rootReducer from '../redux/root-reducer.js';
 import { useEffect } from 'react';
+import { fetchEnderecoByUser } from '../redux/endereco/enderecoSlice.js';
 
 
 
 const HistoricoPedido = () => {
-    const pedidosRegistrados = useSelector((rootReducer) => rootReducer.pedidoSlice.entities);
+    const {pedidos} = useSelector((rootReducer)=> rootReducer.pedidoSlice);
     const dispatch = useDispatch();
     const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
     const error = useSelector((rootReducer) => rootReducer.pedidoSlice.error);
+    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
 
     useEffect(() => {
-        if (status === 'not_loaded') {
-          dispatch(fetchPedido());
+        if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
+          dispatch(fetchEnderecoByUser(currentUser.id));
         }
     }, [status, dispatch]);
 
@@ -27,12 +29,12 @@ const HistoricoPedido = () => {
         <div className='d-block align-items-center min-vh-100  sticky'>
           <Header/>
           <div className="row g-3">
-                {Object.values(pedidosRegistrados).map((Pedido) => (
+                {pedidos? Object.values(pedidos).map((Pedido) => (
                         
-                    <div key="Pedido.id" className="col-md-4 col-lg-3 d-flex">
+                    <div key="Pedido.id" className="col-md-4 col-lg-3 d-flex m-3">
                         <Lista {...Pedido} />
                     </div>
-                ))}
+                )):<span>Você não tem pedidos</span>}
           </div>
           <div className='mt-5'></div>
           <Footer/>

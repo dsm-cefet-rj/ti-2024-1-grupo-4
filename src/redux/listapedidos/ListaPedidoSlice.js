@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 const pedidoAdapter = createEntityAdapter();
 
 const initialState = pedidoAdapter.getInitialState({
+    pedidos: [],
     status: 'not_loaded',
     error:null
 });
@@ -32,6 +33,17 @@ export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async 
       autoClose: 4000,
     });
     return await httpPost(`${baseUrl}/pedido`, pedido);
+});
+
+export const fetchPedidosByUser = createAsyncThunk('endereco/fetchEnderecoByUser', async(payload, {getState}) =>{
+  try{
+    //Pega todos os pedidos do user
+    const response = await fetch(`${baseUrl}/pedido?clienteid=${payload}`);
+    const pedidoByUser = await response.json();
+    return pedidoByUser;
+  } catch(error){
+    throw error;
+  }
 });
 
 export const updatePedidoServer = createAsyncThunk('pedido/updatePedidoServer', async (pedido, {getState}) => {
@@ -87,6 +99,10 @@ export const pedidoSlice = createSlice({
           .addCase(updatePedidoServer.fulfilled, (state, action) => {
             state.status = 'saved';
             pedidoAdapter.upsertOne(state, action.payload);
+          })
+          .addCase(fetchPedidosByUser.fulfilled,(state,action)=>{
+            state.status = 'saved';
+            state.pedidos = action.payload;
           })
 
         }
