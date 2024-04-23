@@ -9,15 +9,15 @@ import { fetchPedidosByUser } from '../redux/listapedidos/ListaPedidoSlice.js';
 
 
 const HistoricoPedido = () => {
-    const {pedidos} = useSelector((rootReducer)=> rootReducer.pedidoSlice);
+    const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.entities);
     const dispatch = useDispatch();
     const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
     const error = useSelector((rootReducer) => rootReducer.pedidoSlice.error);
-    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
+    const currentUser = useSelector((rootReducer) => rootReducer.userSlice) || {};
 
     useEffect(() => {
         if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
-          dispatch(fetchPedidosByUser(currentUser.id));
+          dispatch(fetchPedidosByUser(currentUser));
         }
     }, [status, dispatch]);
 
@@ -26,12 +26,12 @@ const HistoricoPedido = () => {
         <div className=''>
           <Header/>
           <div className="d-flex flex-column">
-                {pedidos? Object.values(pedidos).map((Pedido) => (
+                {Object.values(pedidos).map((Pedido) => (
                         
                     <div key="Pedido.id" className="card m-2 p-2 bg-banana-mania">
                         <Lista {...Pedido} />
                     </div>
-                )):<span>Você não tem pedidos</span>}
+                ))}
           </div>
           <Footer/>
         </div>
