@@ -3,11 +3,14 @@ import {httpDelete, httpGet, httpPut, httpPost} from '../../utils';
 import {baseUrl} from '../../baseUrl';
 
 const initialState = {
-    informacao: Array.from({ length: 5 }).fill([]),
+    informacao: Array.from({ length: 4 }).fill([]),
     status:'not_loaded',
+    error:null
 
 }
-
+//'loading'
+//'failed'
+//'saved'
 function setInfoReducer(state,input){
     const index = input.data[1] 
     const temp = {...input,stepInfo:input.data[1]}
@@ -24,7 +27,7 @@ function setInfoReducer(state,input){
 }
 
 function resetInfoReducer(state){
-    return { ...state, informacao: Array.from({ length: 5 }).fill([]) };
+    return { ...state, informacao: Array.from({ length: 4 }).fill([]) };
 }
 
 
@@ -55,7 +58,9 @@ const compraSlice = createSlice({
                 state.status ='failed';
             })
             .addCase(addPedidoServer.fulfilled,(state,action)=>{
-                state.status ='saved';
+                setTimeout(()=>{
+                    state.status ='saved';
+                },2000);
             })
 
         }
@@ -78,6 +83,11 @@ export default compraSlice.reducer;
 */
 
 /*
+
+       setTimeout(()=>{
+                state.status ='saved';
+            },2000);
+                
 const [step, setStep] = useState(0);
 const [user, setUser] = useState('');
 const [password, setPassword] = useState('');

@@ -51,9 +51,8 @@ function setuppedido_function({ prevStep, nextStep, step }) {
   }, [toggle_botao, nextStep]);
     //useEffect para passagem da informação do usuario 
     useEffect(()=>{
-
-      if(step == 4){
-        dispatch(setInfo([currentUser,step-1]))
+      if(step == 3){
+        dispatch(setInfo([currentUser,step]))
       }
     },[step,setInfo]);
 
