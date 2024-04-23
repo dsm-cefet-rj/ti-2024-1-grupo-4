@@ -33,7 +33,7 @@
     {
       "id": "1",
       "nome": "emanu",
-      "email": "emanu@emanu",
+      "email": "emanu@fgdfw",
       "senha": "oioioi",
       "admin": true
     },
@@ -146,14 +146,6 @@
       "id": "d250"
     },
     {
-      "CEP": 22265457,
-      "logradouro": "rua tals",
-      "complemento": "apto tal tal",
-      "numero": 5,
-      "userKey": 1,
-      "id": "70df"
-    },
-    {
       "id": "737f",
       "CEP": "ege",
       "logradouro": "gerger",
@@ -222,27 +214,34 @@
       "numero": 23,
       "complemento": "oieee",
       "userKey": "6494"
+    },
+    {
+      "id": "a886",
+      "CEP": "32134fewf",
+      "logradouro": "htrhtt",
+      "numero": 333,
+      "complemento": "bthrh",
+      "userKey": "1"
     }
   ],
-
- "pedido": [
+  "pedido": [
     {
-        "id": "5",
-        "produtos": [
-            {
-                "descricao":"Feita com banana e goiaba",
-                "id": 2,
-                "imgUrl":"/img/food.jpg",
-                "nome":"Bananada de Goiaba",
-                "preco": 17.9,
-                "quantity": "3"
-            }
-        ],
-        "clienteid": "1",
-        "status": "EM ANDAMENTO",
-        "progresso": "PedidoRegistrado",
-        "imgUrl": "/img/food.jpg",
-        "valortotal" : 420.69
+      "id": "5",
+      "produtos": [
+        {
+          "descricao": "Feita com banana e goiaba",
+          "id": 2,
+          "imgUrl": "/img/food.jpg",
+          "nome": "Bananada de Goiaba",
+          "preco": 17.9,
+          "quantity": "3"
+        }
+      ],
+      "clienteid": "1",
+      "status": "EM ANDAMENTO",
+      "progresso": "PedidoRegistrado",
+      "imgUrl": "/img/food.jpg",
+      "valortotal": 420.69
     }
   ]
 }

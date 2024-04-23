@@ -81,9 +81,22 @@ export const userSlice = createSlice({
             state.status = 'saved';
             userAdapter.addOne(state,action.payload);
           })
+          .addCase(updateUserServer.rejected,(state,action)=>{
+            state.status = 'failed';
+            toast.error("Erro: " + error, {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+            });
+          })
           .addCase(updateUserServer.fulfilled, (state, action) => {
             state.status = 'saved';
             userAdapter.upsertOne(state, action.payload);
+            toast.info("Informações atualizadas!", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+            });
           })
           .addCase(fetchUserByEmail.fulfilled,(state,action) => {
             state.status = 'saved';

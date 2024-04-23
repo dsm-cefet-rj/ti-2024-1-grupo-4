@@ -10,11 +10,7 @@ import { toast } from 'react-toastify';
 
 
 function Login_page () {
-  const userState = useSelector((rootReducer) => rootReducer.userSlice)|| {};
   const history = useNavigate();
-  const status = userState.status;
-  const users = userState.entities;
-  const erro = userState.error;
   const location = useLocation();
 
   const dispatch = useDispatch();
