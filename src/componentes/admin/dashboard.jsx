@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import * as Yup from 'yup';
 import { productSchema } from './ProdutoSchema';
-
+import {fetchPedido} from '../../redux/listapedidos/ListaPedidoSlice'
 import ProdutoItemDelete from './ProdutoItemDelete';
 import ProdutoItemUpdate from './ProdutoItemUpdate';
 import { fetchUser } from '../../redux/user/UserSlice';
@@ -23,14 +23,18 @@ function Dashboard() {
     const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
     const users = useSelector((rootReducer) => rootReducer.userSlice.entities);
     const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.entities);
-    const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
+    const statusProdutos = useSelector((rootReducer) => rootReducer.produtosSlice.status);
+    const statusClientes = useSelector((rootReducer) => rootReducer.userSlice.status);
+    const statusPedidos = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
     console.log(pedidos)
     useEffect(() => {
-        if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
-          dispatch(fetchProduto());
-          dispatch(fetchUser());
-          dispatch(fetchPedido());
+        if (statusProdutos === 'not_loaded' || statusProdutos === 'saved' || statusProdutos === 'deleted') {
+          dispatch(fetchProduto());   
+        } if(statusClientes === 'not_loaded' || statusClientes === 'saved' || statusClientes === 'deleted'){
+            dispatch(fetchUser());
+        }if(statusPedidos === 'not_loaded' || statusPedidos === 'saved' || statusPedidos === 'deleted'){
+            dispatch(fetchPedido());
         }
     }, [status, dispatch]);
 
@@ -161,7 +165,7 @@ function Dashboard() {
                         <div className="modal-body">
                             <div className="col">
                                 {Object.values(users).map((item) => (
-                                    <ClienteListar user={item}/>
+                                    <ClienteListar key = {item.id} user={item}/>
                                 ))}
                             </div>
                         </div>

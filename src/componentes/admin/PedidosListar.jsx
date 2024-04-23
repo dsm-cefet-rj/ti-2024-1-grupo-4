@@ -44,8 +44,8 @@ function PedidosListar({ pedido }) {
                         <div class="card card-body">
                             <span></span>
                             <span>Nome do Cliente: {pedido.user.nome} </span>
-                            <span>Endereço:</span>
-                            <span>Valor total: R$</span>
+                            <span>Status: {pedido.status} </span>
+                            <span>Valor total: {pedido.valorTotal}</span>
                         </div>
                     </div>
                 </div>

@@ -277,57 +277,6 @@
       }
     },
     {
-      "id": "2999",
-      "user": {
-        "id": "2",
-        "email": "jean@jeje",
-        "senha": "jeje",
-        "nome": "jean",
-        "admin": false
-      },
-      "endereco": {
-        "instrucao_pedido": "",
-        "bairro": "gfhtg",
-        "CompEnd": "fdhfhh",
-        "numEnd": 856,
-        "logradouro": "hgfghfgh",
-        "cep": 5345345
-      },
-      "products": [
-        {
-          "id": "3",
-          "nome": "Goiabada de marmelo",
-          "imgUrl": "/img/food.jpg",
-          "preco": 11.9,
-          "descricao": "Feita com goiaba e muita marmelada",
-          "quantity": 2
-        },
-        {
-          "id": "2",
-          "nome": "Bananada de Goiaba",
-          "imgUrl": "/img/food.jpg",
-          "preco": 17.9,
-          "descricao": "Feita com banana e goiaba",
-          "quantity": 2
-        },
-        {
-          "id": "4",
-          "nome": "Sitio do pica-pau amarelo",
-          "imgUrl": "/img/food.jpg",
-          "preco": 1.9,
-          "descricao": "Feita com Lorem Ipsum",
-          "quantity": 2
-        }
-      ],
-      "pagamento": {
-        "T_pagamento": "cartao_debito",
-        "num_cartao": "1111111111111",
-        "nome_cartao": "frgerg",
-        "datacartao": "3213-02-21",
-        "codcartao": "232"
-      }
-    },
-    {
       "id": "c31d",
       "user": {
         "id": "2",
@@ -530,6 +479,59 @@
         "datacartao": "2024-04-10",
         "codcartao": "123"
       }
+    },
+    {
+      "id": "8c28",
+      "user": {
+        "id": "1",
+        "nome": "emanu",
+        "email": "emanu@nunu",
+        "senha": "nununu",
+        "admin": true
+      },
+      "endereco": {
+        "instrucao_pedido": "",
+        "bairro": "hfghf",
+        "CompEnd": "gdfgdfgdf",
+        "numEnd": 312,
+        "logradouro": "hbgbf",
+        "cep": 213214
+      },
+      "products": [
+        {
+          "id": "3",
+          "nome": "Goiabada de marmelo",
+          "imgUrl": "/img/food.jpg",
+          "preco": 11.9,
+          "descricao": "Feita com goiaba e muita marmelada",
+          "quantity": 2
+        },
+        {
+          "id": "2",
+          "nome": "Bananada de Goiaba",
+          "imgUrl": "/img/food.jpg",
+          "preco": 17.9,
+          "descricao": "Feita com banana e goiaba",
+          "quantity": 2
+        },
+        {
+          "id": "4",
+          "nome": "Sitio do pica-pau amarelo",
+          "imgUrl": "/img/food.jpg",
+          "preco": 1.9,
+          "descricao": "Feita com Lorem Ipsum",
+          "quantity": 3
+        }
+      ],
+      "pagamento": {
+        "T_pagamento": "cartao_credito",
+        "num_cartao": "1111111111111",
+        "nome_cartao": "ggfngfn",
+        "datacartao": "2024-04-04",
+        "codcartao": "123"
+      },
+      "valorTotal": 65.3,
+      "status": "Avaliando pedido"
     }
   ]
 }

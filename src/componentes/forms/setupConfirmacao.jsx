@@ -8,6 +8,7 @@ import {setInfo,resetInfo,addPedidoServer,setStatus} from "../../redux/compra/co
 import {useSelector,useDispatch} from "react-redux";
 import { Link,useNavigate,Navigate } from 'react-router-dom';
 import { useEffect } from 'react'
+import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 
 
 
@@ -18,6 +19,7 @@ function setupConfirmacao({step,value}) {
     const { endereco } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
     const { pagamento } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
     const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
+    const productsTotalPrice = useSelector(selectProductsTotalPrice);
 
     console.log(status)
     console.log(value)
@@ -26,7 +28,7 @@ function setupConfirmacao({step,value}) {
 
    
     const handlePedidoAdd =()=>{
-        dispatch(addPedidoServer({user, endereco, products, pagamento, status:'Avaliando pedido'}));
+        dispatch(addPedidoServer({user, endereco, products, pagamento, valorTotal: productsTotalPrice, status:'Avaliando pedido'}));
     }
     const handleSetStatusLoading = ()=>{
         dispatch(setStatus('loading'));

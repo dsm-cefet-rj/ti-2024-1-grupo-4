@@ -8,20 +8,6 @@ function ClienteListar({ user }) {
     const dispatch = useDispatch();
 
 
-    const [formData, setFormData] = useState({
-        id: user.id,
-        nome: user.nome,
-        email: user.email
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-
     const handleRemove = () => {
         const id = user.id;
         dispatch(deleteUserServer(id)).then((user)=>{
@@ -36,7 +22,7 @@ function ClienteListar({ user }) {
     }
     return (
         <>
-            <div key="item.id" className="row d-flex">
+            <div key={user.id} className="row d-flex">
                 <div className="card w-100 col g-1">
                     <div className="card-body d-flex justify-content-between">
                         <h5 className="card-title">{user.nome}</h5>

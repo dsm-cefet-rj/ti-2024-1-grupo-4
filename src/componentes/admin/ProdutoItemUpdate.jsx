@@ -56,12 +56,12 @@ function ProdutoItemUpdate({ produto }) {
                     <div className="card-body d-flex justify-content-between">
                         <h5 className="card-title">{produto.nome}</h5>
                         <div className="d-flex justify-content-between align-items-center gap-2">
-                            <button class="btn btn-tacao" type="button" data-bs-toggle="collapse" data-bs-target={"#"+produto.id} aria-expanded="false" aria-controls={produto.id}>Mostrar mais</button>
+                            <button className="btn btn-tacao" type="button" data-bs-toggle="collapse" data-bs-target={"#"+produto.id} aria-expanded="false" aria-controls={produto.id}>Mostrar mais</button>
                             <button type="button" className="btn btn-verde-certo" onClick={handleUpdate}>Atualizar</button>                  
                         </div>
                     </div>
-                    <div class="collapse" id={produto.id}>
-                        <div class="card card-body">
+                    <div className="collapse" id={produto.id}>
+                        <div className="card card-body">
                         <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={handleChange} placeholder="Nome do Produto"></input>
                             <input type="number" className="form-control" id="preco" name="preco" value={formData.preco} onChange={handleChange} step="any" min="0.1" placeholder="Preço do Produto"></input>
                             <textarea className="form-control" id="descricao" name="descricao" value={formData.descricao} onChange={handleChange} rows="5" placeholder="Descrição do Produto"></textarea>

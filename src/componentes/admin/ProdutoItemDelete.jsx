@@ -10,7 +10,7 @@ function ProdutoItemDelete({ produto }) {
 
     return (
         <>
-            <div key="item.id" className="row d-flex">
+            <div key={produto.id} className="row d-flex">
                 <div className="card w-100 col g-1">
                     <div className="card-body d-flex justify-content-between">
                         <h5 className="card-title">{produto.nome}</h5>
@@ -19,8 +19,8 @@ function ProdutoItemDelete({ produto }) {
                             <button type="button" className="btn btn-brick-red" onClick={handleRemove}>Deletar</button>                  
                         </div>
                     </div>
-                    <div class="collapse" id={produto.id}>
-                        <div class="card card-body">
+                    <div className="collapse" id={produto.id}>
+                        <div className="card card-body">
                             <span>Preço: {produto.preco.toLocaleString('pt-br',{style: 'currency', currency:'BRL'})}</span>
                             <span>Descrição: {produto.descricao}</span>
                         </div>
