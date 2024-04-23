@@ -67,8 +67,9 @@ function setupconta_function({prevStep,nextStep,step}) {
           step={step}
         />
       </div>
-      <Login/>
       {currentUser ? (onSubmit()) :null }
+      <Login/>
+      
    
     </>
   )
