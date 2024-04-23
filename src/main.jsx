@@ -55,7 +55,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
 
   <React.StrictMode>
-    <Provider store={store} persistor={persistor}>
+    <Provider store={store} /** persistor={persistor} */>
       <ToastContainer limit={4} newestOnTop={true} />
       <RouterProvider router={router} />
     </Provider>

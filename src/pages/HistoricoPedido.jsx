@@ -9,11 +9,11 @@ import { fetchPedidosByUser } from '../redux/listapedidos/ListaPedidoSlice.js';
 
 
 const HistoricoPedido = () => {
-    const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.entities);
+    const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.pedidos);
     const dispatch = useDispatch();
     const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
     const error = useSelector((rootReducer) => rootReducer.pedidoSlice.error);
-    const currentUser = useSelector((rootReducer) => rootReducer.userSlice) || {};
+    const currentUser = useSelector((rootReducer) => rootReducer.userSlice.currentUser) || {};
 
     useEffect(() => {
         if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {

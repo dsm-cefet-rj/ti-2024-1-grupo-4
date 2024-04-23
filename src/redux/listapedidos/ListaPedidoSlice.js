@@ -41,7 +41,7 @@ export const fetchPedidosByUser = createAsyncThunk('pedido/fetchPedidoByUser', a
     const response = await fetch(`${baseUrl}/pedido/`);
     const pedidos = await response.json();
 
-    const pedidoByUser = pedidos.filter(pedido => pedido.user === payload);
+    const pedidoByUser = pedidos.filter(pedido => pedido.user.id === payload.id);
     return pedidoByUser;
   } catch(error){
     throw error;
