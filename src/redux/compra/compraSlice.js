@@ -23,11 +23,12 @@ function setInfoReducer(state,input){
     }
     state.informacao[index] = [];
     state.informacao[index].push(temp);
-
 }
-
+function setStatusReducer(state,payload){
+    return {...state.status,status:payload};
+}
 function resetInfoReducer(state){
-    return { ...state, informacao: Array.from({ length: 4 }).fill([]) };
+    return { ...state.informacao, informacao: Array.from({ length: 4 }).fill([]) };
 }
 
 
@@ -35,7 +36,7 @@ export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async 
     return await httpPost(`${baseUrl}/pedido`, pedido);
 });
 
-
+  
 
 const compraSlice = createSlice({
     name:'compra',
@@ -46,31 +47,33 @@ const compraSlice = createSlice({
             prepare: (data) => ({payload: {data}})
         },
         resetInfo:(state)=> resetInfoReducer(state),
+        setStatus:(state,action)=> setStatusReducer(state,action.payload),
        
     },
     extraReducers:
         (builder)=>{
             builder
             .addCase(addPedidoServer.pending,(state,action)=>{
-                state.status ='loading';
+                    state.status ='loading';
+               
             })
             .addCase(addPedidoServer.rejected,(state,action)=>{
                 state.status ='failed';
             })
             .addCase(addPedidoServer.fulfilled,(state,action)=>{
-                setTimeout(()=>{
+               
                     state.status ='saved';
-                },2000);
+           
             })
 
         }
 
-    
 });
 
 export const { 
 setInfo,
 resetInfo,
+setStatus,
 } = compraSlice.actions;
 export default compraSlice.reducer;
 
