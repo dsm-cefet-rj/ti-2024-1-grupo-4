@@ -531,7 +531,109 @@
         "codcartao": "123"
       },
       "valorTotal": 65.3,
-      "status": "Sendo Preparado"
+      "status": "Avaliando pedido"
+    },
+    {
+      "id": "4894",
+      "products": [
+        {
+          "id": "3",
+          "nome": "Goiabada de marmelo",
+          "imgUrl": "/img/food.jpg",
+          "preco": 11.9,
+          "descricao": "Feita com goiaba e muita marmelada",
+          "quantity": 1
+        },
+        {
+          "id": "4",
+          "nome": "Sitio do pica-pau amarelo",
+          "imgUrl": "/img/food.jpg",
+          "preco": 1.9,
+          "descricao": "Feita com Lorem Ipsum",
+          "quantity": 1
+        },
+        {
+          "id": "2",
+          "nome": "Bananada de Goiaba",
+          "imgUrl": "/img/food.jpg",
+          "preco": 17.9,
+          "descricao": "Feita com banana e goiaba",
+          "quantity": 1
+        },
+        {
+          "id": "1",
+          "nome": "Marmelada de banana Novo",
+          "imgUrl": "/img/food.jpg",
+          "preco": "16.9",
+          "descricao": "Feita com banana e muita marmelada Novo",
+          "quantity": 1
+        }
+      ],
+      "valorTotal": 48.599999999999994,
+      "status": "Avaliando pedido"
+    },
+    {
+      "id": "e0d7",
+      "user": {
+        "id": "2",
+        "email": "jean@jeje",
+        "senha": "jeje",
+        "nome": "jean",
+        "admin": false
+      },
+      "endereco": {
+        "instrucao_pedido": "",
+        "bairro": "dsa",
+        "CompEnd": "gdf",
+        "numEnd": 312,
+        "logradouro": "das",
+        "cep": 123
+      },
+      "products": [
+        {
+          "id": "3",
+          "nome": "Goiabada de marmelo",
+          "imgUrl": "/img/food.jpg",
+          "preco": 11.9,
+          "descricao": "Feita com goiaba e muita marmelada",
+          "quantity": 10
+        },
+        {
+          "id": "4",
+          "nome": "Sitio do pica-pau amarelo",
+          "imgUrl": "/img/food.jpg",
+          "preco": 1.9,
+          "descricao": "Feita com Lorem Ipsum",
+          "quantity": 1
+        },
+        {
+          "id": "2",
+          "nome": "Bananada de Goiaba",
+          "imgUrl": "/img/food.jpg",
+          "preco": 17.9,
+          "descricao": "Feita com banana e goiaba",
+          "quantity": 1
+        },
+        {
+          "id": "1",
+          "nome": "Marmelada de banana Novo",
+          "imgUrl": "/img/food.jpg",
+          "preco": "16.9",
+          "descricao": "Feita com banana e muita marmelada Novo",
+          "quantity": 1
+        }
+      ],
+      "pagamento": {
+        "T_pagamento": "pix",
+        "num_cartao": "",
+        "nome_cartao": "",
+        "datacartao": "",
+        "codcartao": "",
+        "nomePagamento": "fgsdaf",
+        "cpfPagamento": "12345678901"
+      },
+      "valorTotal": 155.70000000000002,
+      "status": "Avaliando pedido"
     }
   ]
 }
