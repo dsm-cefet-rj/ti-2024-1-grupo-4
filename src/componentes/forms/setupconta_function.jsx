@@ -18,19 +18,14 @@ const setupcontaSchema = yup.object().shape({
 
 function setupconta_function({ prevStep, nextStep, step }) {
   const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
-  const { register, handleSubmit, formState: { errors } } = useForm(
-    { validationSchema: setupcontaSchema }
-  );
+
   const dispatch = useDispatch();
   const onSubmit = data => {
     dispatch(setUser(currentUser))
     console.log(data)
     nextStep();
   }
-  const handleSubmitStep = data => {
-    handleSubmit(data)();
-    nextStep();
-  }
+
   return (
     <>
       <div className='position-relative pt-2'>
