@@ -46,7 +46,7 @@ function Home_Page() {
             </div>
             
             {/* Carrinho */}
-            <div className="offcanvas offcanvas-end" data-bs-scroll="true" tabIndex="-1" id="offcanvas" aria-labelledby="offcanvas" /*Parece muito ruim, mas tá bom */>
+            <div className="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvas" aria-labelledby="offcanvas" /*Parece muito ruim, mas tá bom */>
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title" id="offcanvasLabel">Itens no Carrinho</h5>
                     <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
