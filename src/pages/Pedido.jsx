@@ -9,11 +9,11 @@ const Pedido = () => {
   return (
     <>
       <div className='d-block align-items-center min-vh-100  sticky'>
-        <Header/>
+        <Header />
         <div className='mt-5'></div>
-          <Form />
+        <Form />
         <div className='mt-5'></div>
-        <Footer/>
+        <Footer />
       </div>
     </>
   )

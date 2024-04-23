@@ -3,15 +3,15 @@ import Header from '../componentes/header/Header'
 import Footer from '../componentes/footer/Footer'
 import Login_page from '../componentes/Login/Login'
 
-function Login(){
-    return(
+function Login() {
+    return (
         <>
-        <div className='position-relative'>
-            <Header/>
-            <Login_page/>
-            <Footer/>
+            <div className='position-relative'>
+                <Header />
+                <Login_page />
+                <Footer />
 
-        </div>
+            </div>
         </>
     )
 }

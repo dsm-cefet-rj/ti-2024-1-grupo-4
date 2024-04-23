@@ -50,37 +50,3 @@ function CartItem( {product} ) {
     );
 }
 export default CartItem;
-{/*
-    <div className="card mb-1">
-      <div className="card-body">  
-            <h5 className="card-title">Card Title</h5>
-            <p className="card-text">
-            Some quick example text to build on the card title and make up the bulk of the card's content.
-            </p>
-      </div>
-    </div>
-
-*/}
-
-{
-    /**<aside class="bd-sidebar">
-     *  <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar" aria-labelledby="bdSidebarOffcanvasLabel">
-     * <div class="offcanvas-body">
-          <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation"><ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
-      <li class="bd-links-group py-2">
-        <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
-            <svg class="bi me-2" style="color: var(--bs-indigo);" aria-hidden="true"><use xlink:href="#book-half"></use></svg>
-          Getting started
-        </strong>
-
-        <ul class="list-unstyled fw-normal pb-2 small">
-            <li><a href="/docs/5.3/getting-started/introduction/" class="bd-links-link d-inline-block rounded active" aria-current="page">Introduction</a></li>
-            <li><a href="/docs/5.3/getting-started/download/" class="bd-links-link d-inline-block rounded">Download</a></li>
-            <li><a href="/docs/5.3/getting-started/contents/" class="bd-links-link d-inline-block rounded">Contents</a></li>
-            </u>
-     * </aside>
-     * 
-     * 
-     * 
-     */
-}

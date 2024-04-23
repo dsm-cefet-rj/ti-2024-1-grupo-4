@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client' 
-//import 'bootstrap/dist/css/bootstrap.min.css'; 
+import ReactDOM from 'react-dom/client'
+
 import Home_page from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Registro from './pages/Cadastro.jsx'
@@ -10,8 +10,8 @@ import Admin_Page from './pages/Admin_Page.jsx'
 import HistoricoPedido from './pages/HistoricoPedido.jsx'
 import Usuario from './pages/Usuario.jsx'
 
-import {Provider} from "react-redux";
-import {store , persistor} from "./redux/store";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
@@ -25,39 +25,39 @@ import {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home_page/>,
+    element: <Home_page />,
   },
   {
     path: "Login",
-    element: <Login/>,
+    element: <Login />,
   },
   {
     path: "Cadastro",
-    element: <Registro/>,
+    element: <Registro />,
   },
   {
-    path:"Pedido",
-    element:<Pedido/>,
+    path: "Pedido",
+    element: <Pedido />,
   },
   {
-    path:"admin",
-    element:<Admin_Page/>,
+    path: "admin",
+    element: <Admin_Page />,
   },
   {
     path: "historico",
-    element: <HistoricoPedido/>,
-  },{
+    element: <HistoricoPedido />,
+  }, {
     path: "info",
-    element: <Usuario/>
+    element: <Usuario />
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
-    <React.StrictMode>
-      <Provider store = {store} persistor={persistor}>
-        <ToastContainer limit={4} newestOnTop={true}/>
-        <RouterProvider router={router} />
-      </Provider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store} persistor={persistor}>
+      <ToastContainer limit={4} newestOnTop={true} />
+      <RouterProvider router={router} />
+    </Provider>
+  </React.StrictMode>
 )

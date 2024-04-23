@@ -147,10 +147,11 @@ function setupConfirmacao({step,value}) {
               <div className="align-items-center row bg-banana-mania text-center m-5 pb-5">
                 {renderStatus(value)}
               </div>
-             
-              <button className='btn bg-brick-red-300' onClick={handlePedidoAdd}>SIMULACAO</button>
-              <button className='btn bg-brick-red-300' onClick={()=>handleSetStatusLoading()}>SIMULACAO-LOADING</button>
-              <button className='btn bg-brick-red-300' onClick={()=>handleSetStatusSaved()}>SIMULACAO-SAVED</button>
+             <div className=''>
+              <button className='btn bg-verde-certo ' onClick={handlePedidoAdd}>SIMULACAO-COMPLETA/REALIZA SALVAMENTO NO JSON-SERVER</button>
+              <button className='btn bg-brick-red-300 ' onClick={()=>handleSetStatusLoading()}>SIMULACAO-LOADING/NÃO SALVA NO JSON-SERVER</button>
+              <button className='btn bg-brick-red-300 ' onClick={()=>handleSetStatusSaved()}>SIMULACAO-SAVED/NÃO SALVA NO JSON-SERVER</button>
+              </div>
           </div>
       </>
   )
