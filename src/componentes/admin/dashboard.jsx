@@ -10,6 +10,8 @@ import ProdutoItemDelete from './ProdutoItemDelete';
 import ProdutoItemUpdate from './ProdutoItemUpdate';
 import { fetchUser } from '../../redux/user/UserSlice';
 import ClienteListar from './ClienteListar';
+import rootReducer from '../../redux/root-reducer';
+import PedidosListar from './PedidosListar';
 
 function Dashboard() {
 
@@ -20,12 +22,14 @@ function Dashboard() {
     const dispatch = useDispatch();
     const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
     const users = useSelector((rootReducer) => rootReducer.userSlice.entities);
+    const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.entities);
     const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
     useEffect(() => {
-        if (status === 'not_loaded') {
+        if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
           dispatch(fetchProduto());
           dispatch(fetchUser());
+          dispatch(fetchPedido());
         }
     }, [status, dispatch]);
 
@@ -176,8 +180,8 @@ function Dashboard() {
                         </div>
                         <div className="modal-body">
                             <div className="col">
-                                {Object.values(users).map((item) => (
-                                    <ClienteListar user={item}/>
+                                {Object.values(pedidos).map((pedido) => (
+                                    <PedidosListar key = {pedido.id} pedido={pedido}/>
                                 ))}
                             </div>
                         </div>
