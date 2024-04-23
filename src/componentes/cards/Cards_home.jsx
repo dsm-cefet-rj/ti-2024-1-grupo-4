@@ -12,7 +12,7 @@ function Card(prod) {
 
     return (
         <>
-            <div className="card h-100">
+            <div className="card h-100 border-banana-mania shadow-sm">
                 <img className="card-img-top" src={prod.imgUrl} alt=""></img>
                 <div className="card-body d-flex flex-column justify-content-between align-items-stretch">
                     <h5 className="card-title">{prod.nome}</h5>

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addEnderecoServer, fetchEnderecoByUser, updateEnderecoServer } from '../../redux/endereco/enderecoSlice';
 import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm} from "react-hook-form";
-import { updateUserServer, fetchUser, fetchUserByEmail } from '../../redux/user/UserSlice';
-
+import { updateUserServer, fetchUserByEmail, deleteUserServer } from '../../redux/user/UserSlice';
 import { toast } from 'react-toastify';
-import rootReducer from '../../redux/root-reducer';
 import Endereco_Card from './Endereco_Card';
+import { useNavigate } from 'react-router-dom';
 
 function Perfil_Usuario() {
   const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
@@ -17,6 +16,7 @@ function Perfil_Usuario() {
   console.log(enderecos)
   const status = enderecoState.status;
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   useEffect(() => {
     if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
@@ -160,6 +160,20 @@ function Perfil_Usuario() {
     })
   }
 
+  const handleRemove = () => {
+    const id = currentUser.id;
+    dispatch(deleteUserServer(id)).then((resposta)=>{
+      if(resposta.payload){
+        history('/');
+        toast.info("Conta deletada", {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
+        });
+      }
+    })
+}
+
 
 
 
@@ -168,7 +182,7 @@ function Perfil_Usuario() {
   
   return (
     <>
-      <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "700px" }}>
+      <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h1>Perfil do Usuário</h1>
         <form onSubmit  = {handleSubmitUser(userUpdate)}>
           <label htmlFor="nome" className='m-2'>Nome do Usuário:</label>
@@ -182,7 +196,7 @@ function Perfil_Usuario() {
           
         </form>
       </div>
-      <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "700px" }}>
+      <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h2>Endereco</h2>
         {enderecos ? <>
           {Object.values(enderecos).map((endereco) => (
@@ -240,7 +254,7 @@ function Perfil_Usuario() {
         
         
       </div>
-      <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "700px" }}>
+      <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h2>Mudança de senha</h2>
          <form onSubmit  = {handleSubmitSenha(passUpdate)}>
           <label htmlFor = 'senha' className='m-2'>Digite sua senha:</label>
@@ -258,6 +272,11 @@ function Perfil_Usuario() {
           
 
          </form>
+      </div>
+      <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
+        <h2>Deletar Usuário</h2>
+        <button type="button" className="btn btn-brick-red m-3" onClick={handleRemove}>Deletar</button>
+
       </div>
 
 

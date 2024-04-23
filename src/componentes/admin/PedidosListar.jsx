@@ -4,13 +4,13 @@ import { deleteUserServer} from '../../redux/user/UserSlice';
 import { toast } from 'react-toastify';
 
 
-function ClienteListar({ user }) {
+function PedidosListar({ pedido }) {
     const dispatch = useDispatch();
 
 
     const [formData, setFormData] = useState({
-        id: user.id,
-        nome: user.nome,
+        id: pedido.id,
+        nome: pedido.nome,
         email: user.email
     });
 
@@ -56,4 +56,4 @@ function ClienteListar({ user }) {
         </>
     );
 }
-export default ClienteListar;
+export default PedidosListar;
