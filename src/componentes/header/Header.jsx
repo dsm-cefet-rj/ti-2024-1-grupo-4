@@ -28,7 +28,7 @@ const Header = () => {
                 <nav className="navbar navbar-expand-lg p-3">
                     <Link to = "/" className="navbar-brand d-flex align-items-center">
                         <img src={logo} width="50" height="50" alt=""></img>
-                        <span>Nome</span>
+                        <span>Luigi's Pizzeria</span>
                     </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
