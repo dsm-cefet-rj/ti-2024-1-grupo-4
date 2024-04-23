@@ -50,21 +50,20 @@ export const updatePedidoServer = createAsyncThunk('pedido/updatePedidoServer', 
     return await httpPut(`${baseUrl}/pedido/${pedido.id}`, pedido);
 });
 
+export const updateStatusPedidoServer = createAsyncThunk('pedido/updatePedidoServer', async (pedido, {getState}) => {
+  toast.info("Status foi alterado para: "+ pedido.status, {
+    position: "bottom-left",
+    className: "text-spicy-mix bg-banana-mania shadow",
+    autoClose: 4000,
+  });
+  const pedidoId = pedido.id
+  return await httpPut(`${baseUrl}/pedido/${pedido.id}`, pedido);
+});
+
 export const pedidoIDExistServer = createAsyncThunk('pedido/pedidoExistServer', async (id, {getState}) => {
   const response = await fetch (`${baseUrl}/pedido?id=${id}`);
   const existe = await response.json();
   return existe.length > 0;
-});
-
-export const fetchPedidoByID = createAsyncThunk('pedido/fetchPedidoByID', async(idPedido, {getState}) =>{
-  try{
-    const {id} = idPedido
-    const response = await fetch(`${baseUrl}/pedido/3/data?id=${id}`);
-    const pedidobusca = await response.json();
-    return pedidobusca[0];
-  } catch(error){
-    throw error;
-  }
 });
 
 export const pedidoSlice = createSlice({

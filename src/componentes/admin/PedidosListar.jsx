@@ -26,6 +26,10 @@ function PedidosListar({ pedido }) {
                 });
             });
     };
+
+    const updateStatus = (value) => {
+        
+    }
     
 
 
@@ -44,8 +48,18 @@ function PedidosListar({ pedido }) {
                         <div class="card card-body">
                             <span></span>
                             <span>Nome do Cliente: {pedido.user.nome} </span>
-                            <span>Status: {pedido.status} </span>
                             <span>Valor total: {pedido.valorTotal}</span>
+                            <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Status</label>
+                            <select class="form-select" id="inputGroupSelect01" value = {pedido.status} onChange={updateStatus(value)}>
+                                <option selected value = {pedido.status} onChange={(e) => updateStatus(value)}>{pedido.status}</option>
+                                <option value="Avaliando Pedido">Avaliando Pedido</option>
+                                <option value="Pedido Aceito">Pedido Aceito</option>
+                                <option value="Sendo Preparado">Sendo Preparado</option>
+                                <option value="Saiu para entrega">Saiu para entrega</option>
+                                <option value="Pedido Finalizado">Pedido finalizado</option>
+                            </select>
+                            </div>
                         </div>
                     </div>
                 </div>
