@@ -57,8 +57,8 @@ function PedidosListar({ pedido }) {
                             <span>Valor total: {pedido.valorTotal}</span>
                             <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Status</label>
-                            <select class="form-select" id="inputGroupSelect01">
-                                <option selected value = {pedido.status} onChange={(e) => updateStatus(value)}>{pedido.status}</option>
+                            <select class="form-select" id="inputGroupSelect01" value = {pedido.status} onChange={(e) => updateStatus(e.target.value)}>
+                                <option selected >{pedido.status}</option>
                                 <option value="Avaliando Pedido">Avaliando Pedido</option>
                                 <option value="Pedido Aceito">Pedido Aceito</option>
                                 <option value="Sendo Preparado">Sendo Preparado</option>
