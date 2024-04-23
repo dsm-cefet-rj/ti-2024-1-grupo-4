@@ -107,13 +107,3 @@ function setupendereco_function({ prevStep, nextStep, step }) {
 }
 
 export default setupendereco_function
-
-{/**
-
-onClick={()=>handleSubmitStep()}
-
-
- <div className='col-md-6 pb-3'>
-                                    <button className='btn btn-padrao bg-tacao-300' onClick={() => prevStep()}>Anterior</button>
-                                </div>
-*/}

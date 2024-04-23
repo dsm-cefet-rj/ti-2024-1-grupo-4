@@ -1,9 +1,9 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addEnderecoServer, fetchEnderecoByUser, updateEnderecoServer } from '../../redux/endereco/enderecoSlice';
 import * as yup from 'yup'
-import {yupResolver} from '@hookform/resolvers/yup'
-import {useForm} from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from "react-hook-form";
 import { updateUserServer, fetchUserByEmail, deleteUserServer } from '../../redux/user/UserSlice';
 import { toast } from 'react-toastify';
 import Endereco_Card from './Endereco_Card';
@@ -12,17 +12,17 @@ import { useNavigate } from 'react-router-dom';
 function Perfil_Usuario() {
   const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
   const enderecoState = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
-  const {enderecos} = useSelector((rootReducer)=>rootReducer.enderecoSlice)  || {};
+  const { enderecos } = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
   console.log(enderecos)
   const status = enderecoState.status;
   const dispatch = useDispatch();
   const history = useNavigate();
 
   useEffect(() => {
-    if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
+    if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
       dispatch(fetchEnderecoByUser(currentUser.id))
-    } else if(status ==='failed'){
-        setTimeout(()=>dispatch(fetchEnderecoByUser(currentUser.id)))
+    } else if (status === 'failed') {
+      setTimeout(() => dispatch(fetchEnderecoByUser(currentUser.id)))
     }
   }, [status, currentUser.id, dispatch]);
 
@@ -39,11 +39,11 @@ function Perfil_Usuario() {
   });
 
   const senhaSchema = yup.object().shape({
-    senha: yup.string().test('password-match', 'A senha fornecida não corresponde à senha armazenada', function(value) {
+    senha: yup.string().test('password-match', 'A senha fornecida não corresponde à senha armazenada', function (value) {
       const storedPassword = currentUser.senha;
       return value === storedPassword;
     }),
-    novaSenha: yup.string().required('A Nova senha deve ser preenchida').min(5,'A quantidade mínima é de 5 dígitos'),
+    novaSenha: yup.string().required('A Nova senha deve ser preenchida').min(5, 'A quantidade mínima é de 5 dígitos'),
     repSenha: yup.string().oneOf([yup.ref('novaSenha'), null], 'As senhas devem ser iguais').required()
   });
 
@@ -59,111 +59,111 @@ function Perfil_Usuario() {
   });
 
   const userUpdate = (data) => {
-    const {nome, email} = data;
+    const { nome, email } = data;
     const id = currentUser.id;
     const senha = currentUser.senha;
     const admin = currentUser.admin;
-    
-    userSchema.validate(data).then((validData)=>{
-      dispatch(updateUserServer({id,nome, email,senha, admin})).then((user)=>{
-        dispatch(fetchUserByEmail({email, senha}))
+
+    userSchema.validate(data).then((validData) => {
+      dispatch(updateUserServer({ id, nome, email, senha, admin })).then((user) => {
+        dispatch(fetchUserByEmail({ email, senha }))
       })
-      
+
     })
-    .catch((error)=>{
-      toast.error("Erro: " + error, {
-        position: "bottom-left",
-        className: "text-spicy-mix bg-banana-mania shadow",
-        autoClose: 2000,
-      });
-    })
+      .catch((error) => {
+        toast.error("Erro: " + error, {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
+        });
+      })
 
   }
   const createEndereco = (data) => {
-    const {CEP, logradouro, numero, complemento} = data;
+    const { CEP, logradouro, numero, complemento } = data;
     const userKey = currentUser.id;
-    enderecoSchema.validate(data).then((validData)=>{
-      dispatch(addEnderecoServer({CEP, logradouro, numero, complemento, userKey})).then((endereco)=>{
-        if(isAction.payload){
+    enderecoSchema.validate(data).then((validData) => {
+      dispatch(addEnderecoServer({ CEP, logradouro, numero, complemento, userKey })).then((endereco) => {
+        if (isAction.payload) {
           toast.info("Endereço adicionado", {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
+            position: "bottom-left",
+            className: "text-spicy-mix bg-banana-mania shadow",
+            autoClose: 2000,
+          });
         }
-        
-      }).catch((error)=>{
-        toast.error("Erro: "+ error, {
+
+      }).catch((error) => {
+        toast.error("Erro: " + error, {
           position: "bottom-left",
           className: "text-spicy-mix bg-banana-mania shadow",
           autoClose: 2000,
         });
       })
-      
+
     })
-    .catch((error)=>{
-      toast.error("Erro: "+ error, {
-        position: "bottom-left",
-        className: "text-spicy-mix bg-banana-mania shadow",
-        autoClose: 2000,
-      });
-    })
+      .catch((error) => {
+        toast.error("Erro: " + error, {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
+        });
+      })
   }
 
-  const enderecoUpdate = (data) =>{
-    const {CEP, logradouro, numero, complemento} = data;
+  const enderecoUpdate = (data) => {
+    const { CEP, logradouro, numero, complemento } = data;
     const userKey = currentUser.id;
-    enderecoSchema.validate(data).then((validData)=>{
-      dispatch(updateEnderecoServer({CEP, logradouro, numero, complemento, userKey})).then((endereco)=> {
-        if(isAction.payload){
+    enderecoSchema.validate(data).then((validData) => {
+      dispatch(updateEnderecoServer({ CEP, logradouro, numero, complemento, userKey })).then((endereco) => {
+        if (isAction.payload) {
           toast.info("Endereço alterado", {
-        position: "bottom-left",
-        className: "text-spicy-mix bg-banana-mania shadow",
-        autoClose: 2000,
-      });
+            position: "bottom-left",
+            className: "text-spicy-mix bg-banana-mania shadow",
+            autoClose: 2000,
+          });
         }
-      }).catch((error)=>{
-        toast.error("Erro: "+ error, {
+      }).catch((error) => {
+        toast.error("Erro: " + error, {
           position: "bottom-left",
           className: "text-spicy-mix bg-banana-mania shadow",
           autoClose: 2000,
         });
       })
-      
+
     })
-    .catch((error)=>{
-      toast.error("Erro: "+ error, {
-        position: "bottom-left",
-        className: "text-spicy-mix bg-banana-mania shadow",
-        autoClose: 2000,
-      });
-    })
+      .catch((error) => {
+        toast.error("Erro: " + error, {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
+        });
+      })
   }
 
   const passUpdate = (data) => {
-    const {senha, novaSenha, repSenha} = data;
+    const { senha, novaSenha, repSenha } = data;
     const id = currentUser.id;
     const email = currentUser.email;
     const nome = currentUser.nome;
     const admin = currentUser.admin;
-    senhaSchema.validate(data).then((validData)=>{
-      dispatch(updateUserServer({id, nome, email, senha:novaSenha, admin})).then((user)=>{
-        dispatch(fetchUserByEmail({email, senha:novaSenha}))
+    senhaSchema.validate(data).then((validData) => {
+      dispatch(updateUserServer({ id, nome, email, senha: novaSenha, admin })).then((user) => {
+        dispatch(fetchUserByEmail({ email, senha: novaSenha }))
       })
     })
-    .catch((error)=>{
-      toast.error("Erro: " + error, {
-        position: "bottom-left",
-        className: "text-spicy-mix bg-banana-mania shadow",
-        autoClose: 2000,
-      });
-    })
+      .catch((error) => {
+        toast.error("Erro: " + error, {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
+        });
+      })
   }
 
   const handleRemove = () => {
     const id = currentUser.id;
-    dispatch(deleteUserServer(id)).then((resposta)=>{
-      if(resposta.payload){
+    dispatch(deleteUserServer(id)).then((resposta) => {
+      if (resposta.payload) {
         history('/');
         toast.info("Conta deletada", {
           position: "bottom-left",
@@ -172,35 +172,35 @@ function Perfil_Usuario() {
         });
       }
     })
-}
+  }
 
 
 
 
 
 
-  
+
   return (
     <>
       <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h1>Perfil do Usuário</h1>
-        <form onSubmit  = {handleSubmitUser(userUpdate)}>
+        <form onSubmit={handleSubmitUser(userUpdate)}>
           <label htmlFor="nome" className='m-2'>Nome do Usuário:</label>
-          <input type="text" id = 'nome' className="form-control" {...registerUser("nome")}  defaultValue={currentUser.nome}  placeholder="Nome do Cliente"></input>
+          <input type="text" id='nome' className="form-control" {...registerUser("nome")} defaultValue={currentUser.nome} placeholder="Nome do Cliente"></input>
           {userErrors && userErrors.nome && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{userErrors.nome.message}</p>}
 
           <label htmlFor="email" className='m-2'>E-mail do usuário:</label>
           <input type="text" className="form-control" {...registerUser("email")} defaultValue={currentUser.email} placeholder="Email do Cliente"></input>
           {userErrors && userErrors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{userErrors.email.message}</p>}
-          <button type = "submit" id = 'email' className='m-3 botao btn btn-primary bg-tacao btn-tacao border-tacao shadow-sm w-50'>Atualizar Informações</button>
-          
+          <button type="submit" id='email' className='m-3 botao btn btn-primary bg-tacao btn-tacao border-tacao shadow-sm w-50'>Atualizar Informações</button>
+
         </form>
       </div>
       <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h2>Endereco</h2>
         {enderecos ? <>
           {Object.values(enderecos).map((endereco) => (
-            <Endereco_Card key = {endereco.id} endereco={endereco} />
+            <Endereco_Card key={endereco.id} endereco={endereco} />
           ))}
         </> : null}
 
@@ -241,7 +241,7 @@ function Perfil_Usuario() {
                 </form>
 
               </div>
-              
+
             </div>
           </div>
         </div>
@@ -249,29 +249,29 @@ function Perfil_Usuario() {
         <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
           className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
         ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-      </svg></button>
-        
-        
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+          </svg></button>
+
+
       </div>
       <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h2>Mudança de senha</h2>
-         <form onSubmit  = {handleSubmitSenha(passUpdate)}>
-          <label htmlFor = 'senha' className='m-2'>Digite sua senha:</label>
-          <input type="password" id = 'senha' className="form-control" {...registerSenha("senha")}></input>
+        <form onSubmit={handleSubmitSenha(passUpdate)}>
+          <label htmlFor='senha' className='m-2'>Digite sua senha:</label>
+          <input type="password" id='senha' className="form-control" {...registerSenha("senha")}></input>
           {senhaErrors && senhaErrors.senha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{senhaErrors.senha.message}</p>}
 
-          <label htmlFor = 'novaSenha' className='m-2'>Digite a nova senha:</label>
-          <input type="password" id = 'novaSenha' className="form-control" {...registerSenha("novaSenha")}></input>
+          <label htmlFor='novaSenha' className='m-2'>Digite a nova senha:</label>
+          <input type="password" id='novaSenha' className="form-control" {...registerSenha("novaSenha")}></input>
           {senhaErrors && senhaErrors.novaSenha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{senhaErrors.novaSenha.message}</p>}
 
-          <label htmlFor = 'repSenha' className='m-2'>Repita a senha:</label>
-          <input type="password" id = 'repSenha' className="form-control"  {...registerSenha("repSenha")}></input>
+          <label htmlFor='repSenha' className='m-2'>Repita a senha:</label>
+          <input type="password" id='repSenha' className="form-control"  {...registerSenha("repSenha")}></input>
           {senhaErrors && senhaErrors.repSenha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{senhaErrors.repSenha.message}</p>}
-          <button type = 'submit' className='m-3 botao btn btn-primary bg-tacao btn-tacao border-tacao shadow-sm w-50'>Atualizar Senha</button>
-          
+          <button type='submit' className='m-3 botao btn btn-primary bg-tacao btn-tacao border-tacao shadow-sm w-50'>Atualizar Senha</button>
 
-         </form>
+
+        </form>
       </div>
       <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h2>Deletar Usuário</h2>
