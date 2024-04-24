@@ -3,30 +3,58 @@
     {
       "id": "1",
       "nome": "Marmelada de banana Novo",
-      "imgUrl": "/img/food.jpg",
+      "imgUrl": "/img/pizza1.png",
       "preco": "16.9",
       "descricao": "Feita com banana e muita marmelada Novo"
     },
     {
       "id": "2",
       "nome": "Bananada de Goiaba",
-      "imgUrl": "/img/food.jpg",
+      "imgUrl": "/img/pizza2.png",
       "preco": 17.9,
       "descricao": "Feita com banana e goiaba"
     },
     {
       "id": "3",
       "nome": "Goiabada de marmelo",
-      "imgUrl": "/img/food.jpg",
+      "imgUrl": "/img/pizza3.png",
       "preco": 11.9,
       "descricao": "Feita com goiaba e muita marmelada"
     },
     {
       "id": "4",
       "nome": "Sitio do pica-pau amarelo",
-      "imgUrl": "/img/food.jpg",
+      "imgUrl": "/img/pizza4.png",
       "preco": 1.9,
       "descricao": "Feita com Lorem Ipsum"
+    },
+    {
+      "id": "5",
+      "nome": "Goiabada de marmelo",
+      "imgUrl": "/img/pizza5.png",
+      "preco": 11.9,
+      "descricao": "Feita com goiaba e muita marmelada"
+    },
+    {
+      "id": "6",
+      "nome": "Goiabada de marmelo",
+      "imgUrl": "/img/pizza6.png",
+      "preco": 11.9,
+      "descricao": "Feita com goiaba e muita marmelada"
+    },
+    {
+      "id": "7",
+      "nome": "Goiabada de marmelo",
+      "imgUrl": "/img/fotopizza.jpg",
+      "preco": 11.9,
+      "descricao": "Feita com goiaba e muita marmelada"
+    },
+    {
+      "id": "2370",
+      "nome": "PRODUTO_TESTE->atualizado!!!!",
+      "imgUrl": "/img/food.jpg",
+      "preco": "3.1415",
+      "descricao": "Produto_teste - > Atualização!!!"
     }
   ],
   "users": [
@@ -101,13 +129,6 @@
       "admin": false
     },
     {
-      "id": "25b5",
-      "nome": "umeee",
-      "email": "bfdbfd@fwfwe",
-      "senha": "oioioi",
-      "admin": false
-    },
-    {
       "id": "9a16",
       "nome": "emanu",
       "email": "oii@oii",
@@ -140,6 +161,13 @@
       "nome": "hernani",
       "email": "hernani@hehe",
       "senha": "hehehe",
+      "admin": false
+    },
+    {
+      "id": "ae6b",
+      "nome": "shasha",
+      "email": "shasha@shasha",
+      "senha": "shasha",
       "admin": false
     }
   ],
@@ -237,6 +265,14 @@
       "numero": 1,
       "complemento": "Casa",
       "userKey": "40e8"
+    },
+    {
+      "id": "bed1",
+      "CEP": "21321456",
+      "logradouro": "rua das frutas",
+      "numero": 23,
+      "complemento": "",
+      "userKey": "ae6b"
     }
   ],
   "pedido": [
@@ -363,7 +399,7 @@
         "cpfPagamento": "12345678910"
       },
       "valorTotal": 16.9,
-      "status": "Avaliando pedido"
+      "status": "Avaliando Pedido"
     },
     {
       "id": "57e0",
@@ -449,6 +485,98 @@
         "cpfPagamento": "12345678910"
       },
       "valorTotal": 13.8,
+      "status": "Avaliando pedido"
+    },
+    {
+      "id": "902b",
+      "user": {
+        "id": "ae6b",
+        "nome": "shasha",
+        "email": "shasha@shasha",
+        "senha": "shasha",
+        "admin": false
+      },
+      "endereco": {
+        "instrucao_pedido": "",
+        "bairro": "gdf",
+        "CompEnd": "gdf",
+        "numEnd": 123,
+        "logradouro": "gdf",
+        "cep": 12312
+      },
+      "products": [
+        {
+          "id": "1",
+          "nome": "Marmelada de banana Novo",
+          "imgUrl": "/img/pizza1.png",
+          "preco": "16.9",
+          "descricao": "Feita com banana e muita marmelada Novo",
+          "quantity": 3
+        },
+        {
+          "id": "3",
+          "nome": "Goiabada de marmelo",
+          "imgUrl": "/img/pizza3.png",
+          "preco": 11.9,
+          "descricao": "Feita com goiaba e muita marmelada",
+          "quantity": 2
+        },
+        {
+          "id": "4",
+          "nome": "Sitio do pica-pau amarelo",
+          "imgUrl": "/img/pizza4.png",
+          "preco": 1.9,
+          "descricao": "Feita com Lorem Ipsum",
+          "quantity": 2
+        }
+      ],
+      "pagamento": {
+        "T_pagamento": "pix",
+        "num_cartao": "",
+        "nome_cartao": "",
+        "datacartao": "",
+        "codcartao": "",
+        "nomePagamento": "shasha",
+        "cpfPagamento": "12345678901"
+      },
+      "valorTotal": 78.3,
+      "status": "Pedido Aceito"
+    },
+    {
+      "id": "0960",
+      "user": {
+        "id": "ae6b",
+        "nome": "shasha",
+        "email": "shasha@shasha",
+        "senha": "shasha",
+        "admin": false
+      },
+      "endereco": {
+        "instrucao_pedido": "",
+        "bairro": "dsa",
+        "CompEnd": "dsa",
+        "numEnd": 312,
+        "logradouro": "sad",
+        "cep": 321
+      },
+      "products": [
+        {
+          "id": "4",
+          "nome": "Sitio do pica-pau amarelo",
+          "imgUrl": "/img/pizza4.png",
+          "preco": 1.9,
+          "descricao": "Feita com Lorem Ipsum",
+          "quantity": 3
+        }
+      ],
+      "pagamento": {
+        "T_pagamento": "cartao_credito",
+        "num_cartao": "5234234536467",
+        "nome_cartao": "1sfasddfa@haha",
+        "datacartao": "2024-04-17",
+        "codcartao": "312"
+      },
+      "valorTotal": 5.699999999999999,
       "status": "Avaliando pedido"
     }
   ]

@@ -9,11 +9,15 @@ function Card(prod) {
     const handleProductClick = () => {
         dispatch(addProductToCart(prod));
     }
+    const estilo = {
+        Width: '250px',
+        Height:'250px'
+    }
 
     return (
         <>
-            <div className="card h-100 border-banana-mania shadow-sm">
-                <img className="card-img-top" src={prod.imgUrl} alt=""></img>
+            <div className="card h-100 border-banana-mania shadow-sm" style={estilo}>
+                <img className="card-img-top" src={prod.imgUrl}  style = {estilo}  width={350} height={250} alt=""></img>
                 <div className="card-body d-flex flex-column justify-content-between align-items-stretch">
                     <h5 className="card-title">{prod.nome}</h5>
                     <p className="card-text">{prod.descricao}</p>
