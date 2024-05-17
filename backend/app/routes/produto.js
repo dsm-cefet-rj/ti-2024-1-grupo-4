@@ -63,10 +63,46 @@ const produto = [
   ]
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.route('/')
+  .get(function (req, res, next) {
     res.statusCode = 200;
-    res.setHeader('Content-Type','application/json');
+    res.setHeader('Content-Type', 'application/json');
     res.json(produto);
-});
+  })
+  .post(
+    (req, res, next) => {
+      produto.push(req.body);
+
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      //no slice nao tem o return explicito, entao ele retorna pelo httpPost, que é o proprio body
+      res.json(req.body);
+    }
+  )
+router.route('/:id')
+  .delete((req, res, next) => {
+    produto = produto.filter(
+      (value, index, arr) => {
+        return value.id != req.params.id;
+      }
+    );
+
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(req.params.id);
+  }
+  )
+  .put((req, res, next) => {
+    produto = produto.filter(
+      (value, index, arr) => {
+        return value.id != req.params.id;
+      }
+    );
+
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(req.params.id);
+  }
+  )
 
 module.exports = router;
