@@ -30,6 +30,8 @@ function Login_page () {
   const onSubmit= (e) => {
     const {email, senha} = e;
     dispatch(fetchUserByEmail({email,senha})).then((result) => {
+      console.log("Este é o result payload do login");
+      console.log(result.payload)
       if(result.payload){
         if(location.pathname === '/login'){
           history('/');
