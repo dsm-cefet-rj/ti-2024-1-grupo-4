@@ -11,8 +11,23 @@ var produtoRouter = require('./routes/produto');
 var enderecoRouter = require('./routes/endereco');
 var entregaRouter = require('./routes/entrega');
 
+const mongoose = require('mongoose');
+
+const url = 'mongodb://localhost:27017/luigipizzeria';
+
+const connect = mongoose.connect(url);
+
+connect.then(
+    (db) => {
+        console.log("Conectado corretamente ao servidor");
+    }, (err) => {
+        console.log(err);
+    }
+);
+
 
 var app = express();
+
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());

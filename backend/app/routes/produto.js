@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+const produto = require('../models/produto');
+
 //produto proxy
 
+/*
 const produto = [
     {
       "id": "1",
@@ -61,13 +64,28 @@ const produto = [
       "descricao": "Produto_teste - > Atualização!!!"
     }
   ]
+  */
 
 /* GET users listing. */
 router.route('/')
   .get(function (req, res, next) {
+    produto.find({})
+      .then(
+        (produtosBanco) => {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(produtosBanco);
+        },(err) => next(err))
+        .catch(
+          (err) => next(err)
+        );
+/*
+variavel local
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.json(produto);
+    */
+
   })
   .post(
     (req, res, next) => {
