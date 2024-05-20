@@ -3,6 +3,7 @@
         "backend":"cd backend/app && npm start",
         "frontend": "cd frontend && npm run dev",
         "start":"concurrently \"npm run backend\" \"npm run frontend\" "
+        
     },
     "dependencies": {
         "concurrently": "^8.2.2"

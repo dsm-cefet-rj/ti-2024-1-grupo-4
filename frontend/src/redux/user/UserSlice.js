@@ -25,7 +25,7 @@ export const fetchUserByEmail = createAsyncThunk('users/fetchUSerByEmail', async
     const user = await response.json();
     console.log("Este é o usuario do userslice apos o fetch");
     console.log(user);
-    return user[0];
+    return user;
   } catch(error){
     throw error;
   }

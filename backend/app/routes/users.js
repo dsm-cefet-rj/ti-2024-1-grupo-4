@@ -3,20 +3,22 @@ var router = express.Router();
 
 const user = 
   [
-    {
-      "id": "1",
-      "nome": "emanu",
-      "email": "emanu@nunu",
-      "senha": "nununu",
-      "admin": true
-    },
-    {
-      "id": "2",
-      "nome": "shasha",
-      "email": "shasha@shasha",
-      "senha": "shasha",
-      "admin": true
-    },
+    
+      {
+        "id": "1",
+        "nome": "emanu",
+        "email": "emanu@nunu",
+        "senha": "nununu",
+        "admin": true
+      },
+    
+      {
+        "id": "2",
+        "nome": "shasha",
+        "email": "shasha@shasha",
+        "senha": "shasha",
+        "admin": true
+      },
   ]
 
 
@@ -31,6 +33,7 @@ router.route('/')
       const temp =  user.find(
         (u) => u.email === email 
       )
+
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json(temp);
