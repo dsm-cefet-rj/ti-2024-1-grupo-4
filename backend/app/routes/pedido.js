@@ -55,11 +55,12 @@ const pedido = [
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
+  pedido.push(req.body);
 
   res.statusCode = 200;
   res.setHeader('Content-Type','application/json');
-  res.json(pedido);
+  res.json(req.body);
 
 });
 

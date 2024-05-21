@@ -26,7 +26,8 @@ export const deleteProdutoServer = createAsyncThunk('produto/deleteProdutoServer
 });
 
 export const addProdutoServer = createAsyncThunk('produto/addProdutoServer', async (produto, {getState}) => {
-    toast.success(produto.nome + " criado com sucesso!", {
+
+  toast.success(produto.nome + " criado com sucesso!", {
       position: "bottom-left",
       className: "text-spicy-mix bg-banana-mania shadow",
       autoClose: 4000,
@@ -35,7 +36,7 @@ export const addProdutoServer = createAsyncThunk('produto/addProdutoServer', asy
 });
 // ver o vídeo para ver se o código está ok
 export const updateProdutoServer = createAsyncThunk('produto/updateProdutoServer', async (produto, {getState}) => {
-    toast.info(produto.nome + " foi alterado!", {
+      toast.info(produto.nome + " foi alterado!", {
       position: "bottom-left",
       className: "text-spicy-mix bg-banana-mania shadow",
       autoClose: 4000,

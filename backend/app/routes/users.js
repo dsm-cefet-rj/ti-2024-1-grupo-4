@@ -79,7 +79,7 @@ router.route('/:id')
      * @param items Elements to insert into the array in place of the deleted elements.
      * @returns An array containing the elements that were deleted.
      */
-    produto.splice(index, 1, req.body);
+    user.splice(index, 1, req.body);
 
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');

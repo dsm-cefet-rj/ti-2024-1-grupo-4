@@ -15,7 +15,7 @@ function ProdutoItemDelete({ produto }) {
                     <div className="card-body d-flex justify-content-between">
                         <h5 className="card-title">{produto.nome}</h5>
                         <div className="d-flex justify-content-between align-items-center gap-2">
-                            <button class="btn btn-tacao" type="button" data-bs-toggle="collapse" data-bs-target={"#"+produto.id} aria-expanded="false" aria-controls={produto.id}>Mostrar mais</button>
+                            <button className="btn btn-tacao" type="button" data-bs-toggle="collapse" data-bs-target={"#"+produto.id} aria-expanded="false" aria-controls={produto.id}>Mostrar mais</button>
                             <button type="button" className="btn btn-brick-red" onClick={handleRemove}>Deletar</button>                  
                         </div>
                     </div>

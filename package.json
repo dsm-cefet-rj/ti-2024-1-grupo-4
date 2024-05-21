@@ -2,7 +2,8 @@
     "scripts": {
         "backend":"cd backend/app && npm start",
         "frontend": "cd frontend && npm run dev",
-        "start":"concurrently \"npm run backend\" \"npm run frontend\" "
+        "start":"concurrently \"npm run backend\" \"npm run frontend\" ",
+        "restart-back":"cd backend/app && \"<Ctrl> + C\" \"s\" \"npm start\" "
         
     },
     "dependencies": {

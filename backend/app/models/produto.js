@@ -20,7 +20,7 @@ UUID
 
 const ProdutoSchema = mongoose.Schema(
   {
-    _id:false,
+    
     id:{
         type:String, //objectID. tostring
         required:true,
@@ -60,6 +60,8 @@ const ProdutoSchema = mongoose.Schema(
 
 
 module.exports = mongoose.model('produto', ProdutoSchema);
+//
+
 /**
  *const produto = [
     {

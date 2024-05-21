@@ -27,43 +27,54 @@ router.route('/')
       res.json(req.body);
     }
   )
+
 router.route('/:id')
   .delete((req, res, next) => {
-    produto = produto.filter(
-      (value, index, arr) => {
-        return value.id != req.params.id;
-      }
-    );
-
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json(req.params.id);
+    produto.findByIdAndRemove(req.params.id)
+      .then(
+        (result) => {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(result);
+        },(err) => next(err)
+      ).catch(
+        (err) => next(err)
+      );
   }
   )
-  .put((req, res, next) => {
-    // .map(produto=>produto.id) = arrow function de um objeto produto de produto(o array e produtos),
-    // onde retorna para o map o id desse objeto, lendo-se:
-    //dentro de um array de ids de produtos, há um produto igual ao id do parametro da requisition -> poem em index
+  .put((req, res, next) => { 
 
-    let index = produto.map(produto => produto.id).indexOf(req.params.id);
-    //slice = Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
-    /**
-     *     splice(start: number, deleteCount?: number): T[];
-    /**
-     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
-     * @param start The zero-based location in the array from which to start removing elements.
-     * @param deleteCount The number of elements to remove.
-     * @param items Elements to insert into the array in place of the deleted elements.
-     * @returns An array containing the elements that were deleted.
-     */
-    produto.splice(index,1,req.body);
 
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    //retorna body segundo o splice e produto
-    res.json(req.body);
+    //se a alteração nao for no objeto inteiro, atomica, tem que por na forma de set: All top level update keys which are not atomic operation names are treated as set operations:
+    //[options.new=false] «Boolean» if true, return the modified document rather than the original
+    
+    produto.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+      .then(
+        (produto_alterado) => {
+          console.log("console dentro do put de produto no backend");
+          console.log(req);
+          console.log(req.body);
+        
+            if (!produto_alterado) {
+              res.status(404).json({ error: 'Produto não encontrado' });
+            } else {
+              
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.json(produto_alterado);
+              //res.status(200).json(produto_alterado);
+            }
+          
+        },
+        (err) => next(err)
+      )
+      .catch(
+        (err) => next(err)
+      );
+      
   }
   )
+ 
 
 module.exports = router;
 
