@@ -21,7 +21,6 @@ router.route('/')
   .post(
     (req, res, next) => {
       req.body.id = 0;
-      console.log(req.body)
       produto.create(req.body)
       .then(
         (produto) => {
@@ -40,11 +39,7 @@ router.route('/')
   )
 
 router.route('/:id')
-//precisa fazer delete ainda
   .delete((req, res, next) => {
-    console.log("CONSOLE LOG NO DELETE DE PRODUTO DO BACKEND");
-    console.log(req);
-    console.log(res.body);
     produto.findByIdAndDelete(req.params.id)
       .then(
         (result) => {
@@ -65,14 +60,9 @@ router.route('/:id')
     produto.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
       .then(
         (produto_alterado) => {
-          console.log("console dentro do put de produto no backend");
-          console.log(req);
-          console.log(req.body);
-        
             if (!produto_alterado) {
               res.status(404).json({ error: 'Produto não encontrado' });
             } else {
-              
               res.statusCode = 200;
               res.setHeader('Content-Type', 'application/json');
               res.json(produto_alterado);

@@ -20,7 +20,6 @@ UUID
 
 const UserSchema = mongoose.Schema(
   {
-    _id:false,
     id:{
         type:String, //objectID. tostring
         required:true,
@@ -35,7 +34,7 @@ const UserSchema = mongoose.Schema(
         required:true,
     },
     senha:{
-        type:Number,
+        type:String,
         required:true,
     },
     admin:{
@@ -47,7 +46,6 @@ const UserSchema = mongoose.Schema(
     toJSON: {
       virtuals: true,
       transform(doc, ret) {
-        delete ret.__v
         delete ret.password
         ret.id = ret._id
         delete ret._id
@@ -172,7 +170,7 @@ module.exports = mongoose.model('users', UserSchema);
       "nome": "shasha",
       "email": "shasha@shasha",
       "senha": "shasha",
-      "admin": false
+      "admin": true
     }
   ]
  * 

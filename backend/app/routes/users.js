@@ -1,25 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const user = 
-  [
-    
-      {
-        "id": "1",
-        "nome": "emanu",
-        "email": "emanu@nunu",
-        "senha": "nununu",
-        "admin": true
-      },
-    
-      {
-        "id": "2",
-        "nome": "shasha",
-        "email": "shasha@shasha",
-        "senha": "shasha",
-        "admin": true
-      },
-  ]
+  const user = require('../models/users');
 
 
 /* GET users listing. */
@@ -27,16 +9,22 @@ const user =
 router.route('/')
   .get(
     //criar um if aqui para o emailExistServer
-    function (req, res, next) {
-      const { email, senha } = req.query;
+    
+    async function (req, res, next) {
+      try{
+        const { email, senha } = req.query;
 
-      const temp =  user.find(
-        (u) => u.email === email 
-      )
+        const user_temp = await user.findOne({email:email});
 
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json(temp);
+        if(user_temp && user_temp.senha == senha){
+          res.status(200).json(user_temp);
+        }else{
+          res.status(404).json({ error: 'Credenciais nao batem!' });
+        }
+      }catch(err){
+        console.error('Erro ao procurar usuário:', err);
+        res.status(500).json({ error: 'Erro no servidor' });
+      }
     }
   )
   .post(
