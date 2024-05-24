@@ -18,8 +18,6 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async (_, {getState
 
 export const fetchUserByEmail = createAsyncThunk('users/fetchUSerByEmail', async(payload, {getState}) =>{
   try{
-    console.log("Payload do userslice antes do fetch")
-    console.log(payload)
     const {email, senha} = payload
     const response = await fetch(`${baseUrl}/users?email=${email}&senha=${senha}`);
     const user = await response.json();

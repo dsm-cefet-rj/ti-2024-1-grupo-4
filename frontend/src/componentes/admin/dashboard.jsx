@@ -28,6 +28,8 @@ function Dashboard() {
     const statusPedidos = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
     console.log(pedidos)
+    //retirar do useEffect fetchUser e fetchPedido
+    /*
     useEffect(() => {
         if (statusProdutos === 'not_loaded' || statusProdutos === 'saved' || statusProdutos === 'deleted') {
           dispatch(fetchProduto());   
@@ -37,6 +39,7 @@ function Dashboard() {
             dispatch(fetchPedido());
         }
     }, [status, dispatch]);
+    */
 
     const [formData, setFormData] = useState({
         nome: '',
@@ -75,6 +78,18 @@ function Dashboard() {
             setErrors(newErrors);
         }
     };
+    const handleListarClientes =  (e) => {
+        e.preventDefault();
+
+            dispatch(fetchUser());
+
+    }
+    const handleListarPedidos =  (e) => {
+        e.preventDefault();
+
+            dispatch(fetchPedido());
+   
+    }
 
 
 
@@ -160,7 +175,7 @@ function Dashboard() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="listarClientesLabel">Listar Clientes</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button> 
                         </div>
                         <div className="modal-body">
                             <div className="col">
@@ -181,7 +196,7 @@ function Dashboard() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="listarPedidosLabel">Listar Pedidos</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
                         </div>
                         <div className="modal-body">
                             <div className="col">
@@ -211,9 +226,11 @@ function Dashboard() {
                     >Deletar produto</button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#listarClientes"
                         className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                        onClick={handleListarClientes}
                     >Listar Cliente</button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#listarPedidos"
                         className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+                        onClick={handleListarPedidos}
                     >Listar Pedidos</button>      
                 </div>
             </div>

@@ -9,21 +9,39 @@ var router = express.Router();
 router.route('/')
   .get(
     //criar um if aqui para o emailExistServer
-    
     async function (req, res, next) {
-      try{
-        const { email, senha } = req.query;
-
-        const user_temp = await user.findOne({email:email});
-
-        if(user_temp && user_temp.senha == senha){
-          res.status(200).json(user_temp);
-        }else{
-          res.status(404).json({ error: 'Credenciais nao batem!' });
+      const { email, senha } = req.query;
+      if(email && senha){
+        try{
+          const user_temp = await user.findOne({email:email});
+  
+          if(user_temp && user_temp.senha == senha){
+            res.status(200).json(user_temp);
+          }else{
+            res.status(404).json({ error: 'Credenciais nao batem!' });
+          }
+        }catch(err){
+          console.error('Erro ao procurar usuário:', err);
+          res.status(500).json({ error: 'Erro no servidor' });
         }
-      }catch(err){
-        console.error('Erro ao procurar usuário:', err);
-        res.status(500).json({ error: 'Erro no servidor' });
+
+      }else{
+          if(!email && !senha){
+            //get all users
+            user.find({})
+            .then(
+              (usersBanco) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(usersBanco);
+              },(err) => next(err))
+              .catch(
+                (err) => next(err)
+              );
+          }else{
+            
+            res.status(404).json({ error: 'Erro no servidor' });
+          }
       }
     }
   )
