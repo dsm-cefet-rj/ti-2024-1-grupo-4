@@ -3,7 +3,47 @@ var router = express.Router();
 
 // dado proxy
 
-const pedido = [
+const { pedido } = require('../models/pedido');
+
+/* GET users listing. */
+
+router.route('/')
+  .get(function (req, res, next) {
+    pedido.find({})
+      .then(
+        (pedidosBanco) => {
+          res.status(200).json(pedidosBanco);
+        }, (err) => next(err))
+      .catch(
+        (err) => next(err)
+      );
+
+  })
+  .post(function (req, res, next) {
+    pedido.push(req.body);
+    res.status(200).json(req.body);
+
+  })
+router.route('/pedido/')
+  .get(function (req, res, next) {
+    const { id, admin } = req.query;
+    if (id) {
+      pedido.find({ 'user.id': id })
+        .then(
+          (pedidosBanco) => {
+            res.status(200).json(pedidosBanco);
+          }, (err) => next(err))
+        .catch(
+          (err) => next(err)
+        );
+    } else {
+      res.status(404).json({ error: 'Erro. ID indefinido' });
+    }
+  })
+
+module.exports = router;
+/*
+[
   {
     "id": "e451",
     "user": {
@@ -52,16 +92,4 @@ const pedido = [
     "status": "Avaliando pedido"
   }
 ]
-
-
-/* GET users listing. */
-router.post('/', function(req, res, next) {
-  pedido.push(req.body);
-
-  res.statusCode = 200;
-  res.setHeader('Content-Type','application/json');
-  res.json(req.body);
-
-});
-
-module.exports = router;
+*/

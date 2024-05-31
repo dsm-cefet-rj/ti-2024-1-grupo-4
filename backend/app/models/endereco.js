@@ -29,4 +29,8 @@ const EnderecoSchema = mongoose.Schema(
         }
     }
 );
-module.exports = mongoose.model('endereco',EnderecoSchema);
+const enderecoModel = mongoose.model('endereco',EnderecoSchema);
+module.exports = {
+    EnderecoSchema,
+    enderecoModel
+}

@@ -47,24 +47,24 @@ function PedidosListar({ pedido }) {
                     <div className="card-body d-flex justify-content-between">
                         <h5 className="card-title">Pedido id: {pedido.id}</h5>
                         <div className="d-flex justify-content-between align-items-center gap-2">
-                            <button class="btn btn-tacao" type="button" data-bs-toggle="collapse" data-bs-target={"#"+pedido.id} aria-expanded="false" aria-controls={pedido.id}>Mostrar mais</button>
-                            <button type="button" className="btn btn-brick-red" onClick = {handleDelete}>Deletar</button>            
+                            <button className="btn btn-tacao" type="button" data-bs-toggle="collapse" data-bs-target={"#" + pedido.id} aria-expanded="false" aria-controls={pedido.id}>Mostrar mais</button>
+                            <button type="button" className="btn btn-brick-red" onClick={handleDelete}>Deletar</button>
                         </div>
                     </div>
-                    <div class="collapse" id={pedido.id}>
-                        <div class="card card-body">
+                    <div className="collapse" id={pedido.id}>
+                        <div className="card card-body">
                             <span>Nome do Cliente: {pedido.user.nome} </span>
                             <span>Valor total: {pedido.valorTotal}</span>
-                            <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Status</label>
-                            <select class="form-select" id="inputGroupSelect01" value = {pedido.status} onChange={(e) => updateStatus(e.target.value)}>
-                                <option selected >{pedido.status}</option>
-                                <option value="Avaliando Pedido">Avaliando Pedido</option>
-                                <option value="Pedido Aceito">Pedido Aceito</option>
-                                <option value="Sendo Preparado">Sendo Preparado</option>
-                                <option value="Saiu para entrega">Saiu para entrega</option>
-                                <option value="Pedido Finalizado">Pedido finalizado</option>
-                            </select>
+                            <div className="input-group mb-3">
+                                <label className="input-group-text" for="inputGroupSelect01">Status</label>
+                                <select className="form-select" id="inputGroupSelect01" value={pedido.status} onChange={(e) => updateStatus(e.target.value)}>
+                                    <option selected >{pedido.status}</option>
+                                    <option value="Avaliando Pedido">Avaliando Pedido</option>
+                                    <option value="Pedido Aceito">Pedido Aceito</option>
+                                    <option value="Sendo Preparado">Sendo Preparado</option>
+                                    <option value="Saiu para entrega">Saiu para entrega</option>
+                                    <option value="Pedido Finalizado">Pedido finalizado</option>
+                                </select>
                             </div>
                         </div>
                     </div>

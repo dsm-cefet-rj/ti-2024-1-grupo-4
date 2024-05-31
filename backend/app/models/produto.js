@@ -57,9 +57,12 @@ const ProdutoSchema = mongoose.Schema(
   }
 );
 
+const produto = mongoose.model('produto', ProdutoSchema);
 
-
-module.exports = mongoose.model('produto', ProdutoSchema);
+module.exports = {
+  ProdutoSchema,
+  produto,
+}
 //
 
 /**

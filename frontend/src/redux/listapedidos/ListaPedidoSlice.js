@@ -35,15 +35,16 @@ export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async 
     return await httpPost(`${baseUrl}/pedido`, pedido);
 });
 
-export const fetchPedidosByUser = createAsyncThunk('pedido/fetchPedidoByUser', async(payload, {getState}) =>{
-  try{
+export const fetchPedidosByUser = createAsyncThunk('pedido/fetchPedidoByUser', async (payload, { getState }) => {
+  try {
     //Pega todos os pedidos do user
-    const response = await fetch(`${baseUrl}/pedido/`);
+    //revisar a utilização do admin aqui
+    const { id, admin } = payload;
+    const response = await fetch(`${baseUrl}/pedido/pedido?id=${id}&admin=${admin}`);
     const pedidos = await response.json();
 
-    const pedidoByUser = pedidos.filter(pedido => pedido.user.id === payload.id);
-    return pedidoByUser;
-  } catch(error){
+    return pedidos;
+  } catch (error) {
     throw error;
   }
 });

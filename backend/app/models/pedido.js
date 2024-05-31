@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
-const produtos = require('./produto');
-const user = require('./users');
+const {ProdutosSchema} = require('./produto');
+const {UserSchema} = require('./users');
+const {EnderecoSchema} = require('./endereco');
 
 
 /*
+
 * types:
 * String
 Number
@@ -37,7 +39,7 @@ UUID
       },
 
  */
-const pagamento = new Schema(
+const pagamentoSchema = new mongoose.Schema(
     {
         T_pagamento:{
             type:String,
@@ -67,31 +69,36 @@ const pagamento = new Schema(
 );
 
 const PedidoSchema = mongoose.Schema(
-    {
+  {
 
-        id: {
-            type: String, //objectID. tostring
-            required: true,
-        },
-
-        user: user,
-
-        endereco: {
-            type: String,
-            required: true,
-        },
-        produtos: [produtos],
-
-        pagamento: pagamento,
-        
-        valor_total: {
-            type: Number,
-            required: true,
-        },
-        status: {
-            type: String,
-            required: true,
-        }
+    id: {
+      type: String, //objectID. tostring
+      required: true,
+    },
+    user: {
+      type: UserSchema,
+      required: true,
+    },
+    endereco: {
+      type: EnderecoSchema,
+      required: true,
+    },
+    produtos: {
+      type: [ProdutosSchema],
+      required: true,
+    },
+    pagamento: {
+      type: pagamentoSchema,
+      required: true,
+    },
+    valor_total: {
+      type: Number,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    }
   },
   {
     toJSON: {
@@ -107,9 +114,12 @@ const PedidoSchema = mongoose.Schema(
   }
 );
 
+const pedido =  mongoose.model('pedido', PedidoSchema);
 
-
-module.exports = mongoose.model('pedido', PedidoSchema);
+module.exports = {
+  PedidoSchema,
+  pedido,
+}
 //
 /**
  * Poderia ser/ deveria ser dessa forma

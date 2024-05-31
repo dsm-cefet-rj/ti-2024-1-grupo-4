@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-  const user = require('../models/users');
+  const {user} = require('../models/users');
 
 
 /* GET users listing. */
