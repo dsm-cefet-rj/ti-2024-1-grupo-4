@@ -57,7 +57,7 @@ const pagamentoSchema = new mongoose.Schema(
             type:Number,
         },
         nomePagamento:{
-            type:Number,
+            type:String,
         },
         cpfPagamento:{
             type:Number,
@@ -83,7 +83,7 @@ const PedidoSchema = mongoose.Schema(
       type: EnderecoSchema,
       required: true,
     },
-    produtos: {
+    products: {
       type: [ProdutosSchema],
       required: true,
     },
@@ -91,9 +91,8 @@ const PedidoSchema = mongoose.Schema(
       type: pagamentoSchema,
       required: true,
     },
-    valor_total: {
+    valorTotal: {
       type: Number,
-      required: true,
     },
     status: {
       type: String,

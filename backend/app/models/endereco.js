@@ -5,19 +5,15 @@ const EnderecoSchema = mongoose.Schema(
     {
         id:{
             type: String,
-            required: true,
         },
         CEP:{
-            type: String,
-            required: true,
+            type: Number,
         },
         logradouro:{
             type: String,
-            required: true,
         },
         numero:{
             type: Number,
-            required: true,
         },
         complemento:{
             type: String,
@@ -25,7 +21,6 @@ const EnderecoSchema = mongoose.Schema(
         },
         userKey:{
             type: String,
-            required: true,
         }
     }
 );
@@ -34,3 +29,8 @@ module.exports = {
     EnderecoSchema,
     enderecoModel
 }
+
+/*
+required: true,
+Ver como dar cast para orbrigar a vir como String
+*/

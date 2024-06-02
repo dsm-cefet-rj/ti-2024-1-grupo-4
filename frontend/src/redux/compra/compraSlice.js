@@ -36,6 +36,7 @@ function setStatusReducer(state,payload){
 
 
 export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async (pedido, {getState}) => {
+    console.log(pedido);
     return await httpPost(`${baseUrl}/pedido`, pedido);
 });
 
