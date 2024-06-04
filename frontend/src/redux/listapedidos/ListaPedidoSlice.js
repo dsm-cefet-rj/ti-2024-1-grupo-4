@@ -16,14 +16,14 @@ export const fetchPedido = createAsyncThunk('pedido/fetchPedido', async (_, {get
     return await httpGet(`${baseUrl}/pedido`);
 });
 
-export const deletePedidoServer = createAsyncThunk('pedido/deletePedidoServer', async (pedido, {getState}) => {
-    await httpDelete(`${baseUrl}/pedido/${pedido.id}`);
-    toast.warning(pedido.id + " removido!", {
+export const deletePedidoServer = createAsyncThunk('pedido/deletePedidoServer', async (pedidoID, {getState}) => {
+    await httpDelete(`${baseUrl}/pedido/${pedidoID}`);
+    toast.warning(pedidoID + " removido!", {
       position: "bottom-left",
       className: "text-spicy-mix bg-banana-mania shadow",
       autoClose: 4000,
     });
-    return pedido.id;
+    return pedidoID;
 });
 
 export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async (pedido, {getState}) => {

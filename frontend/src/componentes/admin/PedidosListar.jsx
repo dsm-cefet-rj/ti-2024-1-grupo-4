@@ -54,11 +54,10 @@ function PedidosListar({ pedido }) {
                     <div className="collapse" id={pedido.id}>
                         <div className="card card-body">
                             <span>Nome do Cliente: {pedido.user.nome} </span>
-                            <span>Valor total: {pedido.valorTotal}</span>
+                            <span>Valor total: {pedido.valorTotal.toLocaleString('pt-br',{style: 'currency', currency:'BRL'})}</span>
                             <div className="input-group mb-3">
-                                <label className="input-group-text" for="inputGroupSelect01">Status</label>
+                                <label className="input-group-text" htmlFor="inputGroupSelect01">Status</label>
                                 <select className="form-select" id="inputGroupSelect01" value={pedido.status} onChange={(e) => updateStatus(e.target.value)}>
-                                    <option selected >{pedido.status}</option>
                                     <option value="Avaliando Pedido">Avaliando Pedido</option>
                                     <option value="Pedido Aceito">Pedido Aceito</option>
                                     <option value="Sendo Preparado">Sendo Preparado</option>

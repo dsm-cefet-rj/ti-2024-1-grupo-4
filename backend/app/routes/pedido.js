@@ -6,6 +6,37 @@ var router = express.Router();
 const { pedido } = require('../models/pedido');
 
 /* GET users listing. */
+router.route('/:id')
+.delete((req, res, next) => {
+  pedido.findByIdAndDelete(req.params.id)
+    .then(
+      (result) => {
+        res.status(200).json(result);
+      },(err) => next(err)
+    ).catch(
+      (err) => next(err)
+    );
+}
+)
+.put((req, res, next) => { 
+  pedido.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+    .then(
+      (pedido_alterado) => {
+          if (!pedido_alterado) {
+            res.status(404).json({ error: 'pedido não encontrado' });
+          } else {
+            res.status(200).json(pedido_alterado);
+          }
+        
+      },
+      (err) => next(err)
+    )
+    .catch(
+      (err) => next(err)
+    );
+    
+}
+)
 
 router.route('/')
   .get(function (req, res, next) {
