@@ -6,18 +6,27 @@ const EnderecoSchema = mongoose.Schema(
         id:{
             type: String,
         },
-        CEP:{
+        cep:{
             type: Number,
         },
         logradouro:{
             type: String,
         },
-        numero:{
+        numeroEndereco:{
             type: Number,
         },
         complemento:{
             type: String,
             required: false,
+        },
+        bairro:{
+            type:String,
+        },
+        complemento:{
+            type:String,
+        },
+        instrucaoPedido:{
+            type:String,
         },
         userKey:{
             type: String,

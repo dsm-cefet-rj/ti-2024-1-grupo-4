@@ -33,10 +33,10 @@ function Register_page() {
     nome: yup.string().max(50).required(),
     senha: yup.string().min(5, 'A quantidade de caracteres da senha é de no mínimo 5').required(),
     repSenha: yup.string().oneOf([yup.ref('senha'), null], 'As senhas devem ser iguais').required('Este campo deve ser preenchido'),
-    CEP: yup.string().required('CEP é obrigatório'),
+    cep: yup.string().required('cep é obrigatório'),
     logradouro: yup.string().required('Logradouro é obrigatório'),
     complemento: yup.string(),
-    numero: yup.number().positive().required('Número é obrigatório')
+    numeroEndereco: yup.number().positive().required('Número é obrigatório')
     
   });
 
@@ -45,7 +45,7 @@ function Register_page() {
     })
 
   const onSubmit = (data) => {
-    const { email, nome, senha, repSenha, CEP, logradouro, numero, complemento } = data;
+    const { email, nome, senha, repSenha, cep, logradouro, numeroEndereco, complemento } = data;
   
     dispatch(emailExistServer(email)).then((result) => {
       if (result.payload) {
@@ -60,7 +60,7 @@ function Register_page() {
             dispatch(fetchUserByEmail({ email, senha })).then((user) => {
               if (user.payload) {
                 const userKey = user.payload.id;
-                dispatch(addEnderecoServer({ CEP, logradouro, numero, complemento, userKey })).then((addressAdded) => {
+                dispatch(addEnderecoServer({ cep, logradouro, numeroEndereco, complemento, userKey })).then((addressAdded) => {
                   if (addressAdded.payload) {
                     toast.info("Usuário e endereço cadastrados com sucesso", {
                       position: "bottom-left",
@@ -142,8 +142,8 @@ function Register_page() {
               <h2>Endereço</h2>
             <div className="col-md-4">
               <label className="form-label">CEP</label>
-              <input type="text" className="form-control" {...register("CEP")}></input>
-              {errors.endereco?.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.CEP.message}</p>}
+              <input type="text" className="form-control" {...register("cep")}></input>
+              {errors.endereco?.cep && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.cep.message}</p>}
             </div>
             <div className="col-8">
               <label className="form-label">Logradouro</label>
@@ -156,8 +156,8 @@ function Register_page() {
             </div>
             <div className="col-6">
               <label className="form-label">Número</label>
-              <input type="number" className="form-control" {...register("numero")}></input>
-              {errors.endereco?.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.endereco.numero.message}</p>}
+              <input type="number" className="form-control" {...register("numeroEndereco")}></input>
+              {errors.endereco?.numeroEndereco && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.endereco.numeroEndereco.message}</p>}
             </div>
 
           

@@ -63,28 +63,28 @@ function setupendereco_function({ prevStep, nextStep, step }) {
                             </div>
                             <div className='row'>
                                 <div className='col-md-6'>
-                                    <label htmlFor='numEnd'>Número</label>
-                                    <input type='text' className='form-control' id='numEnd' name='numEnd' {...register('numEnd')} />
-                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.numEnd?.message}</p>
+                                    <label htmlFor='numeroEndereco'>Número</label>
+                                    <input type='text' className='form-control' id='numeroEndereco' name='numeroEndereco' {...register('numeroEndereco')} />
+                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.numeroEndereco?.message}</p>
                                 </div>
                                 <div className='col-md-6'>
-                                    <label htmlFor='CompEnd'>Bairro</label>
+                                    <label htmlFor='bairro'>Bairro</label>
                                     <input type='text' className='form-control' id='bairro' name='bairro' {...register('bairro')} />
                                     <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.bairro?.message}</p>
                                 </div>
                                 <div className='col-md-12 p-2'>
-                                    <label htmlFor='CompEnd'>Complemento</label>
-                                    <input type='text' className='form-control' id='CompEnd' name='CompEnd' {...register('CompEnd')} />
-                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.CompEnd?.message}</p>
+                                    <label htmlFor='complemento'>Complemento</label>
+                                    <input type='text' className='form-control' id='complemento' name='complemento' {...register('complemento')} />
+                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.complemento?.message}</p>
                                 </div>
                                 <div className='p-1'>
                                     <hr />
                                 </div>
                                 <div className='col-md-12'>
                                     <div className="mb-3">
-                                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Instruções de Entrega</label>
-                                        <textarea className="form-control" name='instrucao_pedido' {...register('instrucao_pedido')} id="exampleFormControlTextarea1" rows="1"></textarea>
-                                        <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.instrucao_pedido?.message}</p>
+                                        <label htmlFor="instrucaoPedido" className="form-label">Instruções de Entrega</label>
+                                        <textarea className="form-control" name='instrucaoPedido' {...register('instrucaoPedido')} id="exampleFormControlTextarea1" rows="1"></textarea>
+                                        <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.instrucaoPedido?.message}</p>
                                     </div>
                                 </div>
                             </div>
