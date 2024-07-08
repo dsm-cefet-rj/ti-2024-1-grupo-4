@@ -71,10 +71,7 @@ const pagamentoSchema = new mongoose.Schema(
 const PedidoSchema = mongoose.Schema(
   {
 
-    id: {
-      type: String, //objectID. tostring
-      required: true,
-    },
+    id:mongoose.ObjectId,
     user: {
       type: UserSchema,
       required: true,

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
   const {user} = require('../models/users');
+const passport = require('passport');
 
 
 /* GET users listing. */
@@ -93,6 +94,35 @@ router.route('/:id')
     res.json(req.body);
   }
   )
+
+router.post('/signup', (req, res, next) => {
+  user.register(new user({ username: req.body.username,nome:req.body.nome,admin:req.body.admin }),
+    req.body.password, (err, user) => {
+      if (err) {
+        res.status(500).json({ err: err });
+      } else {
+        passport.authenticate('local')(req,res,() => {
+          res.status(200).json({success:true,status:'Registro confirmado'});
+        });
+      }
+    });
+});
+
+router.post('/login', passport.authenticate('local'),(req,res)=>{
+  res.status(200).json({success:true,status:'Você está logado'});
+});
+
+router.get('/logout',(req,res) => {
+  if(req.session){
+    req.session.destroy();
+    res.clearCookie('session-id');
+    res.redirect('/');
+  }else{
+    var err = new Error('Voce nao esta logado');
+    err.status = 403;
+    next(err);
+  }
+})
 
 
 module.exports = router;

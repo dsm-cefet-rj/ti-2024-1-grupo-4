@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-
-
+var passportLocalMongoose = require('passport-local-mongoose');
 
 /*
 * types:
@@ -18,22 +17,11 @@ UUID
 * 
 */
 
+
 const UserSchema = mongoose.Schema(
   {
-    id:{
-        type:String, //objectID. tostring
-        required:true,
-    }
-   ,
+    id:mongoose.ObjectId,
     nome:{
-        type:String,
-        required:true,
-    },
-    email:{
-        type:String,
-        required:true,
-    },
-    senha:{
         type:String,
         required:true,
     },
@@ -54,6 +42,9 @@ const UserSchema = mongoose.Schema(
     }
   }
 );
+
+UserSchema.plugin(passportLocalMongoose);
+
 const user = mongoose.model('users', UserSchema);
 
 module.exports = {

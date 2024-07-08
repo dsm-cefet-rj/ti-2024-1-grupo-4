@@ -52,7 +52,7 @@ router.route('/')
   })
   .post(
     (req, res, next) => {
-      req.body.id = 0;
+      
       pedido.create(req.body)
       .then(
         (pedido) => {

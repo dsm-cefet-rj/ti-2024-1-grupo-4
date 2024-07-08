@@ -21,11 +21,7 @@ UUID
 const ProdutoSchema = mongoose.Schema(
   {
     
-    id:{
-        type:String, //objectID. tostring
-        required:true,
-    }
-   ,
+    id: mongoose.ObjectId,
     nome:{
         type:String,
         required:true,
