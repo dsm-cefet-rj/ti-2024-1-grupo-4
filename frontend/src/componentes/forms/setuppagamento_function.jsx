@@ -13,6 +13,21 @@ import {setInfo,resetInfo, setPagamento} from "../../redux/compra/compraSlice"
 
 //import{nextStep, prevStep,setT_pagamento, setCodcartao, setDatacartao, setNome_cartao, setNum_cartao} from '../../redux/compra/compraSlice';
 
+/**
+ * @module forms/setuppagamento_function
+ * 
+ */
+/**
+ * @function
+ * @description Função para a impressão das opções de pagamento a selecionar na página pagamento
+ * 
+ * @param {Object} prevstep - Step anterior na barra de pagamento
+ * @param {Object} nextStep - Próxima step na barra de pagamento 
+ * @param {Object} step - Atual step na barra de pagamento
+ * @param {Object} value - Opção de pagamento selecionado
+ * @param {Object} handleSetData 
+ * @returns {void} Está função não retorna valor
+ */
 
 function setuppagamento_function({ prevStep, nextStep, step,value,handleSetData }) {
   const { register, handleSubmit, setValue,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)});

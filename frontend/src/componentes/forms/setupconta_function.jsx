@@ -15,6 +15,19 @@ const setupcontaSchema = yup.object().shape({
   teste: yup.string().required().min(3),
 })
 
+/**
+ * @module forms/setupconta_function
+ * 
+ */
+/**
+ * @function
+ * @description Função para a impressão do login na página pagamento
+ * 
+ * @param {Object} prevstep 
+ * @param {Object} nextStep - Próxima step na barra de pagamento 
+ * @param {Object} step - Atual step na barra de pagamento
+ * @returns {void} Está função não retorna valor
+ */
 
 function setupconta_function({ prevStep, nextStep, step }) {
   const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};

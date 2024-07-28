@@ -4,6 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import { deslogarUser } from '../../redux/user/UserSlice';
 
+/**
+ * @module header/Header
+ */
+/**
+ * @function
+ * @description Função para a impressão do header da página
+ * @returns {void} Está função não retorna valor
+ */
 const Header = () => {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const isAdmin = currentUser?.admin || false;

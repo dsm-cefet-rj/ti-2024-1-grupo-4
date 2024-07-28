@@ -13,7 +13,19 @@ import { formsSchema } from './formsSchema';
 import {useDispatch} from "react-redux";
 import {setInfo,resetInfo, setEndereco} from "../../redux/compra/compraSlice"
 
-
+/**
+ * @module forms/setupendereco_function
+ * 
+ */
+/**
+ * @function
+ * @description Função para a impressão do endereço a selecionar na página pagamento
+ * 
+ * @param {Object} prevstep 
+ * @param {Object} nextStep - Próxima step na barra de pagamento 
+ * @param {Object} step - Atual step na barra de pagamento
+ * @returns {void} Está função não retorna valor
+ */
 
 function setupendereco_function({ prevStep, nextStep, step }) {
 

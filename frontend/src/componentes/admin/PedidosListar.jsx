@@ -3,7 +3,27 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { deletePedidoServer, updatePedidoServer } from '../../redux/listapedidos/ListaPedidoSlice';
 
+/**
+ * @module admin/PedidosListar
+ */
 
+/**
+ * Tipo da entidade 'pedido'
+ * @typedef {Object} pedido
+ * @property {string} id - id do pedido
+ * @property {string} endereco - endereco para envio do pedido
+ * @property {Array} products - lista dos produtos no pedido
+ * @property {Object} pagamento - forma de pagamento do pedido
+ * @property {number} valorTotal - valor total do pedido
+ * @property {Object} status - status do pedido
+ */
+/**
+ * @function
+ * @description Função para a impressão da lista de todos os pedidos efetuados na loja
+ * 
+ * @param {pedido} pedido 
+ * @returns 
+ */
 function PedidosListar({ pedido }) {
     const dispatch = useDispatch();
 

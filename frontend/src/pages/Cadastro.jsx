@@ -3,6 +3,10 @@ import Header from '../componentes/header/Header'
 import Footer from '../componentes/footer/Footer'
 import Register_page from '../componentes/cadastro/cadastro'
 
+/**
+ * Retorna a página Registro
+ * 
+ */
 function Registro() {
     return (
         <>

@@ -1,8 +1,17 @@
 import React from 'react'
 import './botao.scss'
 
-
-
+/**
+ * @module forms/progress_bar_function
+ * 
+ */
+/**
+ * @function
+ * @description Função para a impressão da barra de progresso usada em pagamento
+ * 
+ * @param {Object} step - Step atual na barra de progresso em pagamento
+ * @returns {void} Está função não retorna valor
+ */
 function progress_bar_function({step}) {
   return (
       <div>

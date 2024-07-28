@@ -13,6 +13,16 @@ import ClienteListar from './ClienteListar';
 import rootReducer from '../../redux/root-reducer';
 import PedidosListar from './PedidosListar';
 
+/**
+ * @module admin/dashboard
+ */
+
+/**
+ * @function
+ * @description Função para a impressão da página dashboard (admin)
+ * 
+ * @returns {void} Está função não retorna valor
+ */
 function Dashboard() {
 
     const handleRegister = () => {

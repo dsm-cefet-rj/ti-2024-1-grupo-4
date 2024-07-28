@@ -6,7 +6,16 @@ import Setuppedido from './setuppedido_function';
 import SetupConfirmacao from './setupConfirmacao';
 
 
-
+/**
+ * @module forms/forms_function
+ * 
+ */
+/**
+ * @function
+ * @description Função para a impressão da página pagamento
+ * 
+ * @returns {void} Está função não retorna valor
+ */
 function forms_function() {
     const [step, setStep] = useState(0);
 
