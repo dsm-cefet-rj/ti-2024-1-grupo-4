@@ -9,6 +9,11 @@ import { toast } from 'react-toastify';
 import Endereco_Card from './Endereco_Card';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Página do usuário para administrar as informações do cadastro do usuário
+ * @component
+ */
+
 function Perfil_Usuario() {
   const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
   const enderecoState = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
@@ -26,6 +31,9 @@ function Perfil_Usuario() {
     }
   }, [status, currentUser.id, dispatch]);
 
+  /**
+   * Esquemas de validação das informações do usuário
+   */
   const userSchema = yup.object().shape({
     nome: yup.string().required('Nome é obrigatório'),
     email: yup.string().email().required('E-mail é obrigatório'),
@@ -58,6 +66,10 @@ function Perfil_Usuario() {
     resolver: yupResolver(senhaSchema),
   });
 
+  /**
+   * Formulário que atualiza as informações do usuário
+   * @param {Object} data -  Informações do formulário do usuário 
+   */
   const userUpdate = (data) => {
     const { nome, email } = data;
     const id = currentUser.id;
@@ -110,6 +122,10 @@ function Perfil_Usuario() {
       })
   }
 
+  /**
+   * Dashboard que atualiza, deleta e adiciona as informações do endereco do usuário
+   * @param {Object} data -  Informações do formulário do endereco 
+   */
   const enderecoUpdate = (data) => {
     const { CEP, logradouro, numero, complemento } = data;
     const userKey = currentUser.id;
@@ -140,6 +156,10 @@ function Perfil_Usuario() {
       })
   }
 
+  /**
+   * Formulário que atualiza as informações de senha do usuário
+   * @param {Object} data -  dados do formulário de atualização de senha 
+   */
   const passUpdate = (data) => {
     const { senha, novaSenha, repSenha } = data;
     const id = currentUser.id;
@@ -160,6 +180,9 @@ function Perfil_Usuario() {
       })
   }
 
+  /**
+   * Deleta as informações do usuário
+   */
   const handleRemove = () => {
     const id = currentUser.id;
     dispatch(deleteUserServer(id)).then((resposta) => {

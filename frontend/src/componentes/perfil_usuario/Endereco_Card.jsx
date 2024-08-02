@@ -6,6 +6,27 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm} from "react-hook-form";
 import { toast } from 'react-toastify';
 
+/**
+ * @module perfil_usuario
+ */
+/**
+ * Tipo da entidade 'endereco'
+ * @typedef {Object} endereco
+ * @property {string} id - id do endereco
+ * @property {string} CEP - CEP do endereco cadastrado
+ * @property {string} logradouro - logradouro do endereco cadastrado
+ * @property {string} numero - numero do endereco cadastrado
+ * @property {string} complemento - complemento do endereco cadastrado
+ * @property {string} userKey - id do cliente que cadastrou o endereco
+ */
+/**
+ * @function
+ * @description Função que recebe um endereco e imprime as informações em formato de card
+ * 
+ * @param {endereco} endereco 
+ * @returns {void} Está função não retorna valor
+ */
+
 function Endereco_Card({ endereco }) {
     const dispatch = useDispatch();
     const [logradouro, setLogradouro] = useState(endereco.logradouro);
