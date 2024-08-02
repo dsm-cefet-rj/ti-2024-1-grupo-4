@@ -15,9 +15,11 @@ var produtoRouter = require('./routes/produto');
 var enderecoRouter = require('./routes/endereco');
 var entregaRouter = require('./routes/entrega');
 
+var config = require('./config');
+
 const mongoose = require('mongoose');
 
-const url = 'mongodb://localhost:27017/luigipizzeria';
+const url = config.mongoUrl;
 
 const connect = mongoose.connect(url);
 
@@ -39,33 +41,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-    name:'session-id',
-    secret: 'abc',
-    saveUninitialized: false,
-    resave: false,
-    store: new FileStore()
-}))
+
 app.use(passport.initialize());
-app.use(passport.session());
+
 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/produto', produtoRouter);
 
-function auth (req,res,next){
-    console.log(req.user);
-    if(!req.user){
-        var err = new Error('Não autenticado');
-        err.status = 403;
-        next(err);
-    }else{
-        next();
-    }
-}
 
-app.use(auth);
 app.use('/pedido', pedidoRouter);
 //app.use('/endereco', enderecoRouter);
 //app.use('/entrega', entregaRouter);
