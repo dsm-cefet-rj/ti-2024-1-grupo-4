@@ -4,7 +4,10 @@ import Header from '../componentes/header/Header'
 import Footer from '../componentes/footer/Footer'
 
 //currentUser?(setStep({step:step+1})):{}
-
+/**
+ * Retorna a página Pedido
+ * 
+ */
 const Pedido = () => {
   return (
     <>

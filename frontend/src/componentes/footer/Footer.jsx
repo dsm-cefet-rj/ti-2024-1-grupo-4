@@ -2,6 +2,15 @@ import React from 'react'
 import './footer.css';
 import { Link } from 'react-router-dom';
 
+/**
+ * @module footer/Footer
+ */
+/**
+ * @function
+ * @description Função para imprimir o footer da página
+ * 
+ * @returns {void} Está função não retorna valor
+ */
 const Footer = () => {
   return (
     <div className='mt-5'>

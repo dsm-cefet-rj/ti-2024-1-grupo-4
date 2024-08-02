@@ -10,10 +10,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import CartItem from '../cartItem/cartminimal';
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 
-
-
-
-
+/**
+ * @module forms/setuppedido_function
+ * 
+ */
+/**
+ * @function
+ * @description Função para a impressão do pedido a selecionar na página pagamento
+ * 
+ * @param {Object} prevstep 
+ * @param {Object} nextStep - Próxima step na barra de pagamento 
+ * @param {Object} step - Atual step na barra de pagamento
+ * @returns {void} Está função não retorna valor
+ */
 
 function setuppedido_function({ prevStep, nextStep, step }) {
   const { register, handleSubmit, setValue } = useForm();

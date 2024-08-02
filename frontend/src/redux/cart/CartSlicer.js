@@ -1,10 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
+/**
+ * @module cart/CartSlicer
+ */
+
 const initialState = {
     products: [],
 }
 
+/**
+ * @function
+ * @description Slicer do carrinho (cart), seus reducers addProductToCart, removeProductFromCart, decreaseProductQuantity fazem as ações 
+ *              de, respectivamente, adicionar(aumentar), remover, diminuir um produto do carrinho (cart)
+ * @returns {CallableFunction}
+ */
 const cartSlice = createSlice({
     name: "cart",
     initialState,

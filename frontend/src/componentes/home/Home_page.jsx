@@ -15,7 +15,14 @@ import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js'; //
 import { selectProductsCount } from '../../redux/cart/cart.selector.js';
 import { fetchProduto } from '../../redux/produtos/ProdutosSlice.js';
 
-
+/**
+ * @module home/Home_page
+ */
+/**
+ * @function
+ * @description Função para a impressão da Home_page da página
+ * @returns {void} Está função não retorna valor
+ */
 function Home_Page() {
     const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
 

@@ -2,6 +2,24 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { removeProductFromCart, addProductToCart, decreaseProductQuantity } from '../../redux/cart/CartSlicer.js'; //cartSlicer
 
+/**
+ * @module cartItem/cartminimal
+ */
+/**
+ * Tipo da entidade 'product'
+ * @typedef {Object} product
+ * @property {string} nome - nome do produto
+ * @property {string} descricao - descrição do produto
+ * @property {number} preco - preço do produto
+ * @property {number} quantity - quantidade do produto
+ */
+/**
+ * @function
+ * @description Função que recebe um objeto produto e imprime suas informações simplificado para utilizar no carrinho
+ * 
+ * @param {product} product 
+ * @returns {void} Está função não retorna valor
+ */
 function CartItem( {product} ) {
 
     const dispatch = useDispatch();

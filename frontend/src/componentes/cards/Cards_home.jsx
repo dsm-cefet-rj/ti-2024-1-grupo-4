@@ -2,7 +2,24 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addProductToCart } from '../../redux/cart/CartSlicer.js'; //cartSlicer
 
-
+/**
+ * @module cards
+ */
+/**
+ * Tipo da entidade 'prod'
+ * @typedef {Object} prod
+ * @property {string} imgUrl - url da imagem do produto
+ * @property {string} nome - nome do produto
+ * @property {string} descricao - descrição do produto
+ * @property {number} preco - preço do produto
+ */
+/**
+ * @function
+ * @description Função que recebe um objeto produto e imprime suas informações em formato de um cartão
+ * 
+ * @param {prod} prod 
+ * @returns {void} Está função não retorna valor
+ */
 
 function Card(prod) {
     const dispatch = useDispatch();

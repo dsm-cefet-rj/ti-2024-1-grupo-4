@@ -10,7 +10,18 @@ import { Link,useNavigate,Navigate } from 'react-router-dom';
 import { useEffect } from 'react'
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 
-
+/**
+ * @module forms/setupConfirmacao
+ * 
+ */
+/**
+ * @function
+ * @description Função para a impressão da página esperando pagamento
+ * 
+ * @param {Object} step - Step atual na barra de progresso em pagamento
+ * @param {Object} value - Opção de pagamento selecionado
+ * @returns {void} Está função não retorna valor
+ */
 
 function setupConfirmacao({step,value}) {
     const status = useSelector((rootReducer) => rootReducer.compraSlice.status);

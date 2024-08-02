@@ -3,6 +3,10 @@ import Header from '../componentes/header/Header'
 import Footer from '../componentes/footer/Footer'
 import Dashboard from '../componentes/admin/dashboard'
 
+/**
+ * Retorna a página Admin_page
+ * 
+ */
 function Admin_Page() {
     return (
         <>

@@ -2,7 +2,10 @@ import React from 'react'
 import Header from '../componentes/header/Header'
 import Footer from '../componentes/footer/Footer'
 import Perfil_Usuario from '../componentes/perfil_usuario/perfil_usuario'
-
+/**
+ * Retorna a página Usuário
+ * 
+ */
 function Usuario() {
     return (
         <>

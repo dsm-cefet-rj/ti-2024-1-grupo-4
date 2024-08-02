@@ -2,6 +2,25 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteProdutoServer } from '../../redux/produtos/ProdutosSlice';
 
+/**
+ * @module admin/ProdutoItemDelete
+ */
+
+/**
+ * Tipo da entidade 'produto'
+ * @typedef {Object} produto
+ * @property {string} id - id do produto
+ * @property {string} nome - nome do produto
+ * @property {string} descricao - descrição do produto
+ * @property {number} preco - preço do produto
+ */
+/**
+ * @function
+ * @description Função que recebe um objeto produto, imprime o produto e suas informações e permite sua remoção
+ * 
+ * @param {produto} produto 
+ * @returns {void} Está função não retorna valor
+ */
 function ProdutoItemDelete({ produto }) {
     const dispatch = useDispatch();
     const handleRemove = () => {

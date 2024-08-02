@@ -7,7 +7,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchPedidosByUser } from '../redux/listapedidos/ListaPedidoSlice.js';
 
-
+/**
+ * Retorna a página HistoricoPedido
+ * 
+ */
 const HistoricoPedido = () => {
     const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.pedidos);
     const dispatch = useDispatch();

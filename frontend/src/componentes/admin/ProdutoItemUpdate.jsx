@@ -4,6 +4,24 @@ import { updateProdutoServer } from '../../redux/produtos/ProdutosSlice';
 import { productSchema } from './ProdutoSchema';
 import { toast } from 'react-toastify';
 
+/**
+ * @module admin/ProdutoItemUpdate
+ */
+/**
+ * Tipo da entidade 'produto'
+ * @typedef {Object} produto
+ * @property {string} id - id do produto
+ * @property {string} nome - nome do produto
+ * @property {string} descricao - descrição do produto
+ * @property {number} preco - preço do produto
+ */
+/**
+ * @function
+ * @description Função que recebe um objeto produto, imprime o produto e suas informações e permite sua atualização
+ * 
+ * @param {produto} produto 
+ * @returns {void} Está função não retorna valor
+ */
 function ProdutoItemUpdate({ produto }) {
     const dispatch = useDispatch();
     const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
