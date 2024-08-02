@@ -3,6 +3,7 @@ var router = express.Router();
 
   const {user} = require('../models/users');
 const passport = require('passport');
+var authenticate = require('../authenticate');
 
 
 /* GET users listing. */
@@ -109,7 +110,8 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', passport.authenticate('local'),(req,res)=>{
-  res.status(200).json({success:true,status:'Você está logado'});
+  var token = authenticate.getToken({_id: req.user._id});
+  res.status(200).json({success:true,token: token, status:'Você está logado'});
 });
 
 router.get('/logout',(req,res) => {

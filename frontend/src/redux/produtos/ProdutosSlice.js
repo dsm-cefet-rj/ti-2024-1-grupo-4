@@ -3,6 +3,10 @@ import {httpDelete, httpGet, httpPut, httpPost} from '../../utils'
 import {baseUrl} from '../../baseUrl';
 import { toast } from 'react-toastify';
 
+/**
+ * @module produtos/ProdutoSlice
+ */
+
 const produtoAdapter = createEntityAdapter();
 
 const initialState = produtoAdapter.getInitialState({
@@ -10,11 +14,29 @@ const initialState = produtoAdapter.getInitialState({
     error:null
 });
 
+/**
+ * @function
+ * @description Faz o fetch dos produtos no banco de dados
+ * @returns {Array} - Lista dos produtos no banco de dados
+ */
 export const fetchProduto = createAsyncThunk('produto/fetchProduto', async (_, {getState}) => {
     console.log(getState());
     return await httpGet(`${baseUrl}/produto`);
 });
-
+/**
+ * Tipo da entidade 'produto'
+ * @typedef {Object} produto
+ * @property {string} imgUrl - url da imagem do produto
+ * @property {string} nome - nome do produto
+ * @property {string} descricao - descrição do produto
+ * @property {number} preco - preço do produto
+ */
+/**
+ * @function
+ * @description Faz a remoção de um produto no banco de dados por id
+ * @param {produto} produto - objeto produto a remover
+ * @returns {string} - id do produto removido
+ */
 export const deleteProdutoServer = createAsyncThunk('produto/deleteProdutoServer', async (produto, {getState}) => {
     await httpDelete(`${baseUrl}/produto/${produto.id}`);
     toast.warning(produto.nome + " removido!", {
@@ -25,6 +47,12 @@ export const deleteProdutoServer = createAsyncThunk('produto/deleteProdutoServer
     return produto.id;
 });
 
+/**
+ * @function
+ * @description Faz a adição de um produto no banco de dados
+ * @param {produto} produto - objeto produto a adicionar
+ * @returns {produto} - produto adicionado
+ */
 export const addProdutoServer = createAsyncThunk('produto/addProdutoServer', async (produto, {getState}) => {
 
   toast.success(produto.nome + " criado com sucesso!", {
@@ -35,6 +63,13 @@ export const addProdutoServer = createAsyncThunk('produto/addProdutoServer', asy
     return await httpPost(`${baseUrl}/produto`, produto);
 });
 // ver o vídeo para ver se o código está ok
+
+/**
+ * @function
+ * @description Faz a atualização de um produto no banco de dados
+ * @param {produto} produto - objeto produto a atualizar
+ * @returns {produto} - produto adicionado
+ */
 export const updateProdutoServer = createAsyncThunk('produto/updateProdutoServer', async (produto, {getState}) => {
       toast.info(produto.nome + " foi alterado!", {
       position: "bottom-left",
@@ -44,6 +79,10 @@ export const updateProdutoServer = createAsyncThunk('produto/updateProdutoServer
     return await httpPut(`${baseUrl}/produto/${produto.id}`, produto);
 });
 
+/**
+ * @function
+ * @description Slicer do Produto com os extraReducers
+ */
 export const produtoSlice = createSlice({
     name: 'produto',
     initialState,
