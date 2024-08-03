@@ -1,6 +1,9 @@
 import * as yup from 'yup';
 import { ptForm } from 'yup-locale-pt';
 
+/**
+ * Schema Yup para a validação dos dados do forms de pagamento
+ */
 yup.setLocale(ptForm)
 
 

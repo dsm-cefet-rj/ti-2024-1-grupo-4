@@ -11,10 +11,21 @@ const initialState = userAdapter.getInitialState({
     error:null
 });
 
+/**
+ * Async Thunk para buscar todos os usuários
+ * @returns {Promise} - Promise com todos os usuários cadastrados
+ */
+
 export const fetchUser = createAsyncThunk('users/fetchUser', async (_, {getState}) => {
     console.log(getState());
     return await httpGet(`${baseUrl}/users`);
 });
+
+/**
+ * Async Thunk para buscar usuário por e-mail e senha
+ * @param {Object} payload - Objeto contendo o email e a senha
+ * @returns {Promise} - Promise contendo o usuario
+ */
 
 export const fetchUserByEmail = createAsyncThunk('users/fetchUSerByEmail', async(payload, {getState}) =>{
   try{
@@ -29,10 +40,22 @@ export const fetchUserByEmail = createAsyncThunk('users/fetchUSerByEmail', async
   }
 });
 
+/**
+ * Async Thunk para deletar um usuário pelo ID
+ * @param {string} idUser - O id do usuário a ser deletado
+ * @returns {Promise} - Promise com o id do usuario deletado
+ */
+
 export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async (idUser, {getState}) => {
     await httpDelete(`${baseUrl}/users/${idUser}`);
     return idUser;
 });
+
+/**
+ * Async Thunk para verificar se o e-mail já existe no servidor
+ * @param {string} email - O e-mail a ser verificado
+ * @returns {Promise} - Promise com um valor booleano para se o retorna é maior do que 0
+ */
 
 export const emailExistServer = createAsyncThunk('users/emailExistServer', async (email, {getState}) => {
   const response = await fetch (`${baseUrl}/users?email=${email}`);
@@ -40,14 +63,30 @@ export const emailExistServer = createAsyncThunk('users/emailExistServer', async
   return existe.length > 0;
 });
 
+/**
+ * Async Thunk para adicionar um novo usuário
+ * @param {Object} user - O usuário a ser adicionado
+ * @returns {Promise} - Promise com o usuário adicionado
+ */
+
 export const addUserServer = createAsyncThunk('users/addUserServer', async (user, {getState}) => {
     await httpPost(`${baseUrl}/users`, user);
     return user
 });
 
+/**
+ * Async Thunk para atualizar um usuário existente
+ * @param {Object} user - O usuário a ser atualizado
+ * @returns {Promise} - Promise com a informação do usuário atualizado
+ */
+
 export const updateUserServer = createAsyncThunk('users/updateUsersServer', async (user, {getState}) => {
     return await httpPut(`${baseUrl}/users/${user.id}`, user);
 });
+
+/**
+ * Slice que gerencia o user
+ */
 
 export const userSlice = createSlice({
     name: 'user',

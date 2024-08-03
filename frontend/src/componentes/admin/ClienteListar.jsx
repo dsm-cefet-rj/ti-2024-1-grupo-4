@@ -3,6 +3,23 @@ import { useDispatch } from 'react-redux';
 import { deleteUserServer} from '../../redux/user/UserSlice';
 import { toast } from 'react-toastify';
 
+/**
+ * @module admin/ClienteListar
+ */
+
+/**
+ * Tipo da entidade 'cliente'
+ * @typedef {Object} pedido
+ * @property {string} id - id do cliente
+ * @property {string} nome - nome do cliente
+ * @property {string} email - email do cliente
+/**
+ * @function
+ * @description Função para a impressão da informação cadastrada do cliente na loja
+ * 
+ * @param {user} user 
+ * @returns 
+ */
 
 function ClienteListar({ user }) {
     const dispatch = useDispatch();

@@ -11,11 +11,20 @@ const initialState = enderecoAdapter.getInitialState({
     error:null
 });
 
+/**
+ * Async Thunk para busca todos os enderecos
+ * @returns {Promise} - Promise com todos os enderecos
+ */
 export const fetchEndereco = createAsyncThunk('endereco/fetchEndereco', async (_, {getState}) => {
     console.log(getState());
     return await httpGet(`${baseUrl}/endereco`);
 });
 
+/**
+ * Async Thunk para buscar endereco por usuario
+ * @param {string} payload - O id do usuario
+ * @returns {Promise} - Promise contendo os enderecos que possuem o id do usuario
+ */
 export const fetchEnderecoByUser = createAsyncThunk('endereco/fetchEnderecoByUser', async(payload, {getState}) =>{
   try{
     //Pega todos os enderecos do user
@@ -27,19 +36,39 @@ export const fetchEnderecoByUser = createAsyncThunk('endereco/fetchEnderecoByUse
   }
 });
 
+/**
+ * Async Thunk para deletar um endereco por Id
+ * @param {string} idEndereco - O id do endereco para deletar
+ * @returns {Promise} - Promise contendo o id do endereco deletado
+ */
+
 export const deleteEnderecoServer = createAsyncThunk('endereco/deleteEnderecoServer', async (idEndereco, {getState}) => {
     await httpDelete(`${baseUrl}/endereco/${idEndereco}`);
     return idEndereco;
 });
 
+/**
+ * Async Thunk para adicionar um endereco ao servidor
+ * @param {string} endereco - O endereco a ser adicionado
+ * @returns {Promise} - Promise com o endereco adicionado
+ */
 
 export const addEnderecoServer = createAsyncThunk('endereco/addEnderecoServer', async (endereco, {getState}) => {
     return await httpPost(`${baseUrl}/endereco`, endereco);
 });
 
+/**
+ * Async Thunk que atualiza um endereco pelo id
+ * @param {string} endereco - O endereco que deve ter o valor atualizado
+ * @returns {Promise} - Promise com o valor atualizado
+ */
 export const updateEnderecoServer = createAsyncThunk('endereco/updateEnderecoServer', async (endereco, {getState}) => {
     return await httpPut(`${baseUrl}/endereco/${endereco.id}`, endereco);
 });
+
+/**
+ * Slice que gerencia o endereco
+ */
 
 export const enderecoSlice = createSlice({
     name: 'endereco',

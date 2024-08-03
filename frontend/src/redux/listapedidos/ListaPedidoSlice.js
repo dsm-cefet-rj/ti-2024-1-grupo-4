@@ -11,11 +11,20 @@ const initialState = pedidoAdapter.getInitialState({
     error:null
 });
 
+/**
+ * Async Thunk para busca todos os pedidos
+ * @returns {Promise} - Promise com todos os pedidos
+ */
 export const fetchPedido = createAsyncThunk('pedido/fetchPedido', async (_, {getState}) => {
     console.log(getState());
     return await httpGet(`${baseUrl}/pedido`);
 });
 
+/**
+ * Async Thunk para deletar um pedido por id
+ * @param {string} pedidoID - O id do pedido para deletar
+ * @returns {Promise} - Promise contendo o id do pedido deletado
+ */
 export const deletePedidoServer = createAsyncThunk('pedido/deletePedidoServer', async (pedidoID, {getState}) => {
     await httpDelete(`${baseUrl}/pedido/${pedidoID}`);
     toast.warning(pedidoID + " removido!", {
@@ -26,6 +35,11 @@ export const deletePedidoServer = createAsyncThunk('pedido/deletePedidoServer', 
     return pedidoID;
 });
 
+/**
+ * Async Thunk para adicionar um pedido ao servidor
+ * @param {Object} pedido - O pedido a ser adicionado
+ * @returns {Promise} - Promise com o pedido adicionado
+ */
 export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async (pedido, {getState}) => {
     toast.success(pedido.nome + " registrado com sucesso!", {
       position: "bottom-left",
@@ -35,6 +49,11 @@ export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async 
     return await httpPost(`${baseUrl}/pedido`, pedido);
 });
 
+/**
+ * Async Thunk para buscar pedido por usuario
+ * @param {string} payload - O id do usuario
+ * @returns {Promise} - Promise contendo os pedidos que possuem o id do usuario
+ */
 export const fetchPedidosByUser = createAsyncThunk('pedido/fetchPedidoByUser', async (payload, { getState }) => {
   try {
     //Pega todos os pedidos do user
@@ -49,6 +68,11 @@ export const fetchPedidosByUser = createAsyncThunk('pedido/fetchPedidoByUser', a
   }
 });
 
+/**
+ * Async Thunk que atualiza um pedido pelo id
+ * @param {Object} pedido - O pedido que deve ter o valor atualizado
+ * @returns {Promise} - Promise com o pedido atualizado
+ */
 export const updatePedidoServer = createAsyncThunk('pedido/updatePedidoServer', async (pedido, {getState}) => {
     toast.info(pedido.id + " foi alterado!", {
       position: "bottom-left",
@@ -58,6 +82,11 @@ export const updatePedidoServer = createAsyncThunk('pedido/updatePedidoServer', 
     return await httpPut(`${baseUrl}/pedido/${pedido.id}`, pedido);
 });
 
+/**
+ * Async Thunk que atualiza o status de um pedido pelo id
+ * @param {Object} pedido - O pedido que deve ter o valor atualizado
+ * @returns {Promise} - Promise com o pedido atualizado
+ */
 export const updateStatusPedidoServer = createAsyncThunk('pedido/updatePedidoServer', async (pedido, {getState}) => {
   toast.info("Status foi alterado para: "+ pedido.status, {
     position: "bottom-left",
