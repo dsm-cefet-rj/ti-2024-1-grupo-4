@@ -1,6 +1,9 @@
 import * as yup from 'yup';
 import { ptForm } from 'yup-locale-pt';
 
+/**
+ * Schema Yup para a validação de dados de forms sobre Endereco
+ */
 yup.setLocale(ptForm)
 
 const erroNumMsg = "O campo deve ser um número.";

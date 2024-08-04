@@ -1,6 +1,8 @@
 
 import * as Yup from 'yup';
-
+/**
+ * Schema Yup para validação de dados do Produto
+ */
 export const productSchema = Yup.object().shape({
     id: Yup.string(),
     nome: Yup.string().required().max(50).min(10),

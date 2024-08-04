@@ -10,25 +10,48 @@ const initialState = entregaAdapter.getInitialState({
     error:null
 });
 
+/**
+ * Async Thunk para busca todas as entregas
+ * @returns {Promise} - Promise com todas as entregas
+ */
+
 export const fetchEntrega = createAsyncThunk('entrega/fetchEntrega', async (_, {getState}) => {
     return await httpGet(`${baseUrl}/entrega`);
 });
 
-
+/**
+ * Async Thunk para deletar uma entrega por id
+ *  @param {string} idEntrega - O id da entrega
+ * @returns {Promise} - Promise com uma id da entrega
+ */
 export const deleteEntregaServer = createAsyncThunk('entrega/deleteEntregaServer', async (idEntrega, {getState}) => {
     await httpDelete(`${baseUrl}/entrega/${idEntrega}`);
     return idEntrega;
 });
 
-
+/**
+ * Async Thunk para adicionar uma entrega ao servidor
+ * @param {Object} entrega - O objeto entrega que será adicionado
+ * @returns {Promise} - Promise com o endereco adicionado
+ */
 export const addEntregaServer = createAsyncThunk('entrega/addEntregaServer', async (entrega, {getState}) => {
     await httpPost(`${baseUrl}/entrega`, entrega);
     return entrega;
 });
 
+/**
+ * Async Thunk que atualiza um endereco pelo id
+ * @param {string} endereco - O endereco que deve ter o valor atualizado
+ * @returns {Promise} - Promise com o valor atualizado
+ */
 export const updateEntregaServer = createAsyncThunk('entrega/updateEntregaServer', async (entrega, {getState}) => {
     return await httpPut(`${baseUrl}/entrega/${entrega.id}`, entrega);
 });
+
+/**
+ * Slice que gerencia a entrega
+ */
+
 
 export const entregaSlice = createSlice({
     name: 'entrega',

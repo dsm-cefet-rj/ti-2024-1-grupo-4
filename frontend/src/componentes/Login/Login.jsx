@@ -8,13 +8,20 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm} from "react-hook-form";
 import { toast } from 'react-toastify';
 
+/**
+ * Página de login de clientes da loja
+ * @component
+ * 
+ */
 
 function Login_page () {
   const history = useNavigate();
   const location = useLocation();
 
   const dispatch = useDispatch();
-
+  /**
+   * Schema Yup para validação das informações do form
+   */
   const schema = yup.object().shape({
     email: yup.string().email('Precisa ser um e-mail').required('Preencha o e-mail'),
     senha: yup.string().required('Preencha a senha'),
@@ -26,7 +33,10 @@ function Login_page () {
   })
 
   
-
+  /**
+   * Função para verificar as informações do usuário
+   * @param {Object} e - Informações do 
+   */
   const onSubmit= (e) => {
     const {email, senha} = e;
     dispatch(fetchUserByEmail({email,senha})).then((result) => {

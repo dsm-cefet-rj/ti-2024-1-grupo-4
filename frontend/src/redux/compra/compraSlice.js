@@ -3,6 +3,11 @@ import {httpDelete, httpGet, httpPut, httpPost} from '../../utils';
 import {baseUrl} from '../../baseUrl';
 
 const compraAdapter = createEntityAdapter();
+
+/**
+ * O initial state guarda durante o preenchimento do forms, 
+ * as informações ficam guardadas e podem ser alteradas com facilidade
+ */
 const initialState = compraAdapter.getInitialState({
     user: null,
     endereco: null,
@@ -16,6 +21,13 @@ const initialState = compraAdapter.getInitialState({
 //'loading'
 //'failed'
 //'saved'
+
+/**
+ * 
+ * @param {Object} state - recebe o valor que o usuário está no formulário
+ * @param {Object} input - Recebe a informação do form
+ * @returns o estado do currentUser
+ */
 function setInfoReducer(state,input){
     const index = input.data[1] 
     const temp = {...input,stepInfo:input.data[1]}
@@ -29,35 +41,77 @@ function setInfoReducer(state,input){
     state.informacao[index] = [];
     state.informacao[index].push(temp);
 }
+
+/**
+ * Reducer para configurar o status
+ * @param {Object} state - O estado atual
+ * @param {any} payload - O novo status
+ * @returns {Object} - O novo estado
+ */
 function setStatusReducer(state,payload){
     return {...state.status,status:payload};
 }
 
-
+/**
+ * Thunk assíncrono para adicionar um pedido no servidor
+ * @param {Object} pedido - O pedido a ser adicionado
+ * @returns {Promise} - Promise que retorna o pedido adicionado
+ */
 
 export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async (pedido, {getState}) => {
     return await httpPost(`${baseUrl}/pedido`, pedido);
 });
 
-  
+/**
+ * Slice que gerencia o estado da compra.
+ */  
 
 const compraSlice = createSlice({
     name:'compra',
     initialState,
     reducers:{
+        /**
+         * Redutor para configurar o endereço
+         * @param {Object} state - O estado atual
+         * @param {Object} action - A ação despachada
+         */
         setEndereco: (state, action)=>{
             state.endereco = action.payload;
         },
+        /**
+         * Redutor para configurar o usuário
+         * @param {Object} state - O estado atual
+         * @param {Object} action - A ação despachada
+         */
         setUser:(state,action)=>{
             state.user = action.payload;
         },
+        /**
+         * Redutor para configurar o pagamento
+         * @param {Object} state - O estado atual
+         * @param {Object} action - A ação despachada
+         */
         setPagamento:(state, action)=>{
             state.pagamento = action.payload;
         },
+        /**
+         * Redutor para configurar os produtos
+         * @param {Object} state - O estado atual
+         * @param {Object} action - A ação despachada
+         */
         setProdutos:(state,action)=>{
             state.produtos = action.payload;
         },
+        /**
+         * Redutor para resetar as informações
+         * @param {Object} state - O estado atual
+         */
         resetInfo:(state)=> resetInfoReducer(state),
+        /**
+         * Redutor para configurar o status
+         * @param {Object} state - O estado atual
+         * @param {Object} action - A ação despachada
+         */
         setStatus:(state,action)=> setStatusReducer(state,action.payload),
        
     },

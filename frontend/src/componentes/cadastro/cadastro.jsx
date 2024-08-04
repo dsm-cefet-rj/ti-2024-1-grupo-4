@@ -10,6 +10,11 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { addEnderecoServer } from '../../redux/endereco/enderecoSlice';
 
+/**
+ * Página de registro do cliente da loja
+ * @component
+ * 
+ */
 
 function Register_page() {
 
@@ -44,6 +49,10 @@ function Register_page() {
       resolver: yupResolver(schema),
     })
 
+  /**
+   * Função para cadastrar o usuário 
+   * @param {Object} data - Dados do formulário
+   */
   const onSubmit = (data) => {
     const { email, nome, senha, repSenha, cep, logradouro, numeroEndereco, complemento } = data;
   
