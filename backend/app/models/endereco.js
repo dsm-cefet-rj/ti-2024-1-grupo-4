@@ -33,11 +33,11 @@ const EnderecoSchema = mongoose.Schema(
         }
     }
 );
-const enderecoModel = mongoose.model('endereco',EnderecoSchema);
+const endereco = mongoose.model('endereco',EnderecoSchema);
 module.exports = {
     EnderecoSchema,
-    enderecoModel
-}
+    endereco
+};
 
 /*
 required: true,

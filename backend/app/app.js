@@ -49,10 +49,10 @@ app.use(passport.initialize());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/produto', produtoRouter);
+app.use('/endereco', enderecoRouter);
 
 
 app.use('/pedido', pedidoRouter);
-//app.use('/endereco', enderecoRouter);
 //app.use('/entrega', entregaRouter);
 
 module.exports = app;

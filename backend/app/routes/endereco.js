@@ -1,27 +1,52 @@
-/*
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const {endereco} = require('../models/endereco');
 
-const endereco = required('./models/endereco')
+const router = express.Router();
 
-router.route('/')
-    .post((req, res, next) => {
-        try{
-            const novoEnd = new endereco(req.body);
-            const end = await novoEnd.save();
-            res.status(201).json(end);
-        } catch(error){
-            next(error);
-        }
-    });
+router.get('/', async (req, res, next) => {
+    try {
+        const enderecoBanco = await endereco.find({});
+        res.status(200).json(enderecoBanco);
+    } catch (err) {
+        next(err);
+    }
+});
 
-router.route('/:userKey')
-    .get(async(req, res, next) =>{
-        try{
-            const enderecos = await endereco.find({userKey: req.params.userKey});
-            res.status(200).json(enderecos);
-        } catch(error){
-            next(error);
-        }
-    })
-    */
+router.get('/:userKey', async (req, res, next) => {
+    try {
+        const enderecoByUser = await endereco.find({ userKey: req.params.userKey });
+        res.status(200).json(enderecoByUser);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.post('/', async (req, res, next) => {
+    try {
+        const novoEndereco = await endereco.create(req.body);
+        res.status(201).json(novoEndereco);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.put('/:id', async (req, res, next) => {
+    try {
+        const enderecoAtualizado = await endereco.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.status(200).json(enderecoAtualizado);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        await endereco.findByIdAndDelete(req.params.id);
+        res.status(204).send();
+    } catch (err) {
+        next(err);
+    }
+});
+
+module.exports = router;
+
