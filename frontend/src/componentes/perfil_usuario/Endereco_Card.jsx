@@ -73,7 +73,7 @@ function Endereco_Card({ endereco }) {
     }
 
     const handleRemove = () => {
-        const id = endereco.id;
+        const id = endereco._id;
         dispatch(deleteEnderecoServer(id))
     }
 
