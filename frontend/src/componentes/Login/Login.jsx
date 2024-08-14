@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import { fetchUser, fetchUserByEmail} from '../../redux/user/UserSlice';
+import {logUser} from '../../redux/user/UserSlice';
 
 import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -38,8 +38,8 @@ function Login_page () {
    * @param {Object} e - Informações do 
    */
   const onSubmit= (e) => {
-    const {email, senha} = e;
-    dispatch(fetchUserByEmail({email,senha})).then((result) => {
+    console.log(e);
+    dispatch(logUser(e)).then((result) => {
       console.log("Este é o result payload do login");
       console.log(result.payload)
       if(result.payload){

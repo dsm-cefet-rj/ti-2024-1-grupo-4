@@ -1,6 +1,6 @@
 import './cadastro.css';
 import React, { useEffect, useState } from 'react';
-import { addUserServer, emailExistServer, fetchUser, fetchUserByEmail} from '../../redux/user/UserSlice';
+import { addUserServer} from '../../redux/user/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 //import {CadastroSchema} from './CadastroSchema';
 import * as yup from 'yup'
@@ -53,65 +53,64 @@ function Register_page() {
    * Função para cadastrar o usuário 
    * @param {Object} data - Dados do formulário
    */
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { email, nome, senha, repSenha, cep, logradouro, numeroEndereco, complemento } = data;
   
-    dispatch(emailExistServer(email)).then((result) => {
-      if (result.payload) {
+    try {
+      // Step 1: Attempt to add the new user to the server (signup function handles email existence check)
+      const userAddedResult = await dispatch(addUserServer({ nome, email, senha, admin: false })).unwrap();
+  
+      if (userAddedResult) {
+        // Step 2: After user is added, fetch the user by email and password (or just use the result)
+        const userResult = await dispatch(fetchUserByEmail({ email, senha })).unwrap();
+  
+        if (userResult) {
+          const userKey = userResult._id; // Assuming MongoDB returns _id as the identifier
+  
+          // Step 3: Add the address to the server
+          const addressAddedResult = await dispatch(addEnderecoServer({ cep, logradouro, numeroEndereco, complemento, userKey })).unwrap();
+  
+          if (addressAddedResult) {
+            toast.info("Usuário e endereço cadastrados com sucesso", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+            });
+            // Step 4: Redirect to the homepage or another relevant page
+            history('/');
+          } else {
+            toast.error("Erro ao adicionar endereço", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+            });
+          }
+        }
+      } else {
+        toast.error("Erro ao adicionar usuário", {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      if (error.message === "Email já cadastrado") {
         toast.warning("Este e-mail já está cadastrado", {
           position: "bottom-left",
           className: "text-spicy-mix bg-banana-mania shadow",
           autoClose: 2000,
         });
       } else {
-        dispatch(addUserServer({ nome, email, senha, admin: false })).then((userAdded) => {
-          if (userAdded.payload) {
-            dispatch(fetchUserByEmail({ email, senha })).then((user) => {
-              if (user.payload) {
-                const userKey = user.payload.id;
-                dispatch(addEnderecoServer({ cep, logradouro, numeroEndereco, complemento, userKey })).then((addressAdded) => {
-                  if (addressAdded.payload) {
-                    toast.info("Usuário e endereço cadastrados com sucesso", {
-                      position: "bottom-left",
-                      className: "text-spicy-mix bg-banana-mania shadow",
-                      autoClose: 2000,
-                    });
-                    history('/');
-                  } else {
-                    toast.error("Erro ao adicionar endereço", {
-                      position: "bottom-left",
-                      className: "text-spicy-mix bg-banana-mania shadow",
-                      autoClose: 2000,
-                    });
-                  }
-                });
-              }
-            }).catch((error) => {
-              console.log("Error fetching user: ", error);
-              toast.error("Erro ao buscar usuário", {
-                position: "bottom-left",
-                className: "text-spicy-mix bg-banana-mania shadow",
-                autoClose: 2000,
-              });
-            });
-          } else {
-            toast.error("Erro ao adicionar usuário", {
-              position: "bottom-left",
-              className: "text-spicy-mix bg-banana-mania shadow",
-              autoClose: 2000,
-            });
-          }
+        console.error("Error:", error);
+        toast.error("Erro ao cadastrar usuário", {
+          position: "bottom-left",
+          className: "text-spicy-mix bg-banana-mania shadow",
+          autoClose: 2000,
         });
       }
-    }).catch((error) => {
-      console.log("Error:", error);
-      toast.error("Erro ao cadastrar usuário", {
-        position: "bottom-left",
-        className: "text-spicy-mix bg-banana-mania shadow",
-        autoClose: 2000,
-      });
-    });
+    }
   };
+  
   
 
   return (

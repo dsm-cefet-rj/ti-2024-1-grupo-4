@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const userAdapter = createEntityAdapter();
 
 const initialState = userAdapter.getInitialState({
-    currentUser: null,
+    currentToken: null,
     status: 'not_loaded',
     error:null
 });
@@ -27,15 +27,24 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async (_, {getState
  * @returns {Promise} - Promise contendo o usuario
  */
 
-export const fetchUserByEmail = createAsyncThunk('users/fetchUSerByEmail', async(payload, {getState}) =>{
-  try{
-    const {email, senha} = payload
-    const response = await fetch(`${baseUrl}/users?email=${email}&senha=${senha}`);
-    const user = await response.json();
-    console.log("Este é o usuario do userslice apos o fetch");
-    console.log(user);
-    return user;
-  } catch(error){
+export const logUser = createAsyncThunk('users/logUser', async (payload, { getState }) => {
+  try {
+    const response = await httpPost(`${baseUrl}/users/login`, payload);
+    const data = await response.text(); // Get the response as text
+    
+    // Check if the response is JSON
+    try {
+      const jsonData = JSON.parse(data);
+      if (response.ok) {
+        localStorage.setItem('token', jsonData.token);
+        return jsonData;
+      } else {
+        throw new Error(jsonData.message || "Falha no log in");
+      }
+    } catch (e) {
+      throw new Error(data); // If parsing fails, throw the text response
+    }
+  } catch (error) {
     throw error;
   }
 });
@@ -47,20 +56,9 @@ export const fetchUserByEmail = createAsyncThunk('users/fetchUSerByEmail', async
  */
 
 export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async (idUser, {getState}) => {
-    await httpDelete(`${baseUrl}/users/${idUser}`);
+    const token = localStorage.getItem('token');
+    await httpDelete(`${baseUrl}/users/${idUser}`, { headers: { Authorization: `Bearer ${token}` } });
     return idUser;
-});
-
-/**
- * Async Thunk para verificar se o e-mail já existe no servidor
- * @param {string} email - O e-mail a ser verificado
- * @returns {Promise} - Promise com um valor booleano para se o retorna é maior do que 0
- */
-
-export const emailExistServer = createAsyncThunk('users/emailExistServer', async (email, {getState}) => {
-  const response = await fetch (`${baseUrl}/users?email=${email}`);
-  const existe = await response.json();
-  return existe.length > 0;
 });
 
 /**
@@ -70,8 +68,9 @@ export const emailExistServer = createAsyncThunk('users/emailExistServer', async
  */
 
 export const addUserServer = createAsyncThunk('users/addUserServer', async (user, {getState}) => {
-    await httpPost(`${baseUrl}/users`, user);
-    return user
+  const token = localStorage.getItem('token');
+  const response = await httpPost(`${baseUrl}/users/signup`, user, { headers: { Authorization: `Bearer ${token}` } });
+  return response;
 });
 
 /**
@@ -81,9 +80,9 @@ export const addUserServer = createAsyncThunk('users/addUserServer', async (user
  */
 
 export const updateUserServer = createAsyncThunk('users/updateUsersServer', async (user, {getState}) => {
-    return await httpPut(`${baseUrl}/users/${user.id}`, user);
+  const token = localStorage.getItem('token');
+  return await httpPut(`${baseUrl}/users/${user.id}`, user, { headers: { Authorization: `Bearer ${token}` } });
 });
-
 /**
  * Slice que gerencia o user
  */
@@ -139,9 +138,10 @@ export const userSlice = createSlice({
               autoClose: 2000,
             });
           })
-          .addCase(fetchUserByEmail.fulfilled,(state,action) => {
+          .addCase(logUser.fulfilled,(state,action) => {
             state.status = 'saved';
-            state.currentUser = action.payload;
+            userAdapter.addOne(state, action.payload);
+            state.currentToken = action.payload.token;
             if(state.currentUser){
               toast.info("Usuario Logado", {
                 position: "bottom-left",
@@ -150,10 +150,6 @@ export const userSlice = createSlice({
                 })
             }
             
-            
-          })
-          .addCase(emailExistServer.fulfilled,(state,action) =>{
-            state.status = 'saved';
             
           })
 

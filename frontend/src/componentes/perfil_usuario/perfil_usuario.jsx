@@ -4,7 +4,7 @@ import { addEnderecoServer, fetchEnderecoByUser, updateEnderecoServer } from '..
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from "react-hook-form";
-import { updateUserServer, fetchUserByEmail, deleteUserServer } from '../../redux/user/UserSlice';
+import { updateUserServer, deleteUserServer } from '../../redux/user/UserSlice';
 import { toast } from 'react-toastify';
 import Endereco_Card from './Endereco_Card';
 import { useNavigate } from 'react-router-dom';
