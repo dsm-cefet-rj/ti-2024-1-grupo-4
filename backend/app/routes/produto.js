@@ -2,11 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 const {produto} = require('../models/produto');
-
+const cors = require('./cors');
+var authenticate = require('../authenticate');
 
 
 router.route('/')
-  .get(function (req, res, next) {
+.options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+.get(function (req, res, next) {
     produto.find({})
       .then(
         (produtosBanco) => {
@@ -17,66 +19,44 @@ router.route('/')
         .catch(
           (err) => next(err)
         );
-  })
-  .post(
-    (req, res, next) => {
-      produto.create(req.body)
-      .then(
-        (produto) => {
-          if(!produto){
-            res.status(404).json({ error: 'Produto não encontrado' });
-          }else{
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.json(produto);
-          }
-        },(err) => next(err)
-      ).catch(
-        (err) => next(err)
-      );
-    }
-  )
-
-router.route('/:id')
-  .delete((req, res, next) => {
-    produto.findByIdAndDelete(req.params.id)
-      .then(
-        (result) => {
+})
+.post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
+      produto.findOne({nome: req.body.nome}).then( existingProduto => {
+        if(existingProduto) {
+          res.statusCode = 400;
+          res.setHeader('Content-Type', 'application/json');
+          res.json({ err: 'Produto já existe' });
+        } else {
+          const novoProduto = produto.create(req.body);
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
-          res.json(result);
-        },(err) => next(err)
-      ).catch(
-        (err) => next(err)
-      );
-  }
-  )
-  .put((req, res, next) => { 
+          res.json({ success: true, message: 'Produto Criado'});
+        }
+      }).catch((err) => next(err));
+})
 
-    //se a alteração nao for no objeto inteiro, atomica, tem que por na forma de set: All top level update keys which are not atomic operation names are treated as set operations:
-    //[options.new=false] «Boolean» if true, return the modified document rather than the original
-    
-    produto.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
-      .then(
-        (produto_alterado) => {
-            if (!produto_alterado) {
-              res.status(404).json({ error: 'Produto não encontrado' });
-            } else {
-              res.statusCode = 200;
-              res.setHeader('Content-Type', 'application/json');
-              res.json(produto_alterado);
-              //res.status(200).json(produto_alterado);
-            }
-          
-        },
-        (err) => next(err)
-      )
-      .catch(
-        (err) => next(err)
-      );
-      
-  }
-  )
+router.route('/:id')
+.options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+.delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
+    produto.findByIdAndDelete(req.params.id)
+      .then((response) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({ success: true, message: 'Produto Deletado', response });
+      })
+      .catch((err) => next(err));
+  
+})
+.put(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
+    produto.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, { new: true })
+    .then( (produtoAtualizado) => {
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json({ success: true, message: 'Produto Atualizado', response });
+    }).catch((err) => next(err));
+})
  
 
 module.exports = router;
