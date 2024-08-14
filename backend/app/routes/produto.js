@@ -51,7 +51,7 @@ router.route('/:id')
     produto.findByIdAndUpdate(req.params.id, {
       $set: req.body
     }, { new: true })
-    .then( (produtoAtualizado) => {
+    .then( (response) => {
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json({ success: true, message: 'Produto Atualizado', response });
