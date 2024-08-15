@@ -27,7 +27,7 @@ function Home_Page() {
     const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
 
     const dispatch = useDispatch();
-    const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
+    const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.produtosLoja);
     const statusProdutos = useSelector((rootReducer) => rootReducer.produtosSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
 
