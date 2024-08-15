@@ -23,8 +23,8 @@ function Login_page () {
    * Schema Yup para validação das informações do form
    */
   const schema = yup.object().shape({
-    email: yup.string().email('Precisa ser um e-mail').required('Preencha o e-mail'),
-    senha: yup.string().required('Preencha a senha'),
+    username: yup.string().email('Precisa ser um e-mail').required('Preencha o e-mail'),
+    password: yup.string().required('Preencha a senha'),
     
   });
 
@@ -76,14 +76,14 @@ function Login_page () {
               <form className="g-3 col" onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
                   <label className="form-label">Email</label>
-                  <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="fulano@silva.com" {...register("email")}></input>
-                  {errors && errors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.email.message}</p>}
+                  <input type="email" name="username" id="username" className="form-control"  placeholder="fulano@silva.com" {...register("username")}></input>
+                  {errors && errors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.username.message}</p>}
 
                 </div>
                 <div className="col">
                   <label className="senha">Senha</label>
-                  <input type="password" className="form-control" id="inputPassword2" placeholder="Senha" {...register("senha")}></input>
-                  {errors && errors.senha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.senha.message}</p>}
+                  <input type="password" name="password" id="password" className="form-control"  placeholder="Senha" {...register("password")}></input>
+                  {errors && errors.senha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.password.message}</p>}
                 </div>
                 <div className=" div-botao col">
                   <button type="submit" className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow-sm">Login</button>

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 const userAdapter = createEntityAdapter();
 
 const initialState = userAdapter.getInitialState({
+  currentUser: null,
     currentToken: null,
     status: 'not_loaded',
     error:null
@@ -27,26 +28,8 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async (_, {getState
  * @returns {Promise} - Promise contendo o usuario
  */
 
-export const logUser = createAsyncThunk('users/logUser', async (payload, { getState }) => {
-  try {
-    const response = await httpPost(`${baseUrl}/users/login`, payload);
-    const data = await response.text(); // Get the response as text
-    
-    // Check if the response is JSON
-    try {
-      const jsonData = JSON.parse(data);
-      if (response.ok) {
-        localStorage.setItem('token', jsonData.token);
-        return jsonData;
-      } else {
-        throw new Error(jsonData.message || "Falha no log in");
-      }
-    } catch (e) {
-      throw new Error(data); // If parsing fails, throw the text response
-    }
-  } catch (error) {
-    throw error;
-  }
+export const logUser = createAsyncThunk('users/logUser', async (payload) => {
+    return await httpPost(`${baseUrl}/users/login`, payload);
 });
 
 /**
@@ -92,7 +75,9 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         deslogarUser: (state) => {
+            state.status = 'not_loaded';
             state.currentUser = null;
+            state.currentToken = null;
             toast.info("Usuario Deslogado", {
               position: "bottom-left",
               className: "text-spicy-mix bg-banana-mania shadow",
@@ -141,6 +126,7 @@ export const userSlice = createSlice({
           .addCase(logUser.fulfilled,(state,action) => {
             state.status = 'saved';
             userAdapter.addOne(state, action.payload);
+            state.currentUser = action.payload;
             state.currentToken = action.payload.token;
             if(state.currentUser){
               toast.info("Usuario Logado", {

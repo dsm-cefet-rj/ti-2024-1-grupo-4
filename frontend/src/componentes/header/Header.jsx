@@ -15,6 +15,7 @@ import { deslogarUser } from '../../redux/user/UserSlice';
 const Header = () => {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const isAdmin = currentUser?.admin || false;
+    //const isAdmin = useSelector((rootReducer) => rootReducer.userSlice.admin);
 
     const history = useNavigate();
     const dispatch = useDispatch();
