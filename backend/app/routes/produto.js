@@ -30,7 +30,7 @@ router.route('/')
           const novoProduto = produto.create(req.body);
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
-          res.json({ success: true, message: 'Produto Criado'});
+          res.json(req.body);
         }
       }).catch((err) => next(err));
 })
@@ -39,10 +39,10 @@ router.route('/:id')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
     produto.findByIdAndDelete(req.params.id)
-      .then((response) => {
+      .then((produtoDeletado) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json({ success: true, message: 'Produto Deletado', response });
+        res.json(req.body);
       })
       .catch((err) => next(err));
   
@@ -51,10 +51,10 @@ router.route('/:id')
     produto.findByIdAndUpdate(req.params.id, {
       $set: req.body
     }, { new: true })
-    .then( (response) => {
+    .then( (produtoAtualizado) => {
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
-      res.json({ success: true, message: 'Produto Atualizado', response });
+      res.json(req.body);
     }).catch((err) => next(err));
 })
  

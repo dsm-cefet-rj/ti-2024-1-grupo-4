@@ -28,14 +28,13 @@ function Home_Page() {
 
     const dispatch = useDispatch();
     const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
-    const status = useSelector((rootReducer) => rootReducer.produtosSlice.status);
+    const statusProdutos = useSelector((rootReducer) => rootReducer.produtosSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
 
     useEffect(() => {
-        if (status === 'not_loaded'  || status === 'saved' || status === 'deleted') {
-          dispatch(fetchProduto());
-        }
-    }, [status, dispatch]);
+        if (statusProdutos === 'not_loaded' || statusProdutos === 'updated'  || statusProdutos === 'saved' || statusProdutos === 'deleted'  )
+            dispatch(fetchProduto());
+    }, [statusProdutos, dispatch]);
 
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
     const productsCount = useSelector(selectProductsCount);

@@ -11,7 +11,8 @@ const produtoAdapter = createEntityAdapter();
 
 const initialState = produtoAdapter.getInitialState({
     status: 'not_loaded',
-    error:null
+    produtosLoja: [],
+    error: null
 });
 
 /**
@@ -20,7 +21,6 @@ const initialState = produtoAdapter.getInitialState({
  * @returns {Array} - Lista dos produtos no banco de dados
  */
 export const fetchProduto = createAsyncThunk('produto/fetchProduto', async (_, {getState}) => {
-    console.log(getState());
     return await httpGet(`${baseUrl}/produto`);
 });
 /**
@@ -38,12 +38,7 @@ export const fetchProduto = createAsyncThunk('produto/fetchProduto', async (_, {
  * @returns {string} - id do produto removido
  */
 export const deleteProdutoServer = createAsyncThunk('produto/deleteProdutoServer', async (produto, {getState}) => {
-    await httpDelete(`${baseUrl}/produto/${produto.id}`);
-    toast.warning(produto.nome + " removido!", {
-      position: "bottom-left",
-      className: "text-spicy-mix bg-banana-mania shadow",
-      autoClose: 4000,
-    });
+    await httpDelete(`${baseUrl}/produto/${produto.id}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
     return produto.id;
 });
 
@@ -54,13 +49,7 @@ export const deleteProdutoServer = createAsyncThunk('produto/deleteProdutoServer
  * @returns {produto} - produto adicionado
  */
 export const addProdutoServer = createAsyncThunk('produto/addProdutoServer', async (produto, {getState}) => {
-
-  toast.success(produto.nome + " criado com sucesso!", {
-      position: "bottom-left",
-      className: "text-spicy-mix bg-banana-mania shadow",
-      autoClose: 4000,
-    });
-    return await httpPost(`${baseUrl}/produto`, produto);
+    return await httpPost(`${baseUrl}/produto`, produto, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 // ver o vídeo para ver se o código está ok
 
@@ -71,12 +60,7 @@ export const addProdutoServer = createAsyncThunk('produto/addProdutoServer', asy
  * @returns {produto} - produto adicionado
  */
 export const updateProdutoServer = createAsyncThunk('produto/updateProdutoServer', async (produto, {getState}) => {
-      toast.info(produto.nome + " foi alterado!", {
-      position: "bottom-left",
-      className: "text-spicy-mix bg-banana-mania shadow",
-      autoClose: 4000,
-    });
-    return await httpPut(`${baseUrl}/produto/${produto.id}`, produto);
+    return await httpPut(`${baseUrl}/produto/${produto.id}`, produto, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -97,18 +81,34 @@ export const produtoSlice = createSlice({
           })
           .addCase(fetchProduto.fulfilled, (state, action) => {
             state.status = 'loaded';
+            state.produtosLoja = action.payload;
             produtoAdapter.setAll(state, action.payload);
           })
           .addCase(deleteProdutoServer.fulfilled, (state,action) => {
             state.status = 'deleted';
+            toast.warning("Produto removido!", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 4000,
+            });
             produtoAdapter.removeOne(state, action.payload);
           })
           .addCase(addProdutoServer.fulfilled, (state,action) => {
             state.status = 'saved';
+            toast.success("Produto criado com sucesso!", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 4000,
+            });
             produtoAdapter.addOne(state,action.payload);
           })
           .addCase(updateProdutoServer.fulfilled, (state, action) => {
-            state.status = 'saved';
+            state.status = 'updated';
+            toast.info(" Produto alterado!", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 4000,
+            });
             produtoAdapter.upsertOne(state, action.payload);
           })
 

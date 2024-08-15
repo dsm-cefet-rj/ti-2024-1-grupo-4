@@ -30,7 +30,7 @@ function Dashboard() {
     }
 
     const dispatch = useDispatch();
-    const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.entities);
+    const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.produtosLoja);
     const users = useSelector((rootReducer) => rootReducer.userSlice.entities);
     const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.entities);
     const statusProdutos = useSelector((rootReducer) => rootReducer.produtosSlice.status);
@@ -39,6 +39,10 @@ function Dashboard() {
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
     console.log(pedidos)
     //retirar do useEffect fetchUser e fetchPedido
+    useEffect(() => {
+        if (statusProdutos === 'not_loaded' || statusProdutos === 'updated'  || statusProdutos === 'saved' || statusProdutos === 'deleted'  )
+            dispatch(fetchProduto());
+    }, [statusProdutos, dispatch]);
     /*
     useEffect(() => {
         if (statusProdutos === 'not_loaded' || statusProdutos === 'saved' || statusProdutos === 'deleted') {
