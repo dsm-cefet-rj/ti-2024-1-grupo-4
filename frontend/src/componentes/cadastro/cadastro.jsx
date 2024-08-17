@@ -1,6 +1,6 @@
 import './cadastro.css';
 import React, { useEffect, useState } from 'react';
-import { addUserServer} from '../../redux/user/UserSlice';
+import { addUserServer, logUser} from '../../redux/user/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 //import {CadastroSchema} from './CadastroSchema';
 import * as yup from 'yup'
@@ -18,26 +18,16 @@ import { addEnderecoServer } from '../../redux/endereco/enderecoSlice';
 
 function Register_page() {
 
-
-  const status = useSelector((rootReducer) => rootReducer.userSlice.status)|| {};
-  const {currentUser} = useSelector((rootReducer) => rootReducer.userSlice)|| {};
   
   const dispatch = useDispatch();
   const history = useNavigate();
   
-  useEffect(() => {
-    if(status === 'not_loaded' || status === 'saved' || status === 'deleted' ){
-      dispatch(fetchUser())
-    } else if(status ==='failed'){
-        setTimeout(()=>dispatch(fetchUser()))
-    }
-  }, [status,dispatch]);
 
   const schema = yup.object().shape({
-    email: yup.string().email('Precisa ser um e-mail').required(),
+    username: yup.string().email('Precisa ser um e-mail').required(),
     nome: yup.string().max(50).required(),
-    senha: yup.string().min(5, 'A quantidade de caracteres da senha é de no mínimo 5').required(),
-    repSenha: yup.string().oneOf([yup.ref('senha'), null], 'As senhas devem ser iguais').required('Este campo deve ser preenchido'),
+    password: yup.string().min(5, 'A quantidade de caracteres da senha é de no mínimo 5').required(),
+    repSenha: yup.string().oneOf([yup.ref('password'), null], 'As senhas devem ser iguais').required('Este campo deve ser preenchido'),
     cep: yup.string().required('cep é obrigatório'),
     logradouro: yup.string().required('Logradouro é obrigatório'),
     complemento: yup.string(),
@@ -54,61 +44,49 @@ function Register_page() {
    * @param {Object} data - Dados do formulário
    */
   const onSubmit = async (data) => {
-    const { email, nome, senha, repSenha, cep, logradouro, numeroEndereco, complemento } = data;
-  
-    try {
-      // Step 1: Attempt to add the new user to the server (signup function handles email existence check)
-      const userAddedResult = await dispatch(addUserServer({ nome, email, senha, admin: false })).unwrap();
-  
-      if (userAddedResult) {
-        // Step 2: After user is added, fetch the user by email and password (or just use the result)
-        const userResult = await dispatch(fetchUserByEmail({ email, senha })).unwrap();
-  
-        if (userResult) {
-          const userKey = userResult._id; // Assuming MongoDB returns _id as the identifier
-  
-          // Step 3: Add the address to the server
-          const addressAddedResult = await dispatch(addEnderecoServer({ cep, logradouro, numeroEndereco, complemento, userKey })).unwrap();
-  
-          if (addressAddedResult) {
-            toast.info("Usuário e endereço cadastrados com sucesso", {
-              position: "bottom-left",
-              className: "text-spicy-mix bg-banana-mania shadow",
-              autoClose: 2000,
-            });
-            // Step 4: Redirect to the homepage or another relevant page
-            history('/');
-          } else {
-            toast.error("Erro ao adicionar endereço", {
-              position: "bottom-left",
-              className: "text-spicy-mix bg-banana-mania shadow",
-              autoClose: 2000,
-            });
-          }
-        }
-      } else {
-        toast.error("Erro ao adicionar usuário", {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
-      }
-    } catch (error) {
-      if (error.message === "Email já cadastrado") {
-        toast.warning("Este e-mail já está cadastrado", {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
-      } else {
-        console.error("Error:", error);
-        toast.error("Erro ao cadastrar usuário", {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
-      }
+    const user = {
+      username: data.username,
+      password: data.password,
+      nome: data.nome,
     }
+    const end = {
+      cep: data.CEP,
+      logradouro: data.logradouro,
+      complemento: data.complemento,
+      numeroEndereco: data.numeroEndereco,
+    }
+
+      dispatch(addUserServer(user)).then((result) => {
+        console.log(result)
+        if(result.payload){
+          toast.info("Usuário Cadastrado!", {
+            position: "bottom-left",
+            className: "text-spicy-mix bg-banana-mania shadow",
+            autoClose: 2000,
+          });
+          dispatch(logUser({username: data.username, password: data.password})).then((result) =>{
+            if(result.payload){
+              console.log("oi");
+            }else{
+              console.log(payload)
+              toast.error("Tente novamente mais tarde", {
+                position: "bottom-left",
+                className: "text-spicy-mix bg-banana-mania shadow",
+                autoClose: 2000,
+              });
+            }
+          })
+
+        }else{
+          console.log(payload)
+          toast.error("Tente novamente mais tarde", {
+            position: "bottom-left",
+            className: "text-spicy-mix bg-banana-mania shadow",
+            autoClose: 2000,
+          });
+        }
+      })
+
   };
   
   
@@ -125,8 +103,8 @@ function Register_page() {
           <form className="row g-3 col" onSubmit={handleSubmit(onSubmit)}>
             <div className="col-md-6">
               <label className="form-label" htmlFor='email'>Email</label>
-              <input type="email" id = 'email' {...register("email")} className="form-control"></input>
-              {errors && errors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.email.message}</p>}
+              <input type="email" id = 'email' {...register("username")} className="form-control"></input>
+              {errors && errors.username && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.username.message}</p>}
             </div>
             <div className="col-md-6">
               <label className="form-label" >Nome</label>
@@ -136,8 +114,8 @@ function Register_page() {
             </div>
             <div className="col-md-6">
               <label className="form-label">Senha</label>
-              <input type="password" {...register("senha")} className="form-control"></input>
-              {errors && errors.senha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.senha.message}</p>}
+              <input type="password" {...register("password")} className="form-control"></input>
+              {errors && errors.password && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.password.message}</p>}
             </div>
             <div className="col-md-6">
               <label className="form-label">Repita Senha</label>

@@ -3,10 +3,8 @@ const mongoose = require('mongoose');
 
 const EnderecoSchema = mongoose.Schema(
     {
-        id:{
-            type: String,
-        },
-        cep:{
+        id:mongoose.ObjectId,
+        CEP:{
             type: Number,
         },
         logradouro:{
@@ -22,16 +20,21 @@ const EnderecoSchema = mongoose.Schema(
         bairro:{
             type:String,
         },
-        complemento:{
-            type:String,
-        },
-        instrucaoPedido:{
-            type:String,
-        },
         userKey:{
             type: String,
         }
-    }
+    },
+    {
+        toJSON: {
+          virtuals: true,
+          transform(doc, ret) {
+            delete ret.password
+            ret.id = ret._id
+            delete ret._id
+          },
+          timestamps: true,
+        }
+      }
 );
 const endereco = mongoose.model('endereco',EnderecoSchema);
 module.exports = {

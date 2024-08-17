@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const {user} = require('../models/users');
 const passport = require('passport');
 var authenticate = require('../authenticate');
+const cors = require('./cors');
 
 router.use(bodyParser.json());
 
-router.route('/').get(async function (req, res, next) {
+router.route('/').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+.get(cors.corsWithOptions, authenticate.verifyUser, async function (req, res, next) {
       user.find({})
             .then(
               (usersBanco) => {
@@ -19,8 +21,8 @@ router.route('/').get(async function (req, res, next) {
                 (err) => next(err)
               );
 });
-router.route('/:id')
-  .delete((req, res, next) => {
+router.route('/:id').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+  .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     user.findByIdAndDelete(req.params.id)
       .then((response) => {
         res.statusCode = 200;
@@ -31,7 +33,7 @@ router.route('/:id')
 });
 
 router.route('/:id')
-  .put((req, res, next) => {
+  .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     user.findByIdAndUpdate(req.params.id, {
       $set: req.body
     }, { new: true })
@@ -45,42 +47,25 @@ router.route('/:id')
 
 
 
-router.post('/signup', (req, res, next) => {
-  user.findOne({ username: req.body.username })
-    .then(existingUser => {
-      if (existingUser) {
-        res.statusCode = 400;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({ err: 'Usuário já existe' });
+router.post('/signup', cors.corsWithOptions, (req, res, next) => {
+  user.register(new user({username: req.body.username, nome: req.body.nome}), req.body.password, 
+  (err, user) => {
+      if(err) {
+          res.statusCode = 500;
+          res.setHeader('Content-Type', 'application/json');
+          res.json({err: err});
       } else {
-        user.register(
-          new user({ username: req.body.username, nome: req.body.nome, admin: req.body.admin }),
-          req.body.password,
-          (err, user) => {
-            if (err) {
-              res.statusCode = 500;
+          passport.authenticate('local')(req, res, () => {
+              res.statusCode = 200;
               res.setHeader('Content-Type', 'application/json');
-              res.json({ err: err });
-            } else {
-              passport.authenticate('local')(req, res, () => {
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json({ success: true, status: 'Sucesso no Registro' });
-              });
-            }
-          }
-        );
+              res.json({success: true, status: 'Registration Successful!'});
+          });
       }
-    })
-    .catch(err => {
-      res.statusCode = 500;
-      res.setHeader('Content-Type', 'application/json');
-      res.json({ err: err.message });
-    });
+  });
 });
 
-
-router.post('/login', passport.authenticate('local', {session : false}), (req, res) => {
+router.route('/login').options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+router.post('/login',cors.corsWithOptions,  passport.authenticate('local', {session : false}), (req, res) => {
   var token = authenticate.getToken({_id: req.user._id});
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
@@ -88,17 +73,17 @@ router.post('/login', passport.authenticate('local', {session : false}), (req, r
 });
 
 
-router.get('/logout',(req,res) => {
-  if(req.session){
-    req.session.destroy();
-    res.clearCookie('session-id');
-    res.redirect('/');
-  }else{
-    var err = new Error('Voce nao esta logado');
-    err.status = 403;
-    next(err);
+router.post('/logout',cors.corsWithOptions, (req, res) => {
+  //console.log(req.body.headers.Authorization);
+  const token = req.body.headers.Authorization;
+
+  if (token) {
+    res.status(200).json({ message: 'Logout successful' });
+  } else {
+    res.status(403).json({ message: 'You are not logged in' });
   }
-})
+});
+
 
 
 module.exports = router;

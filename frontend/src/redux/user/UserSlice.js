@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const userAdapter = createEntityAdapter();
 
 const initialState = userAdapter.getInitialState({
-  currentUser: null,
+    currentUser: null,
     currentToken: null,
     status: 'not_loaded',
     error:null
@@ -32,6 +32,15 @@ export const logUser = createAsyncThunk('users/logUser', async (payload) => {
     return await httpPost(`${baseUrl}/users/login`, payload);
 });
 
+export const deslogarUser = createAsyncThunk('users/deslogarUser', async (payload) => {
+  const token = localStorage.getItem('token');
+  console.log(token)
+  return await httpPost(`${baseUrl}/users/logout`,{ headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+});
+
 /**
  * Async Thunk para deletar um usuário pelo ID
  * @param {string} idUser - O id do usuário a ser deletado
@@ -51,8 +60,8 @@ export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async
  */
 
 export const addUserServer = createAsyncThunk('users/addUserServer', async (user, {getState}) => {
-  const token = localStorage.getItem('token');
-  const response = await httpPost(`${baseUrl}/users/signup`, user, { headers: { Authorization: `Bearer ${token}` } });
+  console.log(user)
+  const response = await httpPost(`${baseUrl}/users/signup`, user);
   return response;
 });
 
@@ -73,18 +82,7 @@ export const updateUserServer = createAsyncThunk('users/updateUsersServer', asyn
 export const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {
-        deslogarUser: (state) => {
-            state.status = 'not_loaded';
-            state.currentUser = null;
-            state.currentToken = null;
-            toast.info("Usuario Deslogado", {
-              position: "bottom-left",
-              className: "text-spicy-mix bg-banana-mania shadow",
-              autoClose: 2000,
-          });
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
           .addCase(fetchUser.pending, (state, action) => {
@@ -105,6 +103,10 @@ export const userSlice = createSlice({
           .addCase(addUserServer.fulfilled, (state,action) => {
             state.status = 'saved';
             userAdapter.addOne(state,action.payload);
+          })
+          .addCase(addUserServer.rejected, (state,action) => {
+            state.status = 'failed';
+            console.log(state.error);
           })
           .addCase(updateUserServer.rejected,(state,action)=>{
             state.status = 'failed';
@@ -135,15 +137,18 @@ export const userSlice = createSlice({
                 autoClose: 2000,
                 })
             }
-            
-            
+          })
+          .addCase(deslogarUser.fulfilled,(state,action) => {
+            state.status = 'saved';
+            state.currentUser = null;
+            state.currentToken = null;
+
           })
 
         }
 
 });
 
-export const { deslogarUser } = userSlice.actions
 export const {
     selectAll: selectAllUser,
     selectById: selectUserById,
