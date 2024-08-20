@@ -47,10 +47,6 @@ function Perfil_Usuario() {
   });
 
   const senhaSchema = yup.object().shape({
-    senha: yup.string().test('password-match', 'A senha fornecida não corresponde à senha armazenada', function (value) {
-      const storedPassword = currentUser.senha;
-      return value === storedPassword;
-    }),
     novaSenha: yup.string().required('A Nova senha deve ser preenchida').min(5, 'A quantidade mínima é de 5 dígitos'),
     repSenha: yup.string().oneOf([yup.ref('novaSenha'), null], 'As senhas devem ser iguais').required()
   });
@@ -71,25 +67,12 @@ function Perfil_Usuario() {
    * @param {Object} data -  Informações do formulário do usuário 
    */
   const userUpdate = (data) => {
-    const { nome, email } = data;
-    const id = currentUser.id;
-    const senha = currentUser.senha;
-    const admin = currentUser.admin;
-
-    userSchema.validate(data).then((validData) => {
-      dispatch(updateUserServer({ id, nome, email, senha, admin })).then((user) => {
-        dispatch(fetchUserByEmail({ email, senha }))
+    const {nome, email} = data;
+    userSchema.validate(data).then(()=>{
+      dispatch(updateUserServer({nome: nome, username: email})).then((payload)=>{
+        console.log(payload);
       })
-
     })
-      .catch((error) => {
-        toast.error("Erro: " + error, {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
-      })
-
   }
   const createEndereco = (data) => {
     const { CEP, logradouro, numero, complemento } = data;
@@ -161,14 +144,20 @@ function Perfil_Usuario() {
    * @param {Object} data -  dados do formulário de atualização de senha 
    */
   const passUpdate = (data) => {
-    console.log('omo arruma plmrds');
+    const {novaSenha, repSenha} = data;
+    senhaSchema.validate(data).then(() => {
+      dispatch(updateUserServer({password: novaSenha})).then((payload) =>
+      {
+        console.log(payload);
+      })
+    })
   }
 
   /**
    * Deleta as informações do usuário
    */
   const handleRemove = () => {
-    const id = currentUser.id;
+    const id = currentUser;
     dispatch(deleteUserServer(id)).then((resposta) => {
       if (resposta.payload) {
         history('/');
@@ -193,11 +182,11 @@ function Perfil_Usuario() {
         <h1>Perfil do Usuário</h1>
         <form onSubmit={handleSubmitUser(userUpdate)}>
           <label htmlFor="nome" className='m-2'>Nome do Usuário:</label>
-          <input type="text" id='nome' className="form-control" {...registerUser("nome")} defaultValue={currentUser} placeholder="Nome do Cliente"></input>
+          <input type="text" id='nome' className="form-control" {...registerUser("nome")}  placeholder="Nome do Cliente"></input>
           {userErrors && userErrors.nome && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{userErrors.nome.message}</p>}
 
           <label htmlFor="email" className='m-2'>E-mail do usuário:</label>
-          <input type="text" className="form-control" {...registerUser("email")} defaultValue={currentUser} placeholder="Email do Cliente"></input>
+          <input type="text" className="form-control" {...registerUser("email")}  placeholder="Email do Cliente"></input>
           {userErrors && userErrors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{userErrors.email.message}</p>}
           <button type="submit" id='email' className='m-3 botao btn btn-primary bg-tacao btn-tacao border-tacao shadow-sm w-50'>Atualizar Informações</button>
 
@@ -264,9 +253,6 @@ function Perfil_Usuario() {
       <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h2>Mudança de senha</h2>
         <form onSubmit={handleSubmitSenha(passUpdate)}>
-          <label htmlFor='senha' className='m-2'>Digite sua senha:</label>
-          <input type="password" id='senha' className="form-control" {...registerSenha("senha")}></input>
-          {senhaErrors && senhaErrors.senha && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{senhaErrors.senha.message}</p>}
 
           <label htmlFor='novaSenha' className='m-2'>Digite a nova senha:</label>
           <input type="password" id='novaSenha' className="form-control" {...registerSenha("novaSenha")}></input>

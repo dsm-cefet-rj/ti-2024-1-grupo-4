@@ -23,7 +23,6 @@ const UserSchema = mongoose.Schema(
     id:mongoose.ObjectId,
     nome:{
         type:String,
-        required:true,
     },
     admin:{
         type:Boolean,

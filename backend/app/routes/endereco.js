@@ -20,9 +20,6 @@ router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendS
 .get(cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
     try {
         const enderecoByUser = await endereco.find({ userKey: req.params.userKey });
-        console.log(enderecoByUser)
-        console.log(req.params.userKey)
-        console.log(req.params)
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(enderecoByUser);
     } catch (err) {

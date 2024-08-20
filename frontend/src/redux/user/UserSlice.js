@@ -62,7 +62,8 @@ export const addUserServer = createAsyncThunk('users/addUserServer', async (user
  */
 
 export const updateUserServer = createAsyncThunk('users/updateUsersServer', async (user, {getState}) => {
-  return await httpPut(`${baseUrl}/users/${user.id}`, user, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
+  const userKey = getState().userSlice.currentUser
+  return await httpPut(`${baseUrl}/users/${userKey}`, user, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 /**
  * Slice que gerencia o user
@@ -97,6 +98,8 @@ export const userSlice = createSlice({
           })
           .addCase(deleteUserServer.fulfilled, (state,action) => {
             state.status = 'deleted';
+            state.currentUser = null;
+            state.currentToken = null;
             userAdapter.removeOne(state, action.payload);
           })
           .addCase(addUserServer.fulfilled, (state,action) => {
@@ -113,7 +116,7 @@ export const userSlice = createSlice({
           })
           .addCase(updateUserServer.rejected,(state,action)=>{
             state.status = 'failed';
-            toast.error("Erro: " + error, {
+            toast.error("Erro ao atualizar senha", {
               position: "bottom-left",
               className: "text-spicy-mix bg-banana-mania shadow",
               autoClose: 2000,

@@ -36,8 +36,9 @@ router.route('/:id')
   .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     user.findByIdAndUpdate(req.params.id, {
       $set: req.body
-    }, { new: true })
+    }, { new: false })
       .then((updatedUser) => {
+        console.log(updatedUser)
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(updatedUser);
