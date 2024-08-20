@@ -15,13 +15,14 @@ router.route('/')
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
           res.json(produtosBanco);
-        },(err) => next(err))
+        })
         .catch(
           (err) => next(err)
         );
 })
 .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-      produto.findOne({nome: req.body.nome}).then( existingProduto => {
+      produto.findOne({nome: req.body.nome})
+      .then( (existingProduto) => {
         if(existingProduto) {
           res.statusCode = 400;
           res.setHeader('Content-Type', 'application/json');
@@ -40,9 +41,15 @@ router.route('/:id')
 .delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
     produto.findByIdAndDelete(req.params.id)
       .then((produtoDeletado) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(req.body);
+        if(produtoDeletado) {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(req.body);
+        } else {
+          res.statusCode = 400;
+          res.setHeader('Content-Type', 'application/json');
+          res.json({err: 'Produto não foi deletado, porque não foi encontrado'});
+        }
       })
       .catch((err) => next(err));
   
@@ -52,9 +59,15 @@ router.route('/:id')
       $set: req.body
     }, { new: true })
     .then( (produtoAtualizado) => {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json(req.body);
+      if(produtoAtualizado) {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(req.body);
+      } else {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({err: 'Produto não foi atualizado, porque não foi encontrado'});
+      }
     }).catch((err) => next(err));
 })
  

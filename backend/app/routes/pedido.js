@@ -1,58 +1,74 @@
 var express = require('express');
 var router = express.Router();
 
+const cors = require('./cors');
+var authenticate = require('../authenticate');
 // dado proxy
 
 const { pedido } = require('../models/pedido');
+const {user} = require('../models/users');
 
 /* GET users listing. */
 router.route('/:id')
-.delete((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+.delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
   pedido.findByIdAndDelete(req.params.id)
-    .then(
-      (result) => {
-        res.status(200).json(result);
-      },(err) => next(err)
-    ).catch(
+    .then((pedidoDeletado) => {
+      if(pedidoDeletado) {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(req.body);
+      } else {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({err: "Pedido não foi deletado, porque não foi encontrado"});
+      }
+    })
+    .catch(
       (err) => next(err)
     );
-}
-)
-.put((req, res, next) => { 
+})
+.put(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
   pedido.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
-    .then(
-      (pedido_alterado) => {
-          if (!pedido_alterado) {
-            res.status(404).json({ error: 'pedido não encontrado' });
-          } else {
-            res.status(200).json(pedido_alterado);
-          }
-        
-      },
-      (err) => next(err)
-    )
+    .then((pedidoAlterado) => {
+      if(pedidoAlterado) {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(req.body);
+      } else {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({err: "Pedido não foi atualizado, porque não foi encontrado"});
+      }
+      
+    })
     .catch(
       (err) => next(err)
     );
     
-}
-)
+})
 
 router.route('/')
-  .get(function (req, res, next) {
-    pedido.find({})
-      .then(
-        (pedidosBanco) => {
-          res.status(200).json(pedidosBanco);
-        }, (err) => next(err))
+.options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+.get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
+    pedido.find({'pedido.user.id': req.params.id})
+      .then((pedidosBanco) => {
+        if(pedidosBanco) {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(pedidosBanco);
+        } else {
+          res.statusCode = 400;
+          res.setHeader('Content-Type', 'application/json');
+          res.json({err: "Pedido não foi encontrado para este usuário"});
+        }
+      })
       .catch(
         (err) => next(err)
       );
 
   })
-  .post(
-    (req, res, next) => {
-      
+.post(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
       pedido.create(req.body)
       .then(
         (pedido) => {
@@ -67,22 +83,6 @@ router.route('/')
       );
     }
   )
-router.route('/pedido/')
-  .get(function (req, res, next) {
-    const { id, admin } = req.query;
-    if (id) {
-      pedido.find({ 'user.id': id })
-        .then(
-          (pedidosBanco) => {
-            res.status(200).json(pedidosBanco);
-          }, (err) => next(err))
-        .catch(
-          (err) => next(err)
-        );
-    } else {
-      res.status(404).json({ error: 'Erro. ID indefinido' });
-    }
-  })
 
 module.exports = router;
 /*
