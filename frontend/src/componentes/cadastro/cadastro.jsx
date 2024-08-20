@@ -69,7 +69,7 @@ function Register_page() {
             console.log(currentUser);
             console.log(result);
             if(result.payload){
-              dispatch(addEnderecoServer({CEP: data.CEP,
+              dispatch(addEnderecoServer({CEP: data.cep,
                 logradouro: data.logradouro,
                 complemento: data.complemento,
                 numeroEndereco: data.numeroEndereco,

@@ -43,7 +43,7 @@ function Endereco_Card({ endereco }) {
 
     const enderecoUpdate = (data) =>{
         const {CEP, logradouro, numeroEndereco, complemento} = data;
-        const userKey = currentUser.id;
+        const userKey = currentUser;
         const id = endereco.id;
         schema.validate(data).then((validData)=>{
           dispatch(updateEnderecoServer({endereco:{CEP, logradouro, numeroEndereco, complemento, userKey}, id: id})).then((user)=>{
