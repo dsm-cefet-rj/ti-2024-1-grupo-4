@@ -70,15 +70,11 @@ router.route('/')
   })
 .post(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
       pedido.create(req.body)
-      .then(
-        (pedido) => {
-          if(!pedido){
-            res.status(404).json({ error: 'Pedido não encontrado' });
-          }else{
-            res.status(200).json(pedido);
-          }
-        },(err) => next(err)
-      ).catch(
+      .then( (pedidoCriado) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(req.body);
+      }).catch(
         (err) => next(err)
       );
     }
