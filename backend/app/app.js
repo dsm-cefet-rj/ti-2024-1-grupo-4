@@ -21,16 +21,16 @@ const mongoose = require('mongoose');
 
 const url = config.mongoUrl;
 
-const connect = mongoose.connect(url);
-
-connect.then(
-    (db) => {
-        console.log("Conectado corretamente ao servidor");
-    }, (err) => {
-        console.log(err);
-    }
-);
-
+async function run() {
+    mongoose.connect(url)
+        .then(
+            () => console.log("Conectado corretamente ao servidor")
+        )
+        .catch(
+            (error) => console.log(error)
+        );
+}
+run().catch(console.dir);
 
 var app = express();
 
