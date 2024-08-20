@@ -8,6 +8,7 @@ const userAdapter = createEntityAdapter();
 const initialState = userAdapter.getInitialState({
     currentUser: null,
     currentToken: null,
+    isAdmin: false,
     status: 'not_loaded',
     error:null
 });
@@ -76,6 +77,7 @@ export const userSlice = createSlice({
       deslogarUser: (state) => {
           state.currentUser = null;
           state.currentToken = null;
+          state.isAdmin = false;
           toast.info("Usuario Deslogado", {
             position: "bottom-left",
             className: "text-spicy-mix bg-banana-mania shadow",
@@ -100,6 +102,7 @@ export const userSlice = createSlice({
             state.status = 'deleted';
             state.currentUser = null;
             state.currentToken = null;
+            state.isAdmin = false;
             userAdapter.removeOne(state, action.payload);
           })
           .addCase(addUserServer.fulfilled, (state,action) => {
@@ -136,6 +139,7 @@ export const userSlice = createSlice({
             userAdapter.addOne(state, action.payload);
             state.currentUser = action.payload._id;
             state.currentToken = action.payload.token;
+            state.isAdmin = action.payload.admin;
             if(state.currentUser){
               toast.info("Usuario Logado", {
                 position: "bottom-left",

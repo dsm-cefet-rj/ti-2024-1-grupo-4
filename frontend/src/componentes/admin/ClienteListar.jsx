@@ -51,7 +51,7 @@ function ClienteListar({ user }) {
                     <div class="collapse" id={user.id}>
                         <div class="card card-body">
                             <span>Nome do Cliente: {user.nome}</span>
-                            <span>E-mail do Cliente: {user.email}</span>
+                            <span>E-mail do Cliente: {user.username}</span>
                         </div>
                     </div>
                 </div>
