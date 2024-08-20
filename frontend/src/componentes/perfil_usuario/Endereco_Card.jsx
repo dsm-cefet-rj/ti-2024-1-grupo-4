@@ -38,15 +38,15 @@ function Endereco_Card({ endereco }) {
         CEP: yup.string().required('CEP é obrigatório'),
         logradouro: yup.string().required('Logradouro é obrigatório'),
         complemento: yup.string(),
-        numero: yup.number().positive().required('Número é obrigatório')
+        numeroEndereco: yup.number().positive().required('Número é obrigatório')
     });
 
     const enderecoUpdate = (data) =>{
-        const {CEP, logradouro, numero, complemento} = data;
+        const {CEP, logradouro, numeroEndereco, complemento} = data;
         const userKey = currentUser.id;
         const id = endereco.id;
         schema.validate(data).then((validData)=>{
-          dispatch(updateEnderecoServer({id,CEP, logradouro, numero, complemento, userKey})).then((user)=>{
+          dispatch(updateEnderecoServer({endereco:{CEP, logradouro, numeroEndereco, complemento, userKey}, id: id})).then((user)=>{
             if(user.payload){
                setLogradouro(logradouro);
                 toast.info("Endereço alterado", {
@@ -73,7 +73,7 @@ function Endereco_Card({ endereco }) {
     }
 
     const handleRemove = () => {
-        const id = endereco._id;
+        const id = endereco.id;
         dispatch(deleteEnderecoServer(id))
     }
 
@@ -108,8 +108,8 @@ function Endereco_Card({ endereco }) {
                             <input type="text" className="form-control" placeholder="Ex: Apto, Bloco, etc." {...register("complemento")} defaultValue={endereco.complemento}></input>
 
                             <label className="form-label">Número</label>
-                            <input type="number" className="form-control" {...register("numero")} defaultValue={endereco.numero}></input>
-                            {errors.endereco?.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numero.message}</p>}
+                            <input type="number" className="form-control" {...register("numeroEndereco")} defaultValue={endereco.numeroEndereco}></input>
+                            {errors.endereco?.numeroEndereco && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numeroEndereco.message}</p>}
                         </div>
                     </div>
                   </form>                    

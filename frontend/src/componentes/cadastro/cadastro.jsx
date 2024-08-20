@@ -18,7 +18,8 @@ import { addEnderecoServer } from '../../redux/endereco/enderecoSlice';
 
 function Register_page() {
 
-  
+  const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice);
+  const { currentToken } = useSelector((rootReducer) => rootReducer.userSlice);
   const dispatch = useDispatch();
   const history = useNavigate();
   
@@ -65,8 +66,16 @@ function Register_page() {
             autoClose: 2000,
           });
           dispatch(logUser({username: data.username, password: data.password})).then((result) =>{
+            console.log(currentUser);
+            console.log(result);
             if(result.payload){
-              console.log("oi");
+              dispatch(addEnderecoServer({CEP: data.CEP,
+                logradouro: data.logradouro,
+                complemento: data.complemento,
+                numeroEndereco: data.numeroEndereco,
+                userKey: result.payload._id})).then(()=>{
+                  history('/');
+                })
             }else{
               console.log(payload)
               toast.error("Tente novamente mais tarde", {

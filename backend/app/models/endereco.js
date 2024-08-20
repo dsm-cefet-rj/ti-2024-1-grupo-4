@@ -1,46 +1,51 @@
 const mongoose = require('mongoose');
 
-
-const EnderecoSchema = mongoose.Schema(
+const EnderecoSchema = new mongoose.Schema(
     {
-        id:mongoose.ObjectId,
-        CEP:{
-            type: Number,
-        },
-        logradouro:{
+        CEP: {
             type: String,
+            required: true,
         },
-        numeroEndereco:{
+        logradouro: {
+            type: String,
+            required: true,
+        },
+        numeroEndereco: {
             type: Number,
+            required: true,
         },
-        complemento:{
+        complemento: {
             type: String,
             required: false,
         },
-        bairro:{
-            type:String,
-        },
-        userKey:{
+        bairro: {
             type: String,
+        },
+        userKey: {
+            type: mongoose.Schema.Types.ObjectId, // Reference to User model
+            ref: 'user', // Name of the User model
+            required: true,
         }
     },
     {
+        timestamps: true, // Mongoose will automatically manage createdAt and updatedAt fields
         toJSON: {
-          virtuals: true,
-          transform(doc, ret) {
-            delete ret.password
-            ret.id = ret._id
-            delete ret._id
-          },
-          timestamps: true,
+            virtuals: true,
+            transform(doc, ret) {
+                ret.id = ret._id;
+                delete ret._id;
+                delete ret.__v;
+            }
         }
-      }
+    }
 );
-const endereco = mongoose.model('endereco',EnderecoSchema);
+
+const endereco =  mongoose.model('endereco', EnderecoSchema);
+
 module.exports = {
     EnderecoSchema,
     endereco
-};
+  };
 
 /*
 required: true,

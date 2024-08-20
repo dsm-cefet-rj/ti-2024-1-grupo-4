@@ -25,11 +25,11 @@ function Perfil_Usuario() {
 
   useEffect(() => {
     if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
-      dispatch(fetchEnderecoByUser(currentUser.id))
+      dispatch(fetchEnderecoByUser(currentUser))
     } else if (status === 'failed') {
-      setTimeout(() => dispatch(fetchEnderecoByUser(currentUser.id)))
+      setTimeout(() => dispatch(fetchEnderecoByUser(currentUser)))
     }
-  }, [status, currentUser.id, dispatch]);
+  }, [status, currentUser, dispatch]);
 
   /**
    * Esquemas de validação das informações do usuário
@@ -93,10 +93,10 @@ function Perfil_Usuario() {
   }
   const createEndereco = (data) => {
     const { CEP, logradouro, numero, complemento } = data;
-    const userKey = currentUser.id;
+    const userKey = currentUser;
     enderecoSchema.validate(data).then((validData) => {
-      dispatch(addEnderecoServer({ CEP, logradouro, numero, complemento, userKey })).then((endereco) => {
-        if (isAction.payload) {
+      dispatch(addEnderecoServer({ CEP, logradouro, numeroEndereco:numero, complemento, userKey })).then((endereco) => {
+        if (endereco.payload) {
           toast.info("Endereço adicionado", {
             position: "bottom-left",
             className: "text-spicy-mix bg-banana-mania shadow",
@@ -128,10 +128,10 @@ function Perfil_Usuario() {
    */
   const enderecoUpdate = (data) => {
     const { CEP, logradouro, numero, complemento } = data;
-    const userKey = currentUser.id;
+    const userKey = currentUser;
     enderecoSchema.validate(data).then((validData) => {
       dispatch(updateEnderecoServer({ CEP, logradouro, numero, complemento, userKey })).then((endereco) => {
-        if (isAction.payload) {
+        if (endereco.payload) {
           toast.info("Endereço alterado", {
             position: "bottom-left",
             className: "text-spicy-mix bg-banana-mania shadow",
@@ -161,23 +161,7 @@ function Perfil_Usuario() {
    * @param {Object} data -  dados do formulário de atualização de senha 
    */
   const passUpdate = (data) => {
-    const { senha, novaSenha, repSenha } = data;
-    const id = currentUser.id;
-    const email = currentUser.email;
-    const nome = currentUser.nome;
-    const admin = currentUser.admin;
-    senhaSchema.validate(data).then((validData) => {
-      dispatch(updateUserServer({ id, nome, email, senha: novaSenha, admin })).then((user) => {
-        dispatch(fetchUserByEmail({ email, senha: novaSenha }))
-      })
-    })
-      .catch((error) => {
-        toast.error("Erro: " + error, {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
-      })
+    console.log('omo arruma plmrds');
   }
 
   /**
@@ -209,11 +193,11 @@ function Perfil_Usuario() {
         <h1>Perfil do Usuário</h1>
         <form onSubmit={handleSubmitUser(userUpdate)}>
           <label htmlFor="nome" className='m-2'>Nome do Usuário:</label>
-          <input type="text" id='nome' className="form-control" {...registerUser("nome")} defaultValue={currentUser.nome} placeholder="Nome do Cliente"></input>
+          <input type="text" id='nome' className="form-control" {...registerUser("nome")} defaultValue={currentUser} placeholder="Nome do Cliente"></input>
           {userErrors && userErrors.nome && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{userErrors.nome.message}</p>}
 
           <label htmlFor="email" className='m-2'>E-mail do usuário:</label>
-          <input type="text" className="form-control" {...registerUser("email")} defaultValue={currentUser.email} placeholder="Email do Cliente"></input>
+          <input type="text" className="form-control" {...registerUser("email")} defaultValue={currentUser} placeholder="Email do Cliente"></input>
           {userErrors && userErrors.email && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{userErrors.email.message}</p>}
           <button type="submit" id='email' className='m-3 botao btn btn-primary bg-tacao btn-tacao border-tacao shadow-sm w-50'>Atualizar Informações</button>
 

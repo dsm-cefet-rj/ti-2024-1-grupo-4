@@ -73,17 +73,5 @@ router.post('/login',cors.corsWithOptions,  passport.authenticate('local', {sess
 });
 
 
-router.post('/logout',cors.corsWithOptions, (req, res) => {
-  //console.log(req.body.headers.Authorization);
-  const token = req.body.headers.Authorization;
-
-  if (token) {
-    res.status(200).json({ message: 'Logout successful' });
-  } else {
-    res.status(403).json({ message: 'You are not logged in' });
-  }
-});
-
-
 
 module.exports = router;

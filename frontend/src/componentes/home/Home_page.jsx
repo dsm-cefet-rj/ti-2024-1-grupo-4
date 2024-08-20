@@ -34,6 +34,7 @@ function Home_Page() {
     useEffect(() => {
         if (statusProdutos === 'not_loaded' || statusProdutos === 'updated'  || statusProdutos === 'saved' || statusProdutos === 'deleted'  )
             dispatch(fetchProduto());
+        console.log(localStorage.getItem('token'));
     }, [statusProdutos, dispatch]);
 
     const productsTotalPrice = useSelector(selectProductsTotalPrice);

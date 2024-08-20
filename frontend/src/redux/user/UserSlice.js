@@ -19,7 +19,7 @@ const initialState = userAdapter.getInitialState({
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async (_, {getState}) => {
     console.log(getState());
-    return await httpGet(`${baseUrl}/users`);
+    return await httpGet(`${baseUrl}/users`,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -32,14 +32,6 @@ export const logUser = createAsyncThunk('users/logUser', async (payload) => {
     return await httpPost(`${baseUrl}/users/login`, payload);
 });
 
-export const deslogarUser = createAsyncThunk('users/deslogarUser', async (payload) => {
-  const token = localStorage.getItem('token');
-  console.log(token)
-  return await httpPost(`${baseUrl}/users/logout`,{ headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
-});
 
 /**
  * Async Thunk para deletar um usuário pelo ID
@@ -48,8 +40,7 @@ export const deslogarUser = createAsyncThunk('users/deslogarUser', async (payloa
  */
 
 export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async (idUser, {getState}) => {
-    const token = localStorage.getItem('token');
-    await httpDelete(`${baseUrl}/users/${idUser}`, { headers: { Authorization: `Bearer ${token}` } });
+    await httpDelete(`${baseUrl}/users/${idUser}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
     return idUser;
 });
 
@@ -60,7 +51,6 @@ export const deleteUserServer = createAsyncThunk('users/deleteUserServer', async
  */
 
 export const addUserServer = createAsyncThunk('users/addUserServer', async (user, {getState}) => {
-  console.log(user)
   const response = await httpPost(`${baseUrl}/users/signup`, user);
   return response;
 });
@@ -72,8 +62,7 @@ export const addUserServer = createAsyncThunk('users/addUserServer', async (user
  */
 
 export const updateUserServer = createAsyncThunk('users/updateUsersServer', async (user, {getState}) => {
-  const token = localStorage.getItem('token');
-  return await httpPut(`${baseUrl}/users/${user.id}`, user, { headers: { Authorization: `Bearer ${token}` } });
+  return await httpPut(`${baseUrl}/users/${user.id}`, user, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 /**
  * Slice que gerencia o user
@@ -82,7 +71,17 @@ export const updateUserServer = createAsyncThunk('users/updateUsersServer', asyn
 export const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {},
+    reducers: {
+      deslogarUser: (state) => {
+          state.currentUser = null;
+          state.currentToken = null;
+          toast.info("Usuario Deslogado", {
+            position: "bottom-left",
+            className: "text-spicy-mix bg-banana-mania shadow",
+            autoClose: 2000,
+        });
+      }
+  },
     extraReducers: (builder) => {
         builder
           .addCase(fetchUser.pending, (state, action) => {
@@ -106,7 +105,11 @@ export const userSlice = createSlice({
           })
           .addCase(addUserServer.rejected, (state,action) => {
             state.status = 'failed';
-            console.log(state.error);
+            toast.error("E-mail já cadastrado", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+            });
           })
           .addCase(updateUserServer.rejected,(state,action)=>{
             state.status = 'failed';
@@ -128,7 +131,7 @@ export const userSlice = createSlice({
           .addCase(logUser.fulfilled,(state,action) => {
             state.status = 'saved';
             userAdapter.addOne(state, action.payload);
-            state.currentUser = action.payload;
+            state.currentUser = action.payload._id;
             state.currentToken = action.payload.token;
             if(state.currentUser){
               toast.info("Usuario Logado", {
@@ -138,17 +141,12 @@ export const userSlice = createSlice({
                 })
             }
           })
-          .addCase(deslogarUser.fulfilled,(state,action) => {
-            state.status = 'saved';
-            state.currentUser = null;
-            state.currentToken = null;
-
-          })
 
         }
 
 });
 
+export const { deslogarUser } = userSlice.actions
 export const {
     selectAll: selectAllUser,
     selectById: selectUserById,

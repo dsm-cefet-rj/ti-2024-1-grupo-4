@@ -11,26 +11,15 @@ const initialState = enderecoAdapter.getInitialState({
     error:null
 });
 
-/**
- * Async Thunk para busca todos os enderecos
- * @returns {Promise} - Promise com todos os enderecos
- */
-export const fetchEndereco = createAsyncThunk('endereco/fetchEndereco', async (_, {getState}) => {
-    console.log(getState());
-    return await httpGet(`${baseUrl}/endereco`);
-});
 
 /**
  * Async Thunk para buscar endereco por usuario
  * @param {string} payload - O id do usuario
  * @returns {Promise} - Promise contendo os enderecos que possuem o id do usuario
  */
-export const fetchEnderecoByUser = createAsyncThunk('endereco/fetchEnderecoByUser', async(payload, {getState}) =>{
+export const fetchEnderecoByUser = createAsyncThunk('endereco/fetchEnderecoByUser', async(userKey, {getState}) =>{
   try{
-    //Pega todos os enderecos do user
-    const response = await fetch(`${baseUrl}/endereco?userKey=${payload}`);
-    const enderecoByUser = await response.json();
-    return enderecoByUser;
+    return await httpGet(`${baseUrl}/endereco/${userKey}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
   } catch(error){
     throw error;
   }
@@ -43,7 +32,7 @@ export const fetchEnderecoByUser = createAsyncThunk('endereco/fetchEnderecoByUse
  */
 
 export const deleteEnderecoServer = createAsyncThunk('endereco/deleteEnderecoServer', async (idEndereco, {getState}) => {
-    await httpDelete(`${baseUrl}/endereco/${idEndereco}`);
+    await httpDelete(`${baseUrl}/endereco/${idEndereco}`,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
     return idEndereco;
 });
 
@@ -53,8 +42,8 @@ export const deleteEnderecoServer = createAsyncThunk('endereco/deleteEnderecoSer
  * @returns {Promise} - Promise com o endereco adicionado
  */
 
-export const addEnderecoServer = createAsyncThunk('endereco/addEnderecoServer', async (endereco, {getState}) => {
-    return await httpPost(`${baseUrl}/endereco`, endereco);
+export const addEnderecoServer = createAsyncThunk('endereco/addEnderecoServer', async (payload, {getState}) => {
+    return await httpPost(`${baseUrl}/endereco`, payload,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -63,7 +52,7 @@ export const addEnderecoServer = createAsyncThunk('endereco/addEnderecoServer', 
  * @returns {Promise} - Promise com o valor atualizado
  */
 export const updateEnderecoServer = createAsyncThunk('endereco/updateEnderecoServer', async (endereco, {getState}) => {
-    return await httpPut(`${baseUrl}/endereco/${endereco.id}`, endereco);
+    return await httpPut(`${baseUrl}/endereco/${endereco.id}`, endereco.endereco,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -75,17 +64,6 @@ export const enderecoSlice = createSlice({
     initialState,
     extraReducers: (builder) => {
         builder
-          .addCase(fetchEndereco.pending, (state, action) => {
-            state.status = 'loading';
-          })
-          .addCase(fetchEndereco.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
-          })
-          .addCase(fetchEndereco.fulfilled, (state, action) => {
-            state.status = 'loaded';
-            enderecoAdapter.setAll(state, action.payload);
-          })
           .addCase(deleteEnderecoServer.fulfilled, (state,action) => {
             state.status = 'deleted';
             enderecoAdapter.removeOne(state, action.payload);
@@ -100,7 +78,14 @@ export const enderecoSlice = createSlice({
           })
           .addCase(fetchEnderecoByUser.fulfilled,(state,action) => {
             state.status = 'saved';
+            console.log(action.payload)
             state.enderecos = action.payload;
+          }).addCase(fetchEnderecoByUser.rejected,(state,action) => {
+            toast.error("Erro ao requisitar endereços", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
           })
 
         }

@@ -5,17 +5,8 @@ const router = express.Router();
 const cors = require('./cors');
 
 
-router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
-router.get(cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
-    try {
-        const enderecoByUser = await endereco.find({ userKey: req.params.userKey });
-        res.status(200).json(enderecoByUser);
-    } catch (err) {
-        next(err);
-    }
-});
-
-router.route('/').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+router.route('/')
+.options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .post(cors.corsWithOptions,authenticate.verifyUser, async (req, res, next) => {
     try {
         const novoEndereco = await endereco.create(req.body);
@@ -25,6 +16,19 @@ router.route('/').options(cors.corsWithOptions, (req, res) => {res.sendStatus(20
     }
 });
 
+router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+.get(cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
+    try {
+        const enderecoByUser = await endereco.find({ userKey: req.params.userKey });
+        console.log(enderecoByUser)
+        console.log(req.params.userKey)
+        console.log(req.params)
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(enderecoByUser);
+    } catch (err) {
+        next(err);
+    }
+});
 router.route('/:id')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .put(cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
@@ -43,6 +47,7 @@ router.route('/:id')
         next(err);
     }
 });
+
 
 module.exports = router;
 
