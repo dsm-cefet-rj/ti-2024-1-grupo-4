@@ -10,37 +10,14 @@ const compraAdapter = createEntityAdapter();
  */
 const initialState = compraAdapter.getInitialState({
     user: null,
-    endereco: null,
     pagamento: null,
     produtos: null,
     step:0,
     status:'not_loaded',
-    error:null
+    error:null,
+    key: null
 
 })
-//'loading'
-//'failed'
-//'saved'
-
-/**
- * 
- * @param {Object} state - recebe o valor que o usuário está no formulário
- * @param {Object} input - Recebe a informação do form
- * @returns o estado do currentUser
- */
-function setInfoReducer(state,input){
-    const index = input.data[1] 
-    const temp = {...input,stepInfo:input.data[1]}
-    //step 0 = endereco;1-pagamento;2-produtos
-    if (index >= state.informacao.length || index < 0) {
-        console.log(index + "valor do index dentro do if ")
-
-        console.log(()=>state.informacao.length)
-        return state;
-    }
-    state.informacao[index] = [];
-    state.informacao[index].push(temp);
-}
 
 /**
  * Reducer para configurar o status
@@ -59,7 +36,7 @@ function setStatusReducer(state,payload){
  */
 
 export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async (pedido, {getState}) => {
-    return await httpPost(`${baseUrl}/pedido`, pedido);
+    return await httpPost(`${baseUrl}/pedido`, pedido,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -70,14 +47,6 @@ const compraSlice = createSlice({
     name:'compra',
     initialState,
     reducers:{
-        /**
-         * Redutor para configurar o endereço
-         * @param {Object} state - O estado atual
-         * @param {Object} action - A ação despachada
-         */
-        setEndereco: (state, action)=>{
-            state.endereco = action.payload;
-        },
         /**
          * Redutor para configurar o usuário
          * @param {Object} state - O estado atual
@@ -106,7 +75,15 @@ const compraSlice = createSlice({
          * Redutor para resetar as informações
          * @param {Object} state - O estado atual
          */
-        resetInfo:(state)=> resetInfoReducer(state),
+        resetInfo:(state)=> {
+            state.produtos = null,
+            state.pagamentos = null,
+            state.user = null,
+            state.step = 0,
+            state.error = null,
+            state.status = 'not_loaded',
+            state.key = null
+        },
         /**
          * Redutor para configurar o status
          * @param {Object} state - O estado atual
@@ -119,15 +96,16 @@ const compraSlice = createSlice({
         (builder)=>{
             builder
             .addCase(addPedidoServer.pending,(state,action)=>{
-                    state.status ='loading';
+                state.status ='loading';
                
             })
             .addCase(addPedidoServer.rejected,(state,action)=>{
                 state.status ='failed';
             })
             .addCase(addPedidoServer.fulfilled,(state,action)=>{
-               
-                    state.status ='saved';
+                console.log(action)
+                state.key = action.payload.id,
+                state.status ='saved';
            
             })
 
@@ -139,7 +117,6 @@ export const {
 setInfo,
 resetInfo,
 setStatus,
-setEndereco,
 setPagamento,
 setProdutos,
 setUser

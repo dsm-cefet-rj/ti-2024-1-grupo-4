@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 const entregaAdapter = createEntityAdapter();
 
 const initialState = entregaAdapter.getInitialState({
+    endereco: null,
+    status_entrega: 'Avaliando Pedido',
     status: 'not_loaded',
     error:null
 });
@@ -16,7 +18,7 @@ const initialState = entregaAdapter.getInitialState({
  */
 
 export const fetchEntrega = createAsyncThunk('entrega/fetchEntrega', async (_, {getState}) => {
-    return await httpGet(`${baseUrl}/entrega`);
+    return await httpGet(`${baseUrl}/entrega`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -25,7 +27,7 @@ export const fetchEntrega = createAsyncThunk('entrega/fetchEntrega', async (_, {
  * @returns {Promise} - Promise com uma id da entrega
  */
 export const deleteEntregaServer = createAsyncThunk('entrega/deleteEntregaServer', async (idEntrega, {getState}) => {
-    await httpDelete(`${baseUrl}/entrega/${idEntrega}`);
+    await httpDelete(`${baseUrl}/entrega/${idEntrega}`,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
     return idEntrega;
 });
 
@@ -35,7 +37,7 @@ export const deleteEntregaServer = createAsyncThunk('entrega/deleteEntregaServer
  * @returns {Promise} - Promise com o endereco adicionado
  */
 export const addEntregaServer = createAsyncThunk('entrega/addEntregaServer', async (entrega, {getState}) => {
-    await httpPost(`${baseUrl}/entrega`, entrega);
+    await httpPost(`${baseUrl}/entrega`, entrega,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
     return entrega;
 });
 
@@ -45,7 +47,7 @@ export const addEntregaServer = createAsyncThunk('entrega/addEntregaServer', asy
  * @returns {Promise} - Promise com o valor atualizado
  */
 export const updateEntregaServer = createAsyncThunk('entrega/updateEntregaServer', async (entrega, {getState}) => {
-    return await httpPut(`${baseUrl}/entrega/${entrega.id}`, entrega);
+    return await httpPut(`${baseUrl}/entrega/${entrega.id}`, entrega,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -56,6 +58,16 @@ export const updateEntregaServer = createAsyncThunk('entrega/updateEntregaServer
 export const entregaSlice = createSlice({
     name: 'entrega',
     initialState,
+    reducers: {
+        /**
+        * Redutor para configurar o endereço
+        * @param {Object} state - O estado atual
+        * @param {Object} action - A ação despachada
+        */
+        setEndereco: (state, action)=>{
+        state.endereco = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
           .addCase(fetchEntrega.pending, (state, action) => {
@@ -76,6 +88,11 @@ export const entregaSlice = createSlice({
           .addCase(addEntregaServer.fulfilled, (state,action) => {
             state.status = 'saved';
             entregaAdapter.addOne(state,action.payload);
+            toast.info("Pedido feito!", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+            });
           })
           .addCase(updateEntregaServer.rejected,(state,action)=>{
             state.status = 'failed';
@@ -98,6 +115,10 @@ export const entregaSlice = createSlice({
         }
 
 });
+
+export const {
+  setEndereco,
+} = entregaSlice.actions;
 
 export const {
     selectAll: selectAllEntrega,

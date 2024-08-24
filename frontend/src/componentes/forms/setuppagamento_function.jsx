@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 
 import { formsSchema } from './formspagamentoSchema';
 import {useDispatch} from "react-redux";
-import {setInfo,resetInfo, setPagamento} from "../../redux/compra/compraSlice"
+import {setPagamento} from "../../redux/compra/compraSlice"
 
 //import{nextStep, prevStep,setT_pagamento, setCodcartao, setDatacartao, setNome_cartao, setNum_cartao} from '../../redux/compra/compraSlice';
 

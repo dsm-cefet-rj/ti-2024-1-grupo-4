@@ -53,6 +53,6 @@ app.use('/endereco', enderecoRouter);
 
 
 app.use('/pedido', pedidoRouter);
-//app.use('/entrega', entregaRouter);
+app.use('/entrega', entregaRouter);
 
 module.exports = app;

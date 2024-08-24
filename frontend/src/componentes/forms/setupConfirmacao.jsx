@@ -9,6 +9,7 @@ import {useSelector,useDispatch} from "react-redux";
 import { Link,useNavigate,Navigate } from 'react-router-dom';
 import { useEffect } from 'react'
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
+import { addEntregaServer } from '../../redux/entrega/entregaSlice.js'
 
 /**
  * @module forms/setupConfirmacao
@@ -25,9 +26,11 @@ import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 
 function setupConfirmacao({step,value}) {
     const status = useSelector((rootReducer) => rootReducer.compraSlice.status);
-    const pedido = useSelector((rootReducer) => rootReducer.compraSlice.informacao);
-    const { user } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
-    const { endereco } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
+    const status_ent = useSelector((rootReducer) => rootReducer.entregaSlice.status);
+    const { userInfo } = useSelector((rootReducer) => rootReducer.userSlice) || {};
+    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
+    const { endereco } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
+    const { status_entrega } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
     const { pagamento } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
     const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
@@ -38,9 +41,32 @@ function setupConfirmacao({step,value}) {
 
 
    
-    const handlePedidoAdd =()=>{
-        dispatch(addPedidoServer({user, endereco, products, pagamento, valorTotal: productsTotalPrice, status:'Avaliando pedido'}));
-    }
+    const handlePedidoAdd = async () => {
+        try {
+          const user = { email: userInfo.email, nome: userInfo.nome };
+      
+          const pedidoResponse = await dispatch(
+            addPedidoServer({ user, products, pagamento, valorTotal: productsTotalPrice })
+          ).unwrap();
+      
+
+          const pedidoId = pedidoResponse.id;
+
+          await dispatch(addEntregaServer({
+            endereco,
+            status: status_entrega,
+            userKey: currentUser,
+            pedido: pedidoId
+          })).unwrap();
+      
+          if (status_ent === 'saved') {
+            dispatch(resetInfo());
+          }
+        } catch (error) {
+          console.error("Erro:", error);
+        }
+      };
+      
     const handleSetStatusLoading = ()=>{
         dispatch(setStatus('loading'));
     }

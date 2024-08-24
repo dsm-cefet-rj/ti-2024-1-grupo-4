@@ -10,8 +10,8 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { formsSchema } from './formsSchema';
 
 
-import {useDispatch} from "react-redux";
-import {setInfo,resetInfo, setEndereco} from "../../redux/compra/compraSlice"
+import {useDispatch, useSelector} from "react-redux";
+import { setEndereco } from '../../redux/entrega/entregaSlice';
 
 /**
  * @module forms/setupendereco_function
@@ -29,14 +29,15 @@ import {setInfo,resetInfo, setEndereco} from "../../redux/compra/compraSlice"
 
 function setupendereco_function({ prevStep, nextStep, step }) {
 
-  
+    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const [toggle_botao, setToggleBotao] = useState(false);
     
     const { register, handleSubmit,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)});
     const dispatch = useDispatch();
 
     const onSubmit = data => {
-        dispatch(setEndereco(data));
+        const {CEP, logradouro, numeroEndereco, bairro} = data;
+        dispatch(setEndereco({CEP, logradouro, numeroEndereco, bairro, userKey:currentUser}));
         console.log(data)
         setToggleBotao(true);
       }
@@ -64,8 +65,8 @@ function setupendereco_function({ prevStep, nextStep, step }) {
                             <div className='row'>
                                 <div className='col-md-6'>
                                     <label htmlFor='cep'>CEP</label>
-                                    <input type='text' className='form-control' id="cep" name='cep'{...register('cep')}/>
-                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.cep?.message}</p>
+                                    <input type='text' className='form-control' id="cep" name='cep'{...register('CEP')}/>
+                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.CEP?.message}</p>
                                 </div>
                                 <div className='col-md-6'>
                                     <label htmlFor='logradouro'>Logradouro</label>
