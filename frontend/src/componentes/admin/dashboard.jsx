@@ -38,26 +38,17 @@ function Dashboard() {
     const statusPedidos = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
     console.log(pedidos)
-    //retirar do useEffect fetchUser e fetchPedido
+    
     useEffect(() => {
         if (statusProdutos === 'not_loaded' || statusProdutos === 'updated'  || statusProdutos === 'saved' || statusProdutos === 'deleted'  )
             dispatch(fetchProduto());
     }, [statusProdutos, dispatch]);
-    /*
-    useEffect(() => {
-        if (statusProdutos === 'not_loaded' || statusProdutos === 'saved' || statusProdutos === 'deleted') {
-          dispatch(fetchProduto());   
-        } if(statusClientes === 'not_loaded' || statusClientes === 'saved' || statusClientes === 'deleted'){
-            dispatch(fetchUser());
-        }if(statusPedidos === 'not_loaded' || statusPedidos === 'saved' || statusPedidos === 'deleted'){
-            dispatch(fetchPedido());
-        }
-    }, [status, dispatch]);
-    */
+
+    const [img, setImg] = useState("");
 
     const [formData, setFormData] = useState({
         nome: '',
-        imgUrl: '/img/food.jpg',
+        imgUrl: img,
         preco: 0,
         descricao: '',
     });
@@ -77,7 +68,7 @@ function Dashboard() {
         try {
             await productSchema.validate(formData, { abortEarly: false });
             dispatch(addProdutoServer(formData));
-            setFormData({ nome: '', imgUrl: '/img/food.jpg', preco: 0, descricao: '' });
+            setFormData({ nome: '', imgUrl: img, preco: 0, descricao: '' });
             setErrors({});
         } catch (error) {
             const newErrors = {};
@@ -105,6 +96,48 @@ function Dashboard() {
    
     }
 
+    async function handleImageChange(event) {
+        const inputFile = document.querySelector("#ft_input");
+        const pictureImage = document.querySelector(".ft_input");
+        const pictureImgTxt = "Escolha uma Imagem";
+
+        if(!inputFile || !pictureImage) {
+            throw new Error(
+                "DOM elements not found. #ft_input e .ft_image não existem."
+            );
+        }
+
+        const file = event.target.files[0];
+
+        if(file) {
+            const reader = new FileReader();
+
+            try {
+                const imageData = await new Promise((resolve, reject) => {
+                    reader.addEventListener("load", () => resolve(reader.result));
+                    reader.addEventListener("error", reject);
+                    reader.readAsDataURL(file);
+                });
+
+                pictureImage.innerHTML = ""; //Imagem DEFAULT
+                const img = document.createElement("img");
+                img.src = imageData;
+                img.classList.add("ft_img");
+                pictureImage.appendChild(img);
+                setImg(img.src);
+                setFormData({
+                    ...formData,
+                    ["imgUrl"]: img.src,
+                });
+            } catch (error) {
+                console.error("Error loading image: ", error);
+                pictureImage.innerHTML = pictureImgTxt;
+            }
+        } else {
+            pictureImage.innerHTML = pictureImgTxt;
+        }
+        inputFile.addEventListener("change", handleImageChange);
+    }
 
 
     return(
@@ -126,8 +159,8 @@ function Dashboard() {
                                     <input type="number" className="form-control" id="preco" name="preco" value={formData.preco} onChange={handleChange} step="any" min="0.1" placeholder="Preço do Produto"></input>
                                 </div>
                                 <div className="col-12">
-                                    <label htmlFor="inputImg" className="form-label">Imagem do Produto</label>
-                                    <input type="file" className="form-control" id="inputImg"></input>
+                                    <label htmlFor="ft_input" className="form-label">Imagem do Produto</label>
+                                    <input type="file" className="form-control ft_input" id="ft_input" accept='image/' onChange={handleImageChange}></input>
                                 </div>
                                 <div className="col-12">
                                     <textarea className="form-control" id="descricao" name="descricao" value={formData.descricao} onChange={handleChange} rows="5" placeholder="Descrição do Produto"></textarea>
