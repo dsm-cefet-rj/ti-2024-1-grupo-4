@@ -7,6 +7,7 @@ const entregaAdapter = createEntityAdapter();
 
 const initialState = entregaAdapter.getInitialState({
     endereco: null,
+    instrucoes: null,
     entrega: {},
     status_entrega: 'Avaliando Pedido',
     status: 'not_loaded',
@@ -78,6 +79,9 @@ export const entregaSlice = createSlice({
         setEndereco: (state, action)=>{
         state.endereco = action.payload;
         },
+        setInstrucoes: (state, action)=>{
+          state.instrucoes = action.payload;
+          },
     },
     extraReducers: (builder) => {
         builder
@@ -133,6 +137,7 @@ export const entregaSlice = createSlice({
 
 export const {
   setEndereco,
+  setInstrucoes
 } = entregaSlice.actions;
 
 export const {

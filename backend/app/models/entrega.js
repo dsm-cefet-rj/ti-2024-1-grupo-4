@@ -13,6 +13,9 @@ const EntregaSchema = mongoose.Schema(
         type: String,
         default: 'Avaliando o pedido',
     },
+    instrucoes: {
+      type: String,
+    },
     pedido : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'pedido',

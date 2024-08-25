@@ -11,7 +11,7 @@ import { formsSchema } from './formsSchema';
 
 
 import {useDispatch, useSelector} from "react-redux";
-import { setEndereco } from '../../redux/entrega/entregaSlice';
+import { setEndereco, setInstrucoes } from '../../redux/entrega/entregaSlice';
 
 /**
  * @module forms/setupendereco_function
@@ -36,8 +36,9 @@ function setupendereco_function({ prevStep, nextStep, step }) {
     const dispatch = useDispatch();
 
     const onSubmit = data => {
-        const {CEP, logradouro, numeroEndereco, bairro} = data;
+        const {CEP, logradouro, numeroEndereco, bairro, instrucaoPedido} = data;
         dispatch(setEndereco({CEP, logradouro, numeroEndereco, bairro, userKey:currentUser}));
+        dispatch(setInstrucoes(instrucaoPedido));
         console.log(data)
         setToggleBotao(true);
       }

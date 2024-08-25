@@ -27,7 +27,7 @@ import { addEntregaServer } from '../../redux/entrega/entregaSlice.js'
 function setupConfirmacao({step,value}) {
     const status = useSelector((rootReducer) => rootReducer.compraSlice.status);
     const status_ent = useSelector((rootReducer) => rootReducer.entregaSlice.status);
-    const { userInfo } = useSelector((rootReducer) => rootReducer.userSlice) || {};
+    const {instrucoes } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
     const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const { endereco } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
     const { status_entrega } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
@@ -56,7 +56,8 @@ function setupConfirmacao({step,value}) {
             endereco,
             status: status_entrega,
             userKey: currentUser,
-            pedido: pedidoId
+            pedido: pedidoId,
+            instrucoes: instrucoes,
           })).unwrap();
       
           if (status_ent === 'saved') {
