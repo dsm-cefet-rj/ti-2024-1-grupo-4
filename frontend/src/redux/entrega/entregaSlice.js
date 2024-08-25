@@ -7,6 +7,7 @@ const entregaAdapter = createEntityAdapter();
 
 const initialState = entregaAdapter.getInitialState({
     endereco: null,
+    entrega: {},
     status_entrega: 'Avaliando Pedido',
     status: 'not_loaded',
     error:null
@@ -48,6 +49,16 @@ export const addEntregaServer = createAsyncThunk('entrega/addEntregaServer', asy
  */
 export const updateEntregaServer = createAsyncThunk('entrega/updateEntregaServer', async (entrega, {getState}) => {
     return await httpPut(`${baseUrl}/entrega/${entrega.id}`, entrega,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
+});
+
+export const fetchEntregaByPedido = createAsyncThunk('pedido/fetchEntregaByPedido', async (pedido, { getState }) => {
+  try {
+
+    const result = await httpGet(`${baseUrl}/entrega/${pedido}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
+    return result[0];
+  } catch (error) {
+    throw error;
+  }
 });
 
 /**
@@ -110,6 +121,10 @@ export const entregaSlice = createSlice({
               className: "text-spicy-mix bg-banana-mania shadow",
               autoClose: 2000,
             });
+          })
+          .addCase(fetchEntregaByPedido.fulfilled,(state,action)=>{
+            state.status = 'saved';
+            state.entrega[action.payload.pedido] = action.payload;
           })
 
         }

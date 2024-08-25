@@ -79,4 +79,25 @@ router.route('/')
     }
   )
 
+router.route('/:pedido')
+.options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+.get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
+    entrega.find({'pedido': req.params.pedido})
+      .then((pedidosBanco) => {
+        if(pedidosBanco) {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(pedidosBanco);
+        } else {
+          res.statusCode = 400;
+          res.setHeader('Content-Type', 'application/json');
+          res.json({err: "Entrega não foi encontrado para este usuário"});
+        }
+      })
+      .catch(
+        (err) => next(err)
+      );
+
+  }) 
+
 module.exports = router;
