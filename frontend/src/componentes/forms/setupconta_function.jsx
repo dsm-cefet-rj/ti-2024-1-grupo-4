@@ -31,10 +31,11 @@ const setupcontaSchema = yup.object().shape({
 
 function setupconta_function({ prevStep, nextStep, step }) {
   const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
+  const { userInfo } = useSelector((rootReducer) => rootReducer.userSlice) || {};
 
   const dispatch = useDispatch();
   const onSubmit = data => {
-    dispatch(setUser(currentUser))
+    dispatch(setUser({nome: userInfo.nome, email: userInfo.email, userKey: currentUser}))
     console.log(data)
     nextStep();
   }

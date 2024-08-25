@@ -44,7 +44,12 @@ const PedidoSchema = mongoose.Schema(
       email: {
         type: String,
         required: true,
-      }
+      },
+      userKey: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true,
+    }
     },
     products: {
       type: [ProdutosSchema],

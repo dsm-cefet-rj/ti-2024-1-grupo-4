@@ -70,7 +70,7 @@ router.post('/login',cors.corsWithOptions,  passport.authenticate('local', {sess
   var token = authenticate.getToken({_id: req.user._id});
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
-  res.json({_id: req.user._id, token: token, admin: req.user.admin, success: true, status: 'You are successfully logged in!'});
+  res.json({_id: req.user._id, email: req.user.username, nome: req.user.nome, token: token, admin: req.user.admin, success: true, status: 'You are successfully logged in!'});
 });
 
 

@@ -32,6 +32,7 @@ function setupConfirmacao({step,value}) {
     const { endereco } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
     const { status_entrega } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
     const { pagamento } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
+    const { user } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
     const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
 
@@ -43,7 +44,6 @@ function setupConfirmacao({step,value}) {
    
     const handlePedidoAdd = async () => {
         try {
-          const user = { email: userInfo.email, nome: userInfo.nome };
       
           const pedidoResponse = await dispatch(
             addPedidoServer({ user, products, pagamento, valorTotal: productsTotalPrice })
