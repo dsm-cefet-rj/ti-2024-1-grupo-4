@@ -48,10 +48,33 @@ router.route('/:id')
     
 })
 
+router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200) ;})
+.get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
+  console.log(req.params)
+  pedido.find({ 'user.userKey' : req.params.userKey})
+    .then((pedidosBanco) => {
+      if(pedidosBanco) {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(pedidosBanco);
+      } else {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({err: "Pedido não foi encontrado para este usuário"});
+      }
+    })
+    .catch(
+      (err) => next(err)
+    );
+
+})
+
+
 router.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
-    pedido.find({'user.id': req.params.id})
+    console.log(req.params)
+    pedido.find({})
       .then((pedidosBanco) => {
         if(pedidosBanco) {
           res.statusCode = 200;

@@ -17,7 +17,7 @@ const initialState = pedidoAdapter.getInitialState({
  */
 export const fetchPedido = createAsyncThunk('pedido/fetchPedido', async (_, {getState}) => {
     console.log(getState());
-    return await httpGet(`${baseUrl}/pedido`);
+    return await httpGet(`${baseUrl}/pedido`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -26,7 +26,7 @@ export const fetchPedido = createAsyncThunk('pedido/fetchPedido', async (_, {get
  * @returns {Promise} - Promise contendo o id do pedido deletado
  */
 export const deletePedidoServer = createAsyncThunk('pedido/deletePedidoServer', async (pedidoID, {getState}) => {
-    await httpDelete(`${baseUrl}/pedido/${pedidoID}`);
+    await httpDelete(`${baseUrl}/pedido/${pedidoID}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
     toast.warning(pedidoID + " removido!", {
       position: "bottom-left",
       className: "text-spicy-mix bg-banana-mania shadow",
@@ -46,7 +46,7 @@ export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async 
       className: "text-spicy-mix bg-banana-mania shadow",
       autoClose: 4000,
     });
-    return await httpPost(`${baseUrl}/pedido`, pedido);
+    return await httpPost(`${baseUrl}/pedido`, pedido, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -54,13 +54,10 @@ export const addPedidoServer = createAsyncThunk('pedido/addPedidoServer', async 
  * @param {string} payload - O id do usuario
  * @returns {Promise} - Promise contendo os pedidos que possuem o id do usuario
  */
-export const fetchPedidosByUser = createAsyncThunk('pedido/fetchPedidoByUser', async (payload, { getState }) => {
+export const fetchPedidosByUser = createAsyncThunk('pedido/fetchPedidoByUser', async (userKey, { getState }) => {
   try {
-    //Pega todos os pedidos do user
-    //revisar a utilização do admin aqui
-    const { id, admin } = payload;
-    const response = await fetch(`${baseUrl}/pedido/pedido?id=${id}&admin=${admin}`);
-    const pedidos = await response.json();
+
+    return await httpGet(`${baseUrl}/pedido/${userKey}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 
     return pedidos;
   } catch (error) {
@@ -79,7 +76,7 @@ export const updatePedidoServer = createAsyncThunk('pedido/updatePedidoServer', 
       className: "text-spicy-mix bg-banana-mania shadow",
       autoClose: 4000,
     });
-    return await httpPut(`${baseUrl}/pedido/${pedido.id}`, pedido);
+    return await httpPut(`${baseUrl}/pedido/${pedido.id}`, pedido, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 /**
@@ -94,11 +91,11 @@ export const updateStatusPedidoServer = createAsyncThunk('pedido/updatePedidoSer
     autoClose: 4000,
   });
   const pedidoId = pedido.id
-  return await httpPut(`${baseUrl}/pedido/${pedido.id}`, pedido);
+  return await httpPut(`${baseUrl}/pedido/${pedido.id}`, pedido, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 export const pedidoIDExistServer = createAsyncThunk('pedido/pedidoExistServer', async (id, {getState}) => {
-  const response = await fetch (`${baseUrl}/pedido?id=${id}`);
+  const response = await fetch (`${baseUrl}/pedido?id=${id}`,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
   const existe = await response.json();
   return existe.length > 0;
 });
