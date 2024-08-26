@@ -77,6 +77,11 @@ function Lista(ped) {
           <h5 className='border-top border-tacao'>Total: {ped.valorTotal.toLocaleString('pt-br',{style: 'currency', currency:'BRL'})}</h5>
           <h5 className='border-top border-tacao'> Informações de entrega:</h5>
           <div className='d-flex flex-column'>
+            <div>
+              <h5>Quem Pediu: </h5>
+              <p>Nome: {ped.user.nome}</p>
+              <p>Email: {ped.user.email}</p>
+            </div>
           <div>
           <h5>Endereço para entrega:</h5>
           {entrega ? (
