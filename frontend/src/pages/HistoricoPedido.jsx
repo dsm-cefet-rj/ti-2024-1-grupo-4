@@ -5,7 +5,7 @@ import Lista from '../componentes/Lista/setuplista_function.jsx'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchPedidosByUser } from '../redux/listapedidos/ListaPedidoSlice.js';
+import { fetchPedidosByUser, fetchPedido } from '../redux/listapedidos/ListaPedidoSlice.js';
 
 /**
  * Retorna a página HistoricoPedido
@@ -17,10 +17,15 @@ const HistoricoPedido = () => {
     const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
     const error = useSelector((rootReducer) => rootReducer.pedidoSlice.error);
     const currentUser = useSelector((rootReducer) => rootReducer.userSlice.currentUser) || {};
+    const { isAdmin } = useSelector((rootReducer) => rootReducer.userSlice) || {};
 
     useEffect(() => {
-        if (status === 'not_loaded' || status === 'saved' || status === 'deleted') {
-          dispatch(fetchPedidosByUser(currentUser));
+        if ((status === 'not_loaded' || status === 'saved' || status === 'deleted')) {
+          if(isAdmin) {
+            dispatch(fetchPedido());
+          } else {
+            dispatch(fetchPedidosByUser(currentUser));
+          }
         }
     }, [status, dispatch]);
 

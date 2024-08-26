@@ -3,6 +3,8 @@ import logo from '../../assets/img/logo_placeholder.png';
 import { Link, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import { deslogarUser } from '../../redux/user/UserSlice';
+import rootReducer from '../../redux/root-reducer';
+import { pedidoSetStatusServer } from '../../redux/listapedidos/ListaPedidoSlice';
 
 /**
  * @module header/Header
@@ -25,7 +27,7 @@ const Header = () => {
     const handleDeslogar = () => {
         history('/');
         dispatch(deslogarUser());
-        
+        dispatch(pedidoSetStatusServer());
     };
     const handleLogin = () => {
         history('/login');

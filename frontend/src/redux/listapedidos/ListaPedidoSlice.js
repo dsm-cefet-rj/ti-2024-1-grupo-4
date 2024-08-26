@@ -100,11 +100,19 @@ export const pedidoIDExistServer = createAsyncThunk('pedido/pedidoExistServer', 
   return existe.length > 0;
 });
 
+export const pedidoSetStatusServer = createAsyncThunk('pedido/pedidoSetStatusServer', async (_, {getState}) => {
+  return null;
+});
+
+
 export const pedidoSlice = createSlice({
     name: 'pedido',
     initialState,
     extraReducers: (builder) => {
         builder
+          .addCase(pedidoSetStatusServer.fulfilled, (state, action) => {
+            state.status = 'not_loaded';
+          })
           .addCase(fetchPedido.pending, (state, action) => {
             state.status = 'loading';
           })
@@ -114,7 +122,7 @@ export const pedidoSlice = createSlice({
           })
           .addCase(fetchPedido.fulfilled, (state, action) => {
             state.status = 'loaded';
-            pedidoAdapter.setAll(state, action.payload);
+            state.pedidos = action.payload;
           })
           .addCase(deletePedidoServer.fulfilled, (state,action) => {
             state.status = 'deleted';
@@ -129,7 +137,7 @@ export const pedidoSlice = createSlice({
             pedidoAdapter.upsertOne(state, action.payload);
           })
           .addCase(fetchPedidosByUser.fulfilled,(state,action)=>{
-            state.status = 'saved';
+            state.status = 'loaded';
             state.pedidos = action.payload;
           })
 
