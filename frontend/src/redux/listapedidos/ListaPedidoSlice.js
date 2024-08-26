@@ -84,6 +84,7 @@ export const updatePedidoServer = createAsyncThunk('pedido/updatePedidoServer', 
  * @param {Object} pedido - O pedido que deve ter o valor atualizado
  * @returns {Promise} - Promise com o pedido atualizado
  */
+//Não é mais util, pois status de um pedido está em entrega
 export const updateStatusPedidoServer = createAsyncThunk('pedido/updatePedidoServer', async (pedido, {getState}) => {
   toast.info("Status foi alterado para: "+ pedido.status, {
     position: "bottom-left",
