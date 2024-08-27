@@ -42,6 +42,9 @@ function Dashboard() {
     useEffect(() => {
         if (statusProdutos === 'not_loaded' || statusProdutos === 'updated'  || statusProdutos === 'saved' || statusProdutos === 'deleted'  )
             dispatch(fetchProduto());
+        if ((statusPedidos === 'not_loaded' || statusPedidos === 'saved' || statusPedidos === 'deleted')) {
+              dispatch(fetchPedido());
+        }
     }, [statusProdutos, dispatch]);
 
     const [img, setImg] = useState("");

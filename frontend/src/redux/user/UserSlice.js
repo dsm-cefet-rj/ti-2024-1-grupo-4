@@ -102,10 +102,16 @@ export const userSlice = createSlice({
           })
           .addCase(deleteUserServer.fulfilled, (state,action) => {
             state.status = 'deleted';
-            state.currentUser = null;
-            state.currentToken = null;
-            state.userInfo = null;
-            state.isAdmin = false;
+            console.log("state")
+            console.log(state)
+            console.log(action)
+            if(state.currentUser == action.payload){
+              state.currentUser = null;
+              state.currentToken = null;
+              state.userInfo = null;
+              state.isAdmin = false;
+            }
+            
             userAdapter.removeOne(state, action.payload);
           })
           .addCase(addUserServer.fulfilled, (state,action) => {

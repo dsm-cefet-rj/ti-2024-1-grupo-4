@@ -39,6 +39,7 @@ router.route('/')
 router.route('/:id')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
+    console.log(req);
     produto.findByIdAndDelete(req.params.id)
       .then((produtoDeletado) => {
         if(produtoDeletado) {
