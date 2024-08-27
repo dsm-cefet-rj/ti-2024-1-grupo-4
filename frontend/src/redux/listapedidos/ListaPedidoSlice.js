@@ -25,14 +25,14 @@ export const fetchPedido = createAsyncThunk('pedido/fetchPedido', async (_, {get
  * @param {string} pedidoID - O id do pedido para deletar
  * @returns {Promise} - Promise contendo o id do pedido deletado
  */
-export const deletePedidoServer = createAsyncThunk('pedido/deletePedidoServer', async (pedidoID, {getState}) => {
-    await httpDelete(`${baseUrl}/pedido/${pedidoID}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
-    toast.warning(pedidoID + " removido!", {
+export const deletePedidoServer = createAsyncThunk('pedido/deletePedidoServer', async (id, {getState}) => {
+    await httpDelete(`${baseUrl}/pedido/${id}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
+    toast.warning(id + " removido!", {
       position: "bottom-left",
       className: "text-spicy-mix bg-banana-mania shadow",
       autoClose: 4000,
     });
-    return pedidoID;
+    return id;
 });
 
 /**

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { deletePedidoServer, updatePedidoServer } from '../../redux/listapedidos/ListaPedidoSlice';
-import { fetchEntregaByPedido } from '../../redux/entrega/entregaSlice.js';
+import { deleteEntregaServer, fetchEntregaByPedido } from '../../redux/entrega/entregaSlice.js';
 /**
  * @module admin/PedidosListar
  */
@@ -36,6 +36,7 @@ function PedidosListar({ pedido }) {
     }, [status, dispatch, pedido.id]);
     const handleDelete = () => {
         dispatch(deletePedidoServer(pedido.id))
+        dispatch(deleteEntregaServer(entrega.id))
             .then((result) => {
                 if (result.payload) {
                     toast.info("Pedido deletado!", {
