@@ -21,11 +21,7 @@ const HistoricoPedido = () => {
 
     useEffect(() => {
         if ((status === 'not_loaded' || status === 'saved' || status === 'deleted')) {
-          if(isAdmin) {
-            dispatch(fetchPedido());
-          } else {
-            dispatch(fetchPedidosByUser(currentUser));
-          }
+          dispatch(fetchPedidosByUser(currentUser));
         }
     }, [status, dispatch]);
 
