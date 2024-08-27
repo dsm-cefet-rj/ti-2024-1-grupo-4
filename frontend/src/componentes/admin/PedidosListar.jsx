@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { deletePedidoServer, updatePedidoServer } from '../../redux/listapedidos/ListaPedidoSlice';
-import { deleteEntregaServer, fetchEntregaByPedido } from '../../redux/entrega/entregaSlice.js';
+import { deleteEntregaServer, fetchEntregaByPedido, updateEntregaServer } from '../../redux/entrega/entregaSlice.js';
 /**
  * @module admin/PedidosListar
  */
@@ -56,14 +56,9 @@ function PedidosListar({ pedido }) {
     };
 
     const updateStatus = (value) => {
-        const id = pedido.id;
-        const user = pedido.user;
-        const endereco = entrega.endereco;
-        const products = pedido.products;
-        const pagamento = pedido.pagamento;
-        const valorTotal = pedido.valorTotal;
-        const status = entrega.status;
-        dispatch(updatePedidoServer({id, user, endereco, products, pagamento, valorTotal, status}))
+        console.log(value)
+        dispatch(updateEntregaServer({id: entrega.id, status: value}))
+
     }
     
 
@@ -104,7 +99,7 @@ function PedidosListar({ pedido }) {
                                     <option value="Sendo Preparado">Sendo Preparado</option>
                                     <option value="Saiu para entrega">Saiu para entrega</option>
                                     <option value="Pedido Finalizado">Pedido finalizado</option>
-                                    <option value="Pedido Finalizado">Pedido Cancelado</option>
+                                    <option value="Pedido Cancelado">Pedido Cancelado</option>
 
                                 </select>
                             </div>

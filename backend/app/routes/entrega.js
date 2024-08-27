@@ -28,8 +28,10 @@ router.route('/:id')
     );
 })
 .put(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
+  console.log(req.body)
   entrega.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
     .then((pedidoAlterado) => {
+      console.log(pedidoAlterado)
       if(pedidoAlterado) {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');

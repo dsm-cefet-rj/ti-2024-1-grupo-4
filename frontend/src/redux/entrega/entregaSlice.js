@@ -49,7 +49,9 @@ export const addEntregaServer = createAsyncThunk('entrega/addEntregaServer', asy
  * @returns {Promise} - Promise com o valor atualizado
  */
 export const updateEntregaServer = createAsyncThunk('entrega/updateEntregaServer', async (entrega, {getState}) => {
-    return await httpPut(`${baseUrl}/entrega/${entrega.id}`, entrega,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
+  console.log(entrega)
+    const status = {status: entrega.status};
+    return await httpPut(`${baseUrl}/entrega/${entrega.id}`, status ,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
 export const fetchEntregaByPedido = createAsyncThunk('pedido/fetchEntregaByPedido', async (pedido, { getState }) => {
@@ -111,7 +113,7 @@ export const entregaSlice = createSlice({
           })
           .addCase(updateEntregaServer.rejected,(state,action)=>{
             state.status = 'failed';
-            toast.error("Erro: " + error, {
+            toast.error("Erro: " + state.res, {
               position: "bottom-left",
               className: "text-spicy-mix bg-banana-mania shadow",
               autoClose: 2000,
@@ -119,7 +121,7 @@ export const entregaSlice = createSlice({
           })
           .addCase(updateEntregaServer.fulfilled, (state, action) => {
             state.status = 'saved';
-            userAdapter.upsertOne(state, action.payload);
+            entregaAdapter.upsertOne(state, action.payload);
             toast.info("Informações atualizadas!", {
               position: "bottom-left",
               className: "text-spicy-mix bg-banana-mania shadow",
