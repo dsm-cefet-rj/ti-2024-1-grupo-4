@@ -4,10 +4,14 @@
         "frontend": "cd frontend && npm run dev",
         "start": "concurrently \"npm run backend\" \"npm run frontend\" ",
         "restart-back": "powershell -Command \"& { $id_processo = netstat -aon | findstr :3000 | ForEach-Object { $_ -match '\\d+$' | Out-Null; $matches[0] }; Stop-Process -Id $id_processo; cd backend/app; npm start}\" ",
-        "install-all":"concurrently \"cd backend/app && npm install\" \"cd frontend && npm install\" "
-        
+        "install-all": "concurrently \"cd backend/app && npm install\" \"cd frontend && npm install\" ",
+        "cypress:web":"npx cypress open",
+        "cypress:headless":"npx cypress run --browser electron"
     },
     "dependencies": {
         "concurrently": "^8.2.2"
+    },
+    "devDependencies": {
+        "cypress": "^13.7.2"
     }
 }
