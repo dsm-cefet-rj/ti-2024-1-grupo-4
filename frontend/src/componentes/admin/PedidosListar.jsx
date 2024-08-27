@@ -1,8 +1,8 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { deletePedidoServer, updatePedidoServer } from '../../redux/listapedidos/ListaPedidoSlice';
-
+import { fetchEntregaByPedido } from '../../redux/entrega/entregaSlice.js';
 /**
  * @module admin/PedidosListar
  */
@@ -26,7 +26,14 @@ import { deletePedidoServer, updatePedidoServer } from '../../redux/listapedidos
  */
 function PedidosListar({ pedido }) {
     const dispatch = useDispatch();
+    const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
+    const entrega = useSelector((rootReducer) => rootReducer.entregaSlice.entrega[pedido.id]);
 
+    useEffect(() => {
+        if (!entrega || (status === 'not_loaded' || status === 'saved' || status === 'deleted')) {
+          dispatch(fetchEntregaByPedido(pedido.id));
+        }
+    }, [status, dispatch, pedido.id]);
     const handleDelete = () => {
         dispatch(deletePedidoServer(pedido.id))
             .then((result) => {
@@ -50,11 +57,11 @@ function PedidosListar({ pedido }) {
     const updateStatus = (value) => {
         const id = pedido.id;
         const user = pedido.user;
-        const endereco = pedido.endereco;
+        const endereco = entrega.endereco;
         const products = pedido.products;
         const pagamento = pedido.pagamento;
         const valorTotal = pedido.valorTotal;
-        const status = value
+        const status = entrega.status;
         dispatch(updatePedidoServer({id, user, endereco, products, pagamento, valorTotal, status}))
     }
     
@@ -75,14 +82,29 @@ function PedidosListar({ pedido }) {
                         <div className="card card-body">
                             <span>Nome do Cliente: {pedido.user.nome} </span>
                             <span>Valor total: {pedido.valorTotal.toLocaleString('pt-br',{style: 'currency', currency:'BRL'})}</span>
+
+                            {entrega ? (
+                                <>
+                                <span>CEP: {entrega.endereco.CEP}</span>
+                                <span>Local: {entrega.endereco.logradouro}, {entrega.endereco.numeroEndereco}</span>
+                                <span>Bairro: {entrega.endereco.bairro}</span>
+                                {entrega.endereco.complemento ? (<span>Complemento: {entrega.endereco.complemento}</span>) : null}
+                                
+                                {entrega.instrucoes ? ( <span>Instruções: {entrega.instrucoes}</span>): null}
+                                </>
+                            ) : (
+                                <span>Carregando informações de entrega...</span>
+                            )}
                             <div className="input-group mb-3">
                                 <label className="input-group-text" htmlFor="inputGroupSelect01">Status</label>
-                                <select className="form-select" id="inputGroupSelect01" value={pedido.status} onChange={(e) => updateStatus(e.target.value)}>
+                                <select className="form-select" id="inputGroupSelect01" value={status} onChange={(e) => updateStatus(e.target.value)}>
                                     <option value="Avaliando Pedido">Avaliando Pedido</option>
                                     <option value="Pedido Aceito">Pedido Aceito</option>
                                     <option value="Sendo Preparado">Sendo Preparado</option>
                                     <option value="Saiu para entrega">Saiu para entrega</option>
                                     <option value="Pedido Finalizado">Pedido finalizado</option>
+                                    <option value="Pedido Finalizado">Pedido Cancelado</option>
+
                                 </select>
                             </div>
                         </div>

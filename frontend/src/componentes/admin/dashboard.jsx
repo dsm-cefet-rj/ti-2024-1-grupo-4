@@ -32,7 +32,7 @@ function Dashboard() {
     const dispatch = useDispatch();
     const produtosLoja = useSelector((rootReducer) => rootReducer.produtosSlice.produtosLoja);
     const users = useSelector((rootReducer) => rootReducer.userSlice.entities);
-    const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.entities);
+    const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.pedidos);
     const statusProdutos = useSelector((rootReducer) => rootReducer.produtosSlice.status);
     const statusClientes = useSelector((rootReducer) => rootReducer.userSlice.status);
     const statusPedidos = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
