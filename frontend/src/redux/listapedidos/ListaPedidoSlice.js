@@ -7,6 +7,7 @@ const pedidoAdapter = createEntityAdapter();
 
 const initialState = pedidoAdapter.getInitialState({
     pedidos: [],
+    pedidosAdmin: [],
     status: 'not_loaded',
     error:null
 });
@@ -123,7 +124,7 @@ export const pedidoSlice = createSlice({
           })
           .addCase(fetchPedido.fulfilled, (state, action) => {
             state.status = 'loaded';
-            state.pedidos = action.payload;
+            state.pedidosAdmin = action.payload;
           })
           .addCase(deletePedidoServer.fulfilled, (state,action) => {
             state.status = 'deleted';

@@ -93,7 +93,7 @@ function PedidosListar({ pedido }) {
                             )}
                             <div className="input-group mb-3">
                                 <label className="input-group-text" htmlFor="inputGroupSelect01">Status</label>
-                                <select className="form-select" id="inputGroupSelect01" value={status} onChange={(e) => updateStatus(e.target.value)}>
+                                <select className="form-select" id="inputGroupSelect01" value={entrega?.status} onChange={(e) => updateStatus(e.target.value)}>
                                     <option value="Avaliando Pedido">Avaliando Pedido</option>
                                     <option value="Pedido Aceito">Pedido Aceito</option>
                                     <option value="Sendo Preparado">Sendo Preparado</option>
