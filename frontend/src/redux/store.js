@@ -13,17 +13,17 @@ const middleware = (getDefaultMiddleware) => getDefaultMiddleware().concat(logge
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist:['compraSlice']
+    blacklist:['compraSlice'],
+    whitelist: ['userSlice']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-/**persistedReducer */
 /**
  * @description Store com os reducers e middlewares utilizados
  */
 const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer, /*rootReducer*/ /**persistedReducer */
     middleware: middleware,
 });
 

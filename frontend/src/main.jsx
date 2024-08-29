@@ -10,7 +10,7 @@ import Admin_Page from './pages/Admin_Page.jsx'
 import HistoricoPedido from './pages/HistoricoPedido.jsx'
 import Usuario from './pages/Usuario.jsx'
 
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store, persistor } from "./redux/store";
 
 import { ToastContainer } from 'react-toastify';
@@ -20,6 +20,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
+import ProtectedRoute from './ProtectedRoute.jsx'
 
 
 const router = createBrowserRouter([
@@ -41,14 +43,30 @@ const router = createBrowserRouter([
   },
   {
     path: "admin",
-    element: <Admin_Page />,
+    element:
+    <>
+      <ProtectedRoute useAdmin={true}>
+        <Admin_Page />
+      </ProtectedRoute>
+    </>,
   },
   {
     path: "historico",
-    element: <HistoricoPedido />,
-  }, {
+    element: 
+    <>
+      <ProtectedRoute useAdmin={false}>
+        <HistoricoPedido />
+      </ProtectedRoute>
+    </>,
+  }, 
+  {
     path: "info",
-    element: <Usuario />
+    element: 
+    <>
+      <ProtectedRoute useAdmin={false}>
+        <Usuario/>
+      </ProtectedRoute>
+    </>,    
   }
 ]);
 
