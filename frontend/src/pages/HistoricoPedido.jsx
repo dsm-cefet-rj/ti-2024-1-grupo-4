@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../componentes/header/Header.jsx'
 import Footer from '../componentes/footer/Footer.jsx'
 import Lista from '../componentes/Lista/setuplista_function.jsx'
-
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchPedidosByUser} from '../redux/listapedidos/ListaPedidoSlice.js';
@@ -35,12 +35,23 @@ const HistoricoPedido = () => {
         <div className=''>
           <Header/>
           <div className="d-flex flex-column">
-                {Object.values(pedidos).map((Pedido) => (
+          {pedidos && Object.keys(pedidos).length > 0? <>
+            {Object.values(pedidos).map((Pedido) => (
                         
-                    <div key="Pedido.id" className="card m-2 p-2 bg-banana-mania">
-                        <Lista {...Pedido} />
-                    </div>
-                ))}
+                        <div key={Pedido.id} className="card m-2 p-2 bg-banana-mania">
+                            <Lista {...Pedido} />
+                        </div>
+                    ))}
+             </>:(
+          <div className="text-center bg-banana-mania m-5 p-3 rounded-4 shadow">
+            <h5 className="mb-4">Você ainda não tem pedidos</h5>
+            <p className="mb-4">Os seus pedidos e informações de entrega irão aparecer aqui!</p>
+            <Link to="/" className="btn btn-tacao border-tacao shadow-sm">
+              Ver produtos
+            </Link>
+          </div>
+        )}
+                
           </div>
           <Footer/>
         </div>
