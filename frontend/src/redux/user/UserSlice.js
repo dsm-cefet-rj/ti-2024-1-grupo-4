@@ -57,6 +57,9 @@ export const addUserServer = createAsyncThunk('users/addUserServer', async (user
   return response;
 });
 
+export const changeSenhaServer = createAsyncThunk('users/changeSenhaServer', async (senhas, {getState}) => {
+  return await httpPost(`${baseUrl}/users/change-password`, senhas, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } })
+})
 /**
  * Async Thunk para atualizar um usuário existente
  * @param {Object} user - O usuário a ser atualizado
@@ -157,6 +160,11 @@ export const userSlice = createSlice({
                 autoClose: 2000,
                 })
             }
+          })
+          .addCase(changeSenhaServer.fulfilled, (state, action) =>{
+            state.status = 'saved';
+            userAdapter.addOne(state, action.payload);
+            console.log(action);
           })
 
         }

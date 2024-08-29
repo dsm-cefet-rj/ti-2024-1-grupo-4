@@ -73,6 +73,26 @@ router.post('/login',cors.corsWithOptions,  passport.authenticate('local', {sess
   res.json({_id: req.user._id, email: req.user.username, nome: req.user.nome, token: token, admin: req.user.admin, success: true, status: 'You are successfully logged in!'});
 });
 
+router.post('/change-password', cors.corsWithOptions, authenticate.verifyUser, async (req, res) => {
+  const { SenhaAtual, SenhaNova } = req.body;
+
+  try {
+    const user1 = await user.findById(req.user._id);
+
+    if (!user1) {
+      return res.status(500).send('User not found');
+    }
+    user1.changePassword(SenhaAtual, SenhaNova, (err) => {
+      if (err) {
+        return res.status(400).send('A senha atual está incorreta, tente novamente!');
+      }
+
+      res.send('Senha modificada com sucesso');
+    });
+  } catch (err) {
+    res.status(500).send('Um erro ocorreu ao tentar modificar a senha');
+  }
+});
 
 
 module.exports = router;

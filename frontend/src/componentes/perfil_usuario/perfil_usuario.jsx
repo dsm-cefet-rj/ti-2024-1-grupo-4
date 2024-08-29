@@ -4,7 +4,7 @@ import { addEnderecoServer, fetchEnderecoByUser, updateEnderecoServer } from '..
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from "react-hook-form";
-import { updateUserServer, deleteUserServer } from '../../redux/user/UserSlice';
+import { updateUserServer, deleteUserServer, changeSenhaServer } from '../../redux/user/UserSlice';
 import { toast } from 'react-toastify';
 import Endereco_Card from './Endereco_Card';
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +48,8 @@ function Perfil_Usuario() {
 
   const senhaSchema = yup.object().shape({
     novaSenha: yup.string().required('A Nova senha deve ser preenchida').min(5, 'A quantidade mínima é de 5 dígitos'),
-    repSenha: yup.string().oneOf([yup.ref('novaSenha'), null], 'As senhas devem ser iguais').required()
+    repSenha: yup.string().oneOf([yup.ref('novaSenha'), null], 'As senhas devem ser iguais').required(),
+    SenhaAtual: yup.string().required('A Senha Atual deve ser preenchida')
   });
 
 
@@ -144,9 +145,9 @@ function Perfil_Usuario() {
    * @param {Object} data -  dados do formulário de atualização de senha 
    */
   const passUpdate = (data) => {
-    const {novaSenha, repSenha} = data;
+    const {novaSenha, repSenha, SenhaAtual} = data;
     senhaSchema.validate(data).then(() => {
-      dispatch(updateUserServer({password: novaSenha})).then((payload) =>
+      dispatch(changeSenhaServer({SenhaAtual: SenhaAtual, SenhaNova: novaSenha})).then((payload) =>
       {
         console.log(payload);
       })
@@ -253,6 +254,10 @@ function Perfil_Usuario() {
       <div className="bg-banana-mania container-fluid rounded-4 shadow text-center mt-3" style={{ width: "600px" }}>
         <h2>Mudança de senha</h2>
         <form onSubmit={handleSubmitSenha(passUpdate)}>
+
+          <label htmlFor='novaSenha' className='m-2'>Digite a sua senha:</label>
+          <input type="password" id='novaSenha' className="form-control" {...registerSenha("SenhaAtual")}></input>
+          {senhaErrors && senhaErrors.SenhaAtual && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{senhaErrors.SenhaAtual.message}</p>}
 
           <label htmlFor='novaSenha' className='m-2'>Digite a nova senha:</label>
           <input type="password" id='novaSenha' className="form-control" {...registerSenha("novaSenha")}></input>
