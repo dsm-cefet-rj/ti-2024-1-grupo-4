@@ -15,6 +15,20 @@ router.route('/')
         next(err);
     }
 });
+router.post('/delete-enderecos', cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
+    try {
+      const userKey = req.user._id;
+      console.log(userKey)
+      const result = await endereco.deleteMany({ userKey: userKey });
+      if (result.deletedCount > 0) {
+        res.status(200).json({result, msg: 'Todos os endereços foram deletados'});
+      } else {
+        res.status(404).json({msg: 'Erro ao deletar endereços'});
+      }
+    } catch (error) {
+      next(error);
+    }
+});
 
 router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
@@ -39,7 +53,7 @@ router.route('/:id')
 .delete(cors.corsWithOptions,authenticate.verifyUser,  async (req, res, next) => {
     try {
         await endereco.findByIdAndDelete(req.params.id);
-        res.status(204).send();
+        res.status(200).json({msg: 'Endereço deletado com sucesso'});
     } catch (err) {
         next(err);
     }

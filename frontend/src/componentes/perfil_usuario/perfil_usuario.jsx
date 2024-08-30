@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addEnderecoServer, fetchEnderecoByUser, updateEnderecoServer } from '../../redux/endereco/enderecoSlice';
+import { addEnderecoServer, deleteAllenderecosByUser, fetchEnderecoByUser, updateEnderecoServer } from '../../redux/endereco/enderecoSlice';
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from "react-hook-form";
@@ -79,22 +79,7 @@ function Perfil_Usuario() {
     const { CEP, logradouro, numero, complemento } = data;
     const userKey = currentUser;
     enderecoSchema.validate(data).then((validData) => {
-      dispatch(addEnderecoServer({ CEP, logradouro, numeroEndereco:numero, complemento, userKey })).then((endereco) => {
-        if (endereco.payload) {
-          toast.info("Endereço adicionado", {
-            position: "bottom-left",
-            className: "text-spicy-mix bg-banana-mania shadow",
-            autoClose: 2000,
-          });
-        }
-
-      }).catch((error) => {
-        toast.error("Erro: " + error, {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
-      })
+      dispatch(addEnderecoServer({ CEP, logradouro, numeroEndereco:numero, complemento, userKey }))
 
     })
       .catch((error) => {
@@ -114,21 +99,7 @@ function Perfil_Usuario() {
     const { CEP, logradouro, numero, complemento } = data;
     const userKey = currentUser;
     enderecoSchema.validate(data).then((validData) => {
-      dispatch(updateEnderecoServer({ CEP, logradouro, numero, complemento, userKey })).then((endereco) => {
-        if (endereco.payload) {
-          toast.info("Endereço alterado", {
-            position: "bottom-left",
-            className: "text-spicy-mix bg-banana-mania shadow",
-            autoClose: 2000,
-          });
-        }
-      }).catch((error) => {
-        toast.error("Erro: " + error, {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
-      })
+      dispatch(updateEnderecoServer({ CEP, logradouro, numero, complemento, userKey }))
 
     })
       .catch((error) => {
@@ -157,19 +128,29 @@ function Perfil_Usuario() {
   /**
    * Deleta as informações do usuário
    */
-  const handleRemove = () => {
-    const id = currentUser;
-    dispatch(deleteUserServer(id)).then((resposta) => {
-      if (resposta.payload) {
-        history('/');
-        toast.info("Conta deletada", {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
+  const handleRemove = async () => {
+    try {
+      const id = currentUser;
+
+      const deleteEnderecosResult = await dispatch(deleteAllenderecosByUser()).unwrap();
+      console.log(deleteEnderecosResult)
+      if (deleteEnderecosResult) {
+        const deleteUserResult = await dispatch(deleteUserServer(id)).unwrap();
+        
+        if (deleteUserResult) {
+          history('/');
+          toast.info("Conta deletada", {
+            position: "bottom-left",
+            className: "text-spicy-mix bg-banana-mania shadow",
+            autoClose: 2000,
+          });
+        }
       }
-    })
-  }
+    } catch (error) {
+      console.error('Error while deleting the user or addresses:', error);
+    }
+  };
+  
 
 
 

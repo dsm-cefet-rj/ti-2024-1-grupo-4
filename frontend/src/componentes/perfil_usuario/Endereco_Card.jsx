@@ -46,22 +46,7 @@ function Endereco_Card({ endereco }) {
         const userKey = currentUser;
         const id = endereco.id;
         schema.validate(data).then((validData)=>{
-          dispatch(updateEnderecoServer({endereco:{CEP, logradouro, numeroEndereco, complemento, userKey}, id: id})).then((user)=>{
-            if(user.payload){
-               setLogradouro(logradouro);
-                toast.info("Endereço alterado", {
-                    position: "bottom-left",
-                    className: "text-spicy-mix bg-banana-mania shadow",
-                    autoClose: 2000,
-                }); 
-            }
-          }).catch((error)=>{
-            toast.error("Erro: "+ error, {
-                position: "bottom-left",
-                className: "text-spicy-mix bg-banana-mania shadow",
-                autoClose: 2000,
-              });
-          }) 
+          dispatch(updateEnderecoServer({endereco:{CEP, logradouro, numeroEndereco, complemento, userKey}, id: id}))
         })
         .catch((error)=>{
           toast.error("Erro: "+ error, {
