@@ -130,6 +130,8 @@ export const entregaSlice = createSlice({
           })
           .addCase(fetchEntregaByPedido.fulfilled,(state,action)=>{
             state.status = 'saved';
+            console.log("Pedido:")
+            console.log(action.payload)
             state.entrega[action.payload.pedido] = action.payload;
           })
 
