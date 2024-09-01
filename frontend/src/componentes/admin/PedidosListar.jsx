@@ -57,7 +57,13 @@ function PedidosListar({ pedido }) {
 
     const updateStatus = (value) => {
         console.log(value)
-        dispatch(updateEntregaServer({id: entrega.id, status: value}))
+        dispatch(updateEntregaServer({id: entrega.id, status: value})).then((result) =>{
+            if(result.payload){
+                dispatch(fetchEntregaByPedido(pedido.id));
+            }
+        })
+        
+
 
     }
     

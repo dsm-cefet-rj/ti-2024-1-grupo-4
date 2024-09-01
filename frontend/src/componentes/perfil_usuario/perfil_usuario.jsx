@@ -79,8 +79,14 @@ function Perfil_Usuario() {
     const { CEP, logradouro, numero, complemento } = data;
     const userKey = currentUser;
     enderecoSchema.validate(data).then((validData) => {
-      dispatch(addEnderecoServer({ CEP, logradouro, numeroEndereco:numero, complemento, userKey }))
+      dispatch(addEnderecoServer({ CEP, logradouro, numeroEndereco:numero, complemento, userKey })).then((result) =>
+      {
+        if(result.payload){
+          dispatch(fetchEnderecoByUser(currentUser))
 
+        }
+      })
+      
     })
       .catch((error) => {
         toast.error("Erro: " + error, {

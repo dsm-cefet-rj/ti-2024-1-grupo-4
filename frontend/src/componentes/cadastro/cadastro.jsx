@@ -58,7 +58,6 @@ function Register_page() {
     }
 
       dispatch(addUserServer(user)).then((result) => {
-        console.log(result)
         if(result.payload){
           toast.info("Usuário Cadastrado!", {
             position: "bottom-left",
@@ -66,8 +65,6 @@ function Register_page() {
             autoClose: 2000,
           });
           dispatch(logUser({username: data.username, password: data.password})).then((result) =>{
-            console.log(currentUser);
-            console.log(result);
             if(result.payload){
               dispatch(addEnderecoServer({CEP: data.cep,
                 logradouro: data.logradouro,

@@ -69,33 +69,33 @@ function setupendereco_function({ prevStep, nextStep, step }) {
         setEnderecoSelecionado(id);
     };
 
-    const createEndereco = (data) => {
+    const createEndereco = async (data) => {
         const { CEP, logradouro, numero, complemento } = data;
         const userKey = currentUser;
-        enderecoSchema.validate(data).then(() => {
-          dispatch(addEnderecoServer({ CEP, logradouro, numeroEndereco:numero, complemento, userKey }))
+        try{
+          enderecoSchema.validate(data)
+          await dispatch(addEnderecoServer({ CEP, logradouro, numeroEndereco:numero, complemento, userKey })).unwrap();
+          dispatch(fetchEnderecoByUser(currentUser))
     
-        })
-          .catch((error) => {
-            toast.error("Erro: " + error, {
-              position: "bottom-left",
-              className: "text-spicy-mix bg-banana-mania shadow",
-              autoClose: 2000,
-            });
-          })
+        } catch (error){
+          console.log(error)
+        }
+        
       }
 
       useEffect(() => {
-        if (endereco_status === 'not_loaded' || endereco_status === 'saved' || endereco_status === 'deleted') {
-            dispatch(fetchEnderecoByUser(currentUser))
-          } else if (endereco_status === 'failed') {
-            setTimeout(() => dispatch(fetchEnderecoByUser(currentUser)))
-          }
-        if (toggle_botao) {
-            
+        if (toggle_botao) { 
           nextStep();
         }
       }, [toggle_botao, nextStep]);
+
+      useEffect(() => {
+        if (endereco_status === 'not_loaded' || endereco_status === 'saved' || endereco_status === 'deleted') {
+          dispatch(fetchEnderecoByUser(currentUser))
+        } else if (endereco_status === 'failed') {
+          setTimeout(() => dispatch(fetchEnderecoByUser(currentUser)))
+        }
+      }, [endereco_status, enderecos.size])
 
     return (
         <>
