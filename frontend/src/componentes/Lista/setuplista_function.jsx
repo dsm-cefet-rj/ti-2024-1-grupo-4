@@ -49,7 +49,7 @@ function Lista(ped) {
     dispatch(deletePedidoServer(ped.id));
   }
 
-  const cancelaPedido = () => {
+  const cancelaPedido = async () => {
     if(entrega.status == "Pedido Cancelado"){
       toast.error("O pedido já foi cancelado", {
         position: "bottom-left",
@@ -64,7 +64,14 @@ function Lista(ped) {
         autoClose: 2000,
         })
     } else{
-      dispatch(updateEntregaServer({id: entrega.id, status: "Pedido Cancelado"}))
+      try{
+        await dispatch(updateEntregaServer({id: entrega.id, status: "Pedido Cancelado"})).unwrap()
+
+        dispatch(fetchEntregaByPedido(ped.id));
+      } catch(error){
+        console.error(error)
+      }
+      
     }
 }
 
