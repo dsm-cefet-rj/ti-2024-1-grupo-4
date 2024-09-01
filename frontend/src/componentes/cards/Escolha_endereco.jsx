@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 /**
  * @module perfil_usuario
@@ -51,7 +51,6 @@ function Escolha_Endereco({ endereco, enderecoSelecionado, onSelect }) {
                         <div className="card card-body">
                         <p>CEP: {endereco.CEP}</p>
                         <p>Local: {endereco.logradouro}, {endereco.numeroEndereco}</p>
-                        <p>Bairro: {endereco.bairro}</p>
                         {endereco.complemento ? (<p>Complemento: {endereco.complemento}</p>) : null}
                         </div>
                     </div>                

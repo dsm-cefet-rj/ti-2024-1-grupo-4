@@ -106,11 +106,11 @@ function Lista(ped) {
           <h5>Endereço para entrega:</h5>
           {entrega ? (
             <>
-              <p>CEP: {entrega.endereco.CEP}</p>
-              <p>Local: {entrega.endereco.logradouro}, {entrega.endereco.numeroEndereco}</p>
-              <p>Bairro: {entrega.endereco.bairro}</p>
-              {entrega.endereco.complemento ? (<p>Complemento: {entrega.endereco.complemento}</p>) : null}
-              
+              <span>CEP: {entrega.endereco.CEP}</span>
+              <br />
+              <span>Local: {entrega.endereco.logradouro}, {entrega.endereco.numeroEndereco}</span>
+              <br />
+              {entrega.endereco.complemento ? (<span>Complemento: {entrega.endereco.complemento}</span>) : null}
               {entrega.instrucoes ? ( <p>Instruções: {entrega.instrucoes}</p>): null}
             </>
           ) : (

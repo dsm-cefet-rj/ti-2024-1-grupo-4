@@ -57,8 +57,8 @@ function setupendereco_function({ prevStep, nextStep, step }) {
         const selectedEndereco = enderecos.find((endereco) => endereco.id === enderecoSelecionado);
 
         if (selectedEndereco) {
-            const { CEP, logradouro, numeroEndereco, bairro } = selectedEndereco;
-            dispatch(setEndereco({ CEP, logradouro, numeroEndereco, bairro, userKey: currentUser }));
+            const { CEP, logradouro, numeroEndereco, complemento } = selectedEndereco;
+            dispatch(setEndereco({ CEP, logradouro, numeroEndereco, complemento, userKey: currentUser }));
         }
 
         dispatch(setInstrucoes(instrucaoPedido));
