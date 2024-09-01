@@ -47,7 +47,7 @@ function Dashboard() {
         }
     }, [statusProdutos, dispatch]);
 
-    const [img, setImg] = useState("");
+    const [img, setImg] = useState("/img/food.jpg");
 
     const [formData, setFormData] = useState({
         nome: '',
