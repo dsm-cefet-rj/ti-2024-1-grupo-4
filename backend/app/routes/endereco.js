@@ -4,7 +4,10 @@ var authenticate = require('../authenticate');
 const router = express.Router();
 const cors = require('./cors');
 
-
+/**
+ * @function
+ * @description Função de cadastro do endereço de um usuário
+ */
 router.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .post(cors.corsWithOptions,authenticate.verifyUser, async (req, res, next) => {
@@ -15,6 +18,11 @@ router.route('/')
         next(err);
     }
 });
+
+/**
+ * @function
+ * @description Função de deleção de todos os endereços associados a um usuário
+ */
 router.post('/delete-enderecos', cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
     try {
       const userKey = req.user._id;
@@ -30,6 +38,10 @@ router.post('/delete-enderecos', cors.corsWithOptions, authenticate.verifyUser, 
     }
 });
 
+/**
+ * @function
+ * @description Função de obtenção de um endereço por usuário
+ */
 router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
     try {
@@ -40,6 +52,11 @@ router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendS
         next(err);
     }
 });
+
+/**
+ * @function
+ * @description Função de atualização de um endereço
+ */
 router.route('/:id')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .put(cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
@@ -50,6 +67,11 @@ router.route('/:id')
         next(err);
     }
 })
+
+/**
+ * @function
+ * @description Função de deleção de um endereço
+ */
 .delete(cors.corsWithOptions,authenticate.verifyUser,  async (req, res, next) => {
     try {
         await endereco.findByIdAndDelete(req.params.id);

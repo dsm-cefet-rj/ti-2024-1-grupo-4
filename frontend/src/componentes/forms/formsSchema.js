@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { ptForm } from 'yup-locale-pt';
 
 /**
- * Schema Yup para a validação de dados de forms sobre Endereco
+ * Schema Yup para a validação de dados de forms sobre instrucçoes do pedido
  */
 yup.setLocale(ptForm)
 

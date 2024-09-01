@@ -15,6 +15,16 @@ import { useSelector } from 'react-redux';
  * @property {string} userKey - id do cliente que cadastrou o endereco
  */
 /**
+ * Tipo da entidade 'endereco'
+ * @typedef {Object} onSelect
+ * É ativado com o id do endereço quando este é selecionado
+ */
+/**
+ * Tipo da entidade 'endereco'
+ * @typedef {Object} enderecoSelecionado
+ * EnderecoSeleciondo guarda a informação de id sobre o endereço que foi selecionado pelo botão radio
+ */
+/**
  * @function
  * @description Função que recebe um endereco e imprime as informações em formato de card
  * 
@@ -23,8 +33,6 @@ import { useSelector } from 'react-redux';
  */
 
 function Escolha_Endereco({ endereco, enderecoSelecionado, onSelect }) {
-    const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
-
 
     return (
         <>

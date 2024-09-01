@@ -44,10 +44,6 @@ function Lista(ped) {
     }
 }, [status, dispatch, ped.id]);
 
-  
-  const handleDeletePedido = () => {
-    dispatch(deletePedidoServer(ped.id));
-  }
 
   const cancelaPedido = async () => {
     if(entrega.status == "Pedido Cancelado"){

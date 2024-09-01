@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 /**
  * Tipo da entidade 'cliente'
- * @typedef {Object} pedido
+ * @typedef {Object} user
  * @property {string} id - id do cliente
  * @property {string} nome - nome do cliente
  * @property {string} email - email do cliente
@@ -18,7 +18,7 @@ import { toast } from 'react-toastify';
  * @description Função para a impressão da informação cadastrada do cliente na loja
  * 
  * @param {user} user 
- * @returns 
+ * @returns um card com as informações do cliente
  */
 
 function ClienteListar({ user }) {

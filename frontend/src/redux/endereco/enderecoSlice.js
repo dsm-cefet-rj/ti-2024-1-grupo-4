@@ -54,7 +54,11 @@ export const addEnderecoServer = createAsyncThunk('endereco/addEnderecoServer', 
 export const updateEnderecoServer = createAsyncThunk('endereco/updateEnderecoServer', async (endereco, {getState}) => {
     return await httpPut(`${baseUrl}/endereco/${endereco.id}`, endereco.endereco,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
-
+/**
+ * Async Thunk que atualiza um endereco pelo id
+ * @param {string} userKey - o id do usuário cujo endereços serão deletados
+ * @returns {Promise} - Promise com o valor atualizado
+ */
 export const deleteAllenderecosByUser = createAsyncThunk('endereco/deleteAllenderecosByUser', async (userKey, {getState}) => {
   return await httpPost(`${baseUrl}/endereco/delete-enderecos`, userKey, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });

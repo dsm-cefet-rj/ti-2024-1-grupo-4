@@ -11,6 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import { addEnderecoServer } from '../../redux/endereco/enderecoSlice';
 
 /**
+ * @module cadastro/cadastro
+ */
+/**
  * Página de registro do cliente da loja
  * @component
  * 

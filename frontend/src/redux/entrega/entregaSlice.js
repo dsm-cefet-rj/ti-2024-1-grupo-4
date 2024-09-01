@@ -54,6 +54,12 @@ export const updateEntregaServer = createAsyncThunk('entrega/updateEntregaServer
     return await httpPut(`${baseUrl}/entrega/${entrega.id}`, status ,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
+/**
+ * Async Thunk que atualiza um endereco pelo id
+ * @param {string} pedido - id do pedido que está vinculado com a entrega
+ * @returns {Promise} - Promise com o valor atualizado
+ */
+
 export const fetchEntregaByPedido = createAsyncThunk('entrega/fetchEntregaByPedido', async (pedido, { getState }) => {
   try {
 

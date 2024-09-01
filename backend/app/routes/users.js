@@ -8,6 +8,10 @@ const cors = require('./cors');
 
 router.use(bodyParser.json());
 
+/**
+ * @function
+ * @description Função que retorna todos os usuários do banco de dados
+ */
 router.route('/').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .get(cors.corsWithOptions, authenticate.verifyUser, async function (req, res, next) {
       user.find({})
@@ -21,6 +25,11 @@ router.route('/').options(cors.corsWithOptions, (req, res) => {res.sendStatus(20
                 (err) => next(err)
               );
 });
+
+/**
+ * @function
+ * @description Função de delete de um usuário por id
+ */
 router.route('/:id').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
   .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     user.findByIdAndDelete(req.params.id)
@@ -31,6 +40,11 @@ router.route('/:id').options(cors.corsWithOptions, (req, res) => {res.sendStatus
       })
       .catch((err) => next(err));
 });
+
+/**
+ * @function
+ * @description Função de atualização das informações de um usuário por id
+ */
 
 router.route('/:id')
   .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
@@ -47,7 +61,10 @@ router.route('/:id')
 });
 
 
-
+/**
+ * @function
+ * @description Função de cadastro de um usuário
+ */
 router.post('/signup', cors.corsWithOptions, (req, res, next) => {
   user.register(new user({username: req.body.username, nome: req.body.nome}), req.body.password, 
   (err, user) => {
@@ -65,6 +82,10 @@ router.post('/signup', cors.corsWithOptions, (req, res, next) => {
   });
 });
 
+/**
+ * @function
+ * @description Função de login de um usuário
+ */
 router.route('/login').options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
 router.post('/login',cors.corsWithOptions,  passport.authenticate('local', {session : false}), (req, res) => {
   var token = authenticate.getToken({_id: req.user._id});
@@ -73,6 +94,10 @@ router.post('/login',cors.corsWithOptions,  passport.authenticate('local', {sess
   res.json({_id: req.user._id, email: req.user.username, nome: req.user.nome, token: token, admin: req.user.admin, success: true, status: 'You are successfully logged in!'});
 });
 
+/**
+ * @function
+ * @description Função de atualização da senha de um usuário
+ */
 router.post('/change-password', cors.corsWithOptions, authenticate.verifyUser, async (req, res) => {
   const { SenhaAtual, SenhaNova } = req.body;
 

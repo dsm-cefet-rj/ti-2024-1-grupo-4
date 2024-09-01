@@ -22,7 +22,7 @@ import { deleteEntregaServer, fetchEntregaByPedido, updateEntregaServer } from '
  * @description Função para a impressão da lista de todos os pedidos efetuados na loja
  * 
  * @param {pedido} pedido 
- * @returns 
+ * @returns um card com as informações contidas em pedido
  */
 function PedidosListar({ pedido }) {
     const dispatch = useDispatch();
