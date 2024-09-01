@@ -8,9 +8,15 @@ var authenticate = require('../authenticate');
 const { pedido } = require('../models/pedido');
 const {user} = require('../models/users');
 
-/* GET users listing. */
+/**
+ * @module routes/pedido
+ */
 router.route('/:id')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+/**
+ * @function
+ * @description Função de remoção de pedido (por id)
+ */
 .delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
   pedido.findByIdAndDelete(req.params.id)
     .then((pedidoDeletado) => {
@@ -28,6 +34,10 @@ router.route('/:id')
       (err) => next(err)
     );
 })
+/**
+ * @function
+ * @description Função de atualização de pedido por id e suas atualizações 
+ */
 .put(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
   pedido.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
     .then((pedidoAlterado) => {
@@ -49,6 +59,10 @@ router.route('/:id')
 })
 
 router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendStatus(200) ;})
+/**
+ * @function
+ * @description Função de seleção de pedidos por id de usuário
+ */
 .get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
   console.log(req.params)
   pedido.find({ 'user.userKey' : req.params.userKey})
@@ -72,6 +86,10 @@ router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendS
 
 router.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+/**
+ * @function
+ * @description Função de seleção de todos os pedidos
+ */
 .get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
     console.log(req.params)
     pedido.find({})
@@ -91,6 +109,10 @@ router.route('/')
       );
 
   })
+/**
+ * @function
+ * @description Função de criação de um pedido 
+*/
 .post(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
       pedido.create(req.body)
       .then( (pedidoCriado) => {

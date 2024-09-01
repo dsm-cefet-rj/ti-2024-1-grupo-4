@@ -6,9 +6,16 @@ var authenticate = require('../authenticate');
 
 
 const { entrega } = require('../models/entrega');
+/**
+ * @module routes/entrega
+ */
 
 router.route('/:id')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+/**
+ * @function
+ * @description Função de remoção de entrega por Id
+ */
 .delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
   entrega.findByIdAndDelete(req.params.id)
     .then((pedidoDeletado) => {
@@ -26,6 +33,10 @@ router.route('/:id')
       (err) => next(err)
     );
 })
+/**
+ * @function
+ * @description Função de atualização de uma entrega por id e suas atualizações
+ */
 .put(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
   console.log(req.body)
   entrega.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
@@ -50,6 +61,10 @@ router.route('/:id')
 
 router.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+/**
+ * @function
+ * @description Função de seleção de todas as entregas por usuário (e seu id)
+ */
 .get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
     entrega.find({'user.id': req.params.id})
       .then((pedidosBanco) => {
@@ -68,6 +83,10 @@ router.route('/')
       );
 
   })
+/**
+ * @function
+ * @description Função de criação de uma entrega
+ */
 .post(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
       entrega.create(req.body)
       .then( (pedidoCriado) => {
@@ -82,6 +101,10 @@ router.route('/')
 
 router.route('/:pedido')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+/**
+ * @function
+ * @description Função de seleção de entregas por pedido (todas as informações do pedido devem ser iguais)
+ */
 .get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
     entrega.find({'pedido': req.params.pedido})
       .then((pedidosBanco) => {

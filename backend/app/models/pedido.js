@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const {ProdutosSchema} = require('./produto');
 
-
-
 const pagamentoSchema = new mongoose.Schema(
     {
         T_pagamento:{
