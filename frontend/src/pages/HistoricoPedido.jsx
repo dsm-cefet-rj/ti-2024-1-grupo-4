@@ -8,8 +8,10 @@ import { useEffect } from 'react';
 import { fetchPedidosByUser} from '../redux/listapedidos/ListaPedidoSlice.js';
 
 /**
- * Retorna a página HistoricoPedido
+ * Componente que renderiza a página de histórico de pedidos do usuário.
  * 
+ * @component
+ * @returns {JSX.Element} Retorna a página HistoricoPedido.
  */
 const HistoricoPedido = () => {
     const pedidos = useSelector((rootReducer)=> rootReducer.pedidoSlice.pedidos);
@@ -18,6 +20,10 @@ const HistoricoPedido = () => {
     const error = useSelector((rootReducer) => rootReducer.pedidoSlice.error);
     const currentUser = useSelector((rootReducer) => rootReducer.userSlice.currentUser) || {};
 
+    /**
+     * Hook useEffect para buscar pedidos do usuário com base no status.
+     * Atualiza os pedidos a cada 2 segundos caso o status seja 'loaded'.
+     */
     useEffect(() => {
         if ((status === 'not_loaded' || status === 'saved' || status === 'deleted')) {
           dispatch(fetchPedidosByUser(currentUser));

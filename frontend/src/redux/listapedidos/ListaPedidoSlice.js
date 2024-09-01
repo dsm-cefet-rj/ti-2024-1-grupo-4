@@ -95,7 +95,11 @@ export const updateStatusPedidoServer = createAsyncThunk('pedido/updatePedidoSer
   const pedidoId = pedido.id
   return await httpPut(`${baseUrl}/pedido/${pedido.id}`, pedido, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
-
+/**
+ * Async Thunk que atualiza o status de um pedido pelo id
+ * @param {Object} id - id do pedido que será checado
+ * @returns {Promise} - Promise com o pedido atualizado
+ */
 export const pedidoIDExistServer = createAsyncThunk('pedido/pedidoExistServer', async (id, {getState}) => {
   const response = await fetch (`${baseUrl}/pedido?id=${id}`,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
   const existe = await response.json();
