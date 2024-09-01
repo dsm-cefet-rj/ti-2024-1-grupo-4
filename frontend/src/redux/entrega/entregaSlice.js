@@ -54,7 +54,7 @@ export const updateEntregaServer = createAsyncThunk('entrega/updateEntregaServer
     return await httpPut(`${baseUrl}/entrega/${entrega.id}`, status ,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
-export const fetchEntregaByPedido = createAsyncThunk('pedido/fetchEntregaByPedido', async (pedido, { getState }) => {
+export const fetchEntregaByPedido = createAsyncThunk('entrega/fetchEntregaByPedido', async (pedido, { getState }) => {
   try {
 
     const result = await httpGet(`${baseUrl}/entrega/${pedido}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });

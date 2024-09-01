@@ -3,11 +3,10 @@ var router = express.Router();
 
 const cors = require('./cors');
 var authenticate = require('../authenticate');
-// dado proxy
+
 
 const { entrega } = require('../models/entrega');
 
-/* GET users listing. */
 router.route('/:id')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
 .delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
