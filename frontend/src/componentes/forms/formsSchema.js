@@ -12,7 +12,7 @@ export let formsSchema = yup.object().shape({
     CEP: yup.number().min(8).required('O cep é obrigatório').typeError(erroNumMsg),
     logradouro: yup.string().required('Logradouro é obrigatório'),
     numeroEndereco: yup.number().required('O número de Endereço é obrigatório').typeError(erroNumMsg),
-    complemento: yup.string().typeError('precisa').required('O complemento é obrigatório'),
+    complemento: yup.string().typeError('precisa'),//.required('O complemento é obrigatório')
     bairro: yup.string().notRequired().max(30).required("O bairro é obrigatório"),
     instrucaoPedido: yup.string().notRequired(),
 
