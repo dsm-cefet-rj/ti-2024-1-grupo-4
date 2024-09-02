@@ -59,11 +59,18 @@ function setupendereco_function({ prevStep, nextStep, step }) {
         if (selectedEndereco) {
             const { CEP, logradouro, numeroEndereco, complemento } = selectedEndereco;
             dispatch(setEndereco({ CEP, logradouro, numeroEndereco, complemento, userKey: currentUser }));
+            dispatch(setInstrucoes(instrucaoPedido));
+            console.log(data);
+            setToggleBotao(true);
+        }else{
+          toast.error("Selecione um endereço", {
+            position: "bottom-left",
+            className: "text-spicy-mix bg-banana-mania shadow",
+            autoClose: 2000,
+            })
         }
 
-        dispatch(setInstrucoes(instrucaoPedido));
-        console.log(data);
-        setToggleBotao(true);
+        
     };
     const handleSelectAddress = (id) => {
         setEnderecoSelecionado(id);
