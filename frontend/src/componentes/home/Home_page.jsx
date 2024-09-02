@@ -83,7 +83,7 @@ function Home_Page() {
                             { status === 'loading' ? <h1>Carregando...</h1> :
                                 <div className="row g-3">
                                     {Object.values(produtosLoja).map((item) => (
-                                        <div key="item.id" className="col-md-4 col-lg-3 d-flex">
+                                        <div key={item.id} className="col-md-4 col-lg-3 d-flex">
                                             <Card {...item} />
                                         </div>
                                     ))}

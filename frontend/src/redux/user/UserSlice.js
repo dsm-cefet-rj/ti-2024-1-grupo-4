@@ -57,6 +57,11 @@ export const addUserServer = createAsyncThunk('users/addUserServer', async (user
   return response;
 });
 
+/**
+ * Async Thunk para adicionar um novo usuário
+ * @param {Object} senhas - senha atual e nova do usuário
+ * @returns {Promise} - Promise com o usuário adicionado
+ */
 export const changeSenhaServer = createAsyncThunk('users/changeSenhaServer', async (senhas, {getState}) => {
   return await httpPost(`${baseUrl}/users/change-password`, senhas, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } })
 })

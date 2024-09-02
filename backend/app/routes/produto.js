@@ -5,9 +5,15 @@ const {produto} = require('../models/produto');
 const cors = require('./cors');
 var authenticate = require('../authenticate');
 
-
+/**
+ * @module routes/produto
+ */
 router.route('/')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+/**
+ * @function
+ * @description Função de seleção de todos os produtos na loja
+ */
 .get(function (req, res, next) {
     produto.find({})
       .then(
@@ -20,6 +26,10 @@ router.route('/')
           (err) => next(err)
         );
 })
+/**
+ * @function
+ * @description Função de criação de um produto
+ */
 .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
       produto.findOne({nome: req.body.nome})
       .then( (existingProduto) => {
@@ -38,6 +48,10 @@ router.route('/')
 
 router.route('/:id')
 .options(cors.corsWithOptions, (req, res) => {res.sendStatus(200); })
+/**
+ * @function
+ * @description Função de remoção de um produto por id
+ */
 .delete(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
     console.log(req);
     produto.findByIdAndDelete(req.params.id)
@@ -55,6 +69,10 @@ router.route('/:id')
       .catch((err) => next(err));
   
 })
+/**
+ * @function
+ * @description Função de atualização de um produto por id e suas atualizações
+ */
 .put(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
     produto.findByIdAndUpdate(req.params.id, {
       $set: req.body

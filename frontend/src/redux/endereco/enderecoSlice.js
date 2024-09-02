@@ -32,8 +32,8 @@ export const fetchEnderecoByUser = createAsyncThunk('endereco/fetchEnderecoByUse
  */
 
 export const deleteEnderecoServer = createAsyncThunk('endereco/deleteEnderecoServer', async (idEndereco, {getState}) => {
-    await httpDelete(`${baseUrl}/endereco/${idEndereco}`,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
-    return idEndereco;
+    return await httpDelete(`${baseUrl}/endereco/${idEndereco}`,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
+    
 });
 
 /**
@@ -54,6 +54,14 @@ export const addEnderecoServer = createAsyncThunk('endereco/addEnderecoServer', 
 export const updateEnderecoServer = createAsyncThunk('endereco/updateEnderecoServer', async (endereco, {getState}) => {
     return await httpPut(`${baseUrl}/endereco/${endereco.id}`, endereco.endereco,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
+/**
+ * Async Thunk que atualiza um endereco pelo id
+ * @param {string} userKey - o id do usuário cujo endereços serão deletados
+ * @returns {Promise} - Promise com o valor atualizado
+ */
+export const deleteAllenderecosByUser = createAsyncThunk('endereco/deleteAllenderecosByUser', async (userKey, {getState}) => {
+  return await httpPost(`${baseUrl}/endereco/delete-enderecos`, userKey, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
+});
 
 /**
  * Slice que gerencia o endereco
@@ -67,21 +75,69 @@ export const enderecoSlice = createSlice({
           .addCase(deleteEnderecoServer.fulfilled, (state,action) => {
             state.status = 'deleted';
             enderecoAdapter.removeOne(state, action.payload);
+            toast.info("Endereço deletado com sucesso", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
+          })
+          .addCase(deleteEnderecoServer.rejected, (state,action) => {
+            state.status = 'failed';
+            toast.error("Erro ao deletar endereço", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
           })
           .addCase(addEnderecoServer.fulfilled, (state,action) => {
             state.status = 'saved';
             enderecoAdapter.addOne(state,action.payload);
+            toast.info("Endereço adicionado com sucesso", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
+          })
+          .addCase(addEnderecoServer.rejected, (state,action) => {
+            state.status = 'failed';
+            toast.error("Erro ao adicionar endereço", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
           })
           .addCase(updateEnderecoServer.fulfilled, (state, action) => {
             state.status = 'saved';
             enderecoAdapter.upsertOne(state, action.payload);
-          })
-          .addCase(fetchEnderecoByUser.fulfilled,(state,action) => {
+            toast.info("Endereço atualizado com sucesso", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
+          }).addCase(updateEnderecoServer.rejected, (state, action) => {
+            state.status = 'failed';
+            toast.error("Erro ao atualizar as informações do endereço", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
+          })          .addCase(fetchEnderecoByUser.fulfilled,(state,action) => {
             state.status = 'saved';
             console.log(action.payload)
             state.enderecos = action.payload;
           }).addCase(fetchEnderecoByUser.rejected,(state,action) => {
             toast.error("Erro ao requisitar endereços", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
+          })
+          .addCase(deleteAllenderecosByUser.fulfilled,(state,action) => {
+            state.status = 'saved';
+            enderecoAdapter.removeOne(state, action.payload);
+          })
+          .addCase(deleteAllenderecosByUser.rejected,(state,action) => {
+            toast.error("Erro ao deletar todos os endereços", {
               position: "bottom-left",
               className: "text-spicy-mix bg-banana-mania shadow",
               autoClose: 2000,

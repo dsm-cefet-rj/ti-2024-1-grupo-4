@@ -18,9 +18,6 @@ const EnderecoSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        bairro: {
-            type: String,
-        },
         userKey: {
             type: mongoose.Schema.Types.ObjectId, // Reference to User model
             ref: 'user', // Name of the User model

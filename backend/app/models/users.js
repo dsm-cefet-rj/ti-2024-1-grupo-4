@@ -1,23 +1,6 @@
 const mongoose = require('mongoose');
 var passportLocalMongoose = require('passport-local-mongoose');
 
-/*
-* types:
-* String
-Number
-Date
-Buffer
-Boolean
-Mixed
-ObjectId
-Array
-Decimal128
-Map
-UUID
-* 
-*/
-
-
 const UserSchema = mongoose.Schema(
   {
     id:mongoose.ObjectId,

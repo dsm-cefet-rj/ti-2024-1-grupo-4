@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { toast } from 'react-toastify';
 
 
 /**
@@ -28,7 +29,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { deletePedidoServer } from '../../redux/listapedidos/ListaPedidoSlice.js';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchEntregaByPedido } from '../../redux/entrega/entregaSlice.js';
+import { fetchEntregaByPedido, updateEntregaServer } from '../../redux/entrega/entregaSlice.js';
 
 
 function Lista(ped) {
@@ -43,10 +44,32 @@ function Lista(ped) {
     }
 }, [status, dispatch, ped.id]);
 
-  
-  const handleDeletePedido = () => {
-    dispatch(deletePedidoServer(ped.id));
-  }
+
+  const cancelaPedido = async () => {
+    if(entrega.status == "Pedido Cancelado"){
+      toast.error("O pedido já foi cancelado", {
+        position: "bottom-left",
+        className: "text-spicy-mix bg-banana-mania shadow",
+        autoClose: 2000,
+        })
+    }
+    else if(entrega.status != "Avaliando Pedido"){
+      toast.error("O pedido já foi aceito e não pode ser cancelado", {
+        position: "bottom-left",
+        className: "text-spicy-mix bg-banana-mania shadow",
+        autoClose: 2000,
+        })
+    } else{
+      try{
+        await dispatch(updateEntregaServer({id: entrega.id, status: "Pedido Cancelado"})).unwrap()
+
+        dispatch(fetchEntregaByPedido(ped.id));
+      } catch(error){
+        console.error(error)
+      }
+      
+    }
+}
 
   /**/
   return (
@@ -86,11 +109,11 @@ function Lista(ped) {
           <h5>Endereço para entrega:</h5>
           {entrega ? (
             <>
-              <p>CEP: {entrega.endereco.CEP}</p>
-              <p>Local: {entrega.endereco.logradouro}, {entrega.endereco.numeroEndereco}</p>
-              <p>Bairro: {entrega.endereco.bairro}</p>
-              {entrega.endereco.complemento ? (<p>Complemento: {entrega.endereco.complemento}</p>) : null}
-              
+              <span>CEP: {entrega.endereco.CEP}</span>
+              <br />
+              <span>Local: {entrega.endereco.logradouro}, {entrega.endereco.numeroEndereco}</span>
+              <br />
+              {entrega.endereco.complemento ? (<span>Complemento: {entrega.endereco.complemento}</span>) : null}
               {entrega.instrucoes ? ( <p>Instruções: {entrega.instrucoes}</p>): null}
             </>
           ) : (
@@ -100,6 +123,7 @@ function Lista(ped) {
           </div>
 
         </div>
+        <button type="button" className="botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow-sm" onClick = {cancelaPedido}>Cancelar Pedido</button>
       </div>
     </>
 

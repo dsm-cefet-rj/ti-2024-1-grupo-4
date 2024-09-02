@@ -54,7 +54,13 @@ export const updateEntregaServer = createAsyncThunk('entrega/updateEntregaServer
     return await httpPut(`${baseUrl}/entrega/${entrega.id}`, status ,{ headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
 });
 
-export const fetchEntregaByPedido = createAsyncThunk('pedido/fetchEntregaByPedido', async (pedido, { getState }) => {
+/**
+ * Async Thunk que atualiza um endereco pelo id
+ * @param {string} pedido - id do pedido que está vinculado com a entrega
+ * @returns {Promise} - Promise com o valor atualizado
+ */
+
+export const fetchEntregaByPedido = createAsyncThunk('entrega/fetchEntregaByPedido', async (pedido, { getState }) => {
   try {
 
     const result = await httpGet(`${baseUrl}/entrega/${pedido}`, { headers: { Authorization: `Bearer ` + getState().userSlice.currentToken } });
@@ -130,6 +136,8 @@ export const entregaSlice = createSlice({
           })
           .addCase(fetchEntregaByPedido.fulfilled,(state,action)=>{
             state.status = 'saved';
+            console.log("Pedido:")
+            console.log(action.payload)
             state.entrega[action.payload.pedido] = action.payload;
           })
 

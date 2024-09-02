@@ -1,23 +1,5 @@
 const mongoose = require('mongoose');
 
-
-
-/*
-* types:
-* String
-Number
-Date
-Buffer
-Boolean
-Mixed
-ObjectId
-Array
-Decimal128
-Map
-UUID
-* 
-*/
-
 const ProdutoSchema = mongoose.Schema(
   {
     

@@ -8,10 +8,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
 
 import { formsSchema } from './formsSchema';
-
+import { fetchEnderecoByUser, addEnderecoServer} from '../../redux/endereco/enderecoSlice';
 
 import {useDispatch, useSelector} from "react-redux";
 import { setEndereco, setInstrucoes } from '../../redux/entrega/entregaSlice';
+import Escolha_Endereco from '../cards/Escolha_endereco';
+import * as yup from 'yup'
+import { toast } from 'react-toastify';
 
 /**
  * @module forms/setupendereco_function
@@ -31,66 +34,95 @@ function setupendereco_function({ prevStep, nextStep, step }) {
 
     const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const [toggle_botao, setToggleBotao] = useState(false);
-    
+    const endereco_status = useSelector((rootReducer) => rootReducer.enderecoSlice.status) || {};
+    const { enderecos } = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
     const { register, handleSubmit,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)});
+    const [enderecoSelecionado, setEnderecoSelecionado] = useState(null);
+    
     const dispatch = useDispatch();
 
-    const onSubmit = data => {
-        const {CEP, logradouro, numeroEndereco, bairro, instrucaoPedido} = data;
-        dispatch(setEndereco({CEP, logradouro, numeroEndereco, bairro, userKey:currentUser}));
+    const enderecoSchema = yup.object().shape({
+        CEP: yup.string().required('CEP é obrigatório'),
+        logradouro: yup.string().required('Logradouro é obrigatório'),
+        complemento: yup.string(),
+        numero: yup.number().positive().required('Número é obrigatório')
+      });
+
+    const { register: registerEndereco, handleSubmit: handleSubmitEndereco, formState: { errors: enderecoErrors } } = useForm({
+        resolver: yupResolver(enderecoSchema),
+      });
+
+    const onSubmit = (data) => {
+        const { instrucaoPedido } = data;
+        const selectedEndereco = enderecos.find((endereco) => endereco.id === enderecoSelecionado);
+
+        if (selectedEndereco) {
+            const { CEP, logradouro, numeroEndereco, complemento } = selectedEndereco;
+            dispatch(setEndereco({ CEP, logradouro, numeroEndereco, complemento, userKey: currentUser }));
+        }
+
         dispatch(setInstrucoes(instrucaoPedido));
-        console.log(data)
+        console.log(data);
         setToggleBotao(true);
+    };
+    const handleSelectAddress = (id) => {
+        setEnderecoSelecionado(id);
+    };
+
+    const createEndereco = async (data) => {
+        const { CEP, logradouro, numero, complemento } = data;
+        const userKey = currentUser;
+        try{
+          enderecoSchema.validate(data)
+          await dispatch(addEnderecoServer({ CEP, logradouro, numeroEndereco:numero, complemento, userKey })).unwrap();
+          dispatch(fetchEnderecoByUser(currentUser))
+    
+        } catch (error){
+          console.log(error)
+        }
+        
       }
 
       useEffect(() => {
-        if (toggle_botao) {
-            
+        if (toggle_botao) { 
           nextStep();
         }
       }, [toggle_botao, nextStep]);
 
+      useEffect(() => {
+        if (endereco_status === 'not_loaded' || endereco_status === 'saved' || endereco_status === 'deleted') {
+          dispatch(fetchEnderecoByUser(currentUser))
+        } else if (endereco_status === 'failed') {
+          setTimeout(() => dispatch(fetchEnderecoByUser(currentUser)))
+        }
+      }, [endereco_status, enderecos.size])
+
     return (
         <>
-            <div className='position-relative pt-2'>
-                <Progressbar step={step} />
-            </div>
+        <div className='position-relative pt-2'>
+            <Progressbar step={step} />
+        </div>
 
 
-            <div className='container-fluid'>
-                <form className='form' onSubmit={handleSubmit(onSubmit)}> {/* HOOKFORM ONSUBMIT */}
-                    <div className="align-items-center row bg-banana-mania text-center m-5 ">
-                        <h3>Endereço</h3>
-                        <hr />
+        <div className='container-fluid'>
+    <form className='form' onSubmit={handleSubmit(onSubmit)}> {/* HOOKFORM ONSUBMIT */}
+        <div className="align-items-center row bg-banana-mania text-center m-1 ">
+        <h2>Endereco</h2>
+        <span>Escolha o endereço ou cadastre um novo</span>
+        {enderecos ? <>
+          {Object.values(enderecos).map((endereco) => (
+            <Escolha_Endereco key={endereco.id}
+             endereco={endereco}
+             enderecoSelecionado={enderecoSelecionado}
+             onSelect={handleSelectAddress} />
+          ))} </> : null}
+        <button type="button" data-bs-toggle="modal" data-bs-target="#criarEndereco"
+          className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
+        ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+          </svg></button>
                         <div className='form-container'>
-                            <div className='row'>
-                                <div className='col-md-6'>
-                                    <label htmlFor='cep'>CEP</label>
-                                    <input type='text' className='form-control' id="cep" name='cep'{...register('CEP')}/>
-                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.CEP?.message}</p>
-                                </div>
-                                <div className='col-md-6'>
-                                    <label htmlFor='logradouro'>Logradouro</label>
-                                    <input type='text' className='form-control' id="logradouro" name='logradouro'{...register('logradouro')} />
-                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.logradouro?.message}</p>
-                                </div>
-                            </div>
-                            <div className='row'>
-                                <div className='col-md-6'>
-                                    <label htmlFor='numeroEndereco'>Número</label>
-                                    <input type='text' className='form-control' id='numeroEndereco' name='numeroEndereco' {...register('numeroEndereco')} />
-                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.numeroEndereco?.message}</p>
-                                </div>
-                                <div className='col-md-6'>
-                                    <label htmlFor='bairro'>Bairro</label>
-                                    <input type='text' className='form-control' id='bairro' name='bairro' {...register('bairro')} />
-                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.bairro?.message}</p>
-                                </div>
-                                <div className='col-md-12 p-2'>
-                                    <label htmlFor='complemento'>Complemento</label>
-                                    <input type='text' className='form-control' id='complemento' name='complemento' {...register('complemento')} />
-                                    <p className='text-decoration-underline  rounded text-brick-red-400'>{errors.complemento?.message}</p>
-                                </div>
+                            <div className='row'>                             
                                 <div className='p-1'>
                                     <hr />
                                 </div>
@@ -113,8 +145,49 @@ function setupendereco_function({ prevStep, nextStep, step }) {
 
                             </div>
                         </div>
-                    </div>
+            </div>
+    </form>
+        <div className="modal fade" id="criarEndereco" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="criarProdutoLabel" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="criarProdutoLabel">Adicionar Endereço</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <div className="modal-body">
+
+                <form onSubmit={handleSubmitEndereco(createEndereco)}>
+                  <div className="col-md-12">
+                    <label className="form-label" htmlFor='CEP'>CEP:</label>
+                    <input type="text" id='CEP' className="form-control" {...registerEndereco("CEP")}></input>
+                    {enderecoErrors.endereco?.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.CEP.message}</p>}
+                  </div>
+                  <div className="col-md-12">
+                    <label className="form-label" htmlFor='logradouro'>Logradouro:</label>
+                    <input type="text" id='logradouro' className="form-control" placeholder="Ex: Rua, Avenida, etc." {...registerEndereco("logradouro")}></input>
+                    {enderecoErrors.endereco?.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.logradouro.message}</p>}
+                  </div>
+                  <div className="col-12">
+                    <label className="form-label" htmlFor='complemento'>Complemento:</label>
+                    <input type="text" id='complemento' className="form-control" placeholder="Ex: Apto, Bloco, etc."  {...registerEndereco("complemento")}></input>
+                  </div>
+                  <div className="col-12">
+                    <label className="form-label" htmlFor='numero'>Número:</label>
+                    <input type="number" id='numero' className="form-control" {...registerEndereco("numero")}></input>
+                    {enderecoErrors.endereco?.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.numero.message}</p>}
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" className="btn btn-verde-certo">Adicionar Endereco</button>
+                  </div>
                 </form>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
             </div>
         </>
     )

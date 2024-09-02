@@ -46,22 +46,7 @@ function Endereco_Card({ endereco }) {
         const userKey = currentUser;
         const id = endereco.id;
         schema.validate(data).then((validData)=>{
-          dispatch(updateEnderecoServer({endereco:{CEP, logradouro, numeroEndereco, complemento, userKey}, id: id})).then((user)=>{
-            if(user.payload){
-               setLogradouro(logradouro);
-                toast.info("Endereço alterado", {
-                    position: "bottom-left",
-                    className: "text-spicy-mix bg-banana-mania shadow",
-                    autoClose: 2000,
-                }); 
-            }
-          }).catch((error)=>{
-            toast.error("Erro: "+ error, {
-                position: "bottom-left",
-                className: "text-spicy-mix bg-banana-mania shadow",
-                autoClose: 2000,
-              });
-          }) 
+          dispatch(updateEnderecoServer({endereco:{CEP, logradouro, numeroEndereco, complemento, userKey}, id: id}))
         })
         .catch((error)=>{
           toast.error("Erro: "+ error, {
@@ -98,18 +83,18 @@ function Endereco_Card({ endereco }) {
                         <div class="card card-body">
                             <label className="form-label">CEP</label>
                             <input type="text" className="form-control" {...register("CEP")} defaultValue={endereco.CEP}></input>
-                            {errors.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.CEP.message}</p>}
+                            {errors.CEP && <span className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.CEP.message}</span>}
 
                             <label className="form-label">Logradouro</label>
                             <input type="text" className="form-control" placeholder="Ex: Rua, Avenida, etc." {...register("logradouro")} defaultValue={endereco.logradouro}></input>
-                            {errors.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.logradouro.message}</p>}
+                            {errors.logradouro && <span className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.logradouro.message}</span>}
 
                             <label className="form-label">Complemento</label>
                             <input type="text" className="form-control" placeholder="Ex: Apto, Bloco, etc." {...register("complemento")} defaultValue={endereco.complemento}></input>
 
                             <label className="form-label">Número</label>
                             <input type="number" className="form-control" {...register("numeroEndereco")} defaultValue={endereco.numeroEndereco}></input>
-                            {errors.endereco?.numeroEndereco && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numeroEndereco.message}</p>}
+                            {errors.endereco?.numeroEndereco && <span className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numeroEndereco.message}</span>}
                         </div>
                     </div>
                   </form>                    
