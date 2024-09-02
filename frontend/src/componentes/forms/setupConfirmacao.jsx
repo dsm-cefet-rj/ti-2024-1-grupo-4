@@ -44,41 +44,154 @@ function setupConfirmacao({step,value}) {
    
     const handlePedidoAdd = async () => {
         try {
-      
-          const pedidoResponse = await dispatch(
-            addPedidoServer({ user, products, pagamento, valorTotal: productsTotalPrice })
-          ).unwrap();
-      
 
-          const pedidoId = pedidoResponse.id;
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+            console.log({ user, products, pagamento, valorTotal: productsTotalPrice })
+            const pedidoResponse = await dispatch(
+                addPedidoServer({ user, products, pagamento, valorTotal: productsTotalPrice })
+            ).unwrap();
+            const pedidoId = pedidoResponse.id;
 
-          await dispatch(addEntregaServer({
-            endereco,
-            status: status_entrega,
-            userKey: currentUser,
-            pedido: pedidoId,
-            instrucoes: instrucoes,
-          })).unwrap();
-      
-          if (status_ent === 'saved') {
-            dispatch(resetInfo());
-          }
+            await dispatch(addEntregaServer({
+                endereco,
+                status: status_entrega,
+                userKey: currentUser,
+                pedido: pedidoId,
+                instrucoes: instrucoes,
+            })).unwrap();
+            
+            if (status_ent === 'saved') {
+                dispatch(resetInfo());
+            }
+            
         } catch (error) {
-          console.error("Erro:", error);
+            console.error("Erro:", error);
         }
-      };
-      
-    const handleSetStatusLoading = ()=>{
+    };
+
+    const handleSetStatusLoading = () => {
         dispatch(setStatus('loading'));
     }
-    const handleSetStatusSaved = ()=>
-    {
+    const handleSetStatusSaved = () => {
         dispatch(setStatus('saved'));
     }
 
     const renderStatus = (value)=>{
 
         if(value == 'pix'){
+            if( status == 'saved'){
+                return(
+                    <>
+                        <svg className="path_icon bs-tacao-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" height={'200px'} width={"200px"} >
+                            <path fill='#5a964c' d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                        </svg>
+                        <h3 className='text-verde-certo pt-3'>Pagamento Realizado</h3>
+
+                        <Link to="/">
+                                <span className="btn btn-brick-red w-100 mb-2 pb-2" onClick={setStatus('not_loaded')}>Fechar</span>
+                            </Link>
+                        
+                    </>
+                )
+            } else {
+                //loading
+                return(
+                    <>
+                        <img src={qrcode}></img>
+                        <h3 className='text-verde-certo pt-3'>Esperando o Pagamento</h3>
+                    </>
+                )
+            }
+        }else{
+            //cartao
+            if( status == 'saved'){
+        
+               return(
+                    <>
+                        <svg className="path_icon bs-tacao-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" height={'200px'} width={"200px"} >
+                            <path fill='#5a964c' d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                        </svg>
+                        <h3 className='text-verde-certo pt-3'>Pagamento Realizado</h3>
+                        <Link to="/">
+                                <span className="btn btn-brick-red w-100 mb-2 pb-2">Fechar</span>
+                            </Link>
+                    </>
+               )
+            }else if(status == 'loading'){
+                //loading
+                return(
+                    <>
+                        <div className="d-flex justify-content-center">
+                            <div className='py-5 px-5'>
+                            <div class="spinner-border text-verde-certo" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            </div>
+                        </div>
+                    </>
+
+                )
+            }else{
+                //failed
+                return(
+                    <>
+                        <div className="d-flex justify-content-center">
+                            <div className='py-1 my-1 px-3 rounded border border-brick-red bg-tacao-400'>
+                                <h3 className='text-brick-red pb-3 pt-3'>Falha no Pagamento</h3>
+                                <Link to="/">
+                                <span className="btn btn-brick-red w-100 mb-2 pb-2">Fechar</span>
+                            </Link>
+                            </div>
+                         
+                        </div>
+                    </>
+
+                )
+
+            }
+        }  
+    }
+
+    useEffect(() => {
+        renderStatus(value);
+    }, [status]);
+
+    useEffect(() => {
+        if(status === 'loading'){
+            handlePedidoAdd();
+        }
+        if(status === 'saved'){
+            dispatch(resetInfo());
+        }
+    }, [status]);
+/*
+    useEffect(() => {
+      handleSetStatusLoading();
+    }, [step])
+*/  
+
+
+
+  return (
+      <>
+          <div className='position-relative pt-2'>
+              <Progressbar step={step} />
+          </div>
+          {console.log(status + " status antes do handlepedido")}
+         
+          <div className='container-fluid'>
+              <div className="align-items-center row bg-banana-mania text-center m-5 pb-5">
+                {renderStatus(value)}
+              </div>
+          </div>
+      </>
+  )
+}
+
+export default setupConfirmacao
+
+/**
+ * if(value == 'pix'){
             if( status == 'saved'){
         
                 return(
@@ -168,33 +281,4 @@ function setupConfirmacao({step,value}) {
             }
         }  
     }
-
-   useEffect(() => {
-      
-            
-          renderStatus(value);
-       
-      }, [status,setStatus]);
-
-  return (
-      <>
-          <div className='position-relative pt-2'>
-              <Progressbar step={step} />
-          </div>
-          {console.log(status + " status antes do handlepedido")}
-         
-          <div className='container-fluid'>
-              <div className="align-items-center row bg-banana-mania text-center m-5 pb-5">
-                {renderStatus(value)}
-              </div>
-             <div className=''>
-              <button className='btn bg-verde-certo ' onClick={handlePedidoAdd}>SIMULACAO-COMPLETA/REALIZA SALVAMENTO NO JSON-SERVER</button>
-              <button className='btn bg-brick-red-300 ' onClick={()=>handleSetStatusLoading()}>SIMULACAO-LOADING/NÃO SALVA NO JSON-SERVER</button>
-              <button className='btn bg-brick-red-300 ' onClick={()=>handleSetStatusSaved()}>SIMULACAO-SAVED/NÃO SALVA NO JSON-SERVER</button>
-              </div>
-          </div>
-      </>
-  )
-}
-
-export default setupConfirmacao
+ */
