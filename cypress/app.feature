@@ -2,7 +2,9 @@
 Funcionalidade: Realizar um pedido estando autenticado como cliente
 
     Contexto: Me cadastrar
-      Quando Eu estou na tela de login
+      Quando Eu estou na tela Principal
+      Então clico no botão "Login" na Dashboard
+      Quando Eu estou na tela de Login
       Então Eu clico no link de "Registre-se"
         E Eu preencho os dados requisitados
       Quando Clico no botão de "Cadastre-se"
@@ -26,6 +28,7 @@ Funcionalidade: Realizar um pedido estando autenticado como cliente
       Então eu deveria ser jogado para etapa de pagamento
       Quando estou na etapa de pagamento
       Então preencho o formulário de pagamento
+      Quando clico no botão "Próximo"
 
 
     Contexto: Acompanhar pedido

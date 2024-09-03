@@ -54,6 +54,20 @@ function setuppedido_function({ prevStep, nextStep, step }) {
       nextStep();
     }
   }, [toggle_botao, nextStep]);
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSubmitStepConfirmacao();
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   return (
     <>
