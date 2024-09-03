@@ -164,7 +164,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
 
               <div className="modal-body">
 
-                <form onSubmit={handleSubmitEndereco(createEndereco)}>
+                <form className='form' onSubmit={handleSubmitEndereco(createEndereco)}>
                   <div className="col-md-12">
                     <label className="form-label" htmlFor='CEP'>CEP:</label>
                     <input type="text" id='CEP' className="form-control" {...registerEndereco("CEP")}></input>
