@@ -46,7 +46,7 @@ function Perfil_Usuario() {
   });
 
   const senhaSchema = yup.object().shape({
-    novaSenha: yup.string().required('A Nova senha deve ser preenchida').min(5, 'A quantidade mínima é de 5 dígitos'),
+    novaSenha: yup.string().required('A Nova senha deve ser preenchida').min(5, 'A quantidade mínima é de 5 dígitos').notOneOf([yup.ref('SenhaAtual')], 'A nova senha deve ser diferente da senha atual'),
     repSenha: yup.string().oneOf([yup.ref('novaSenha'), null], 'As senhas devem ser iguais').required(),
     SenhaAtual: yup.string().required('A Senha Atual deve ser preenchida')
   });
