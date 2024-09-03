@@ -27,7 +27,7 @@ router.post('/delete-enderecos',  cors.corsWithOptions, authenticate.verifyUser,
     try {
       const userKey = req.body.userKey;
       const result = await endereco.deleteMany({ 'userKey': userKey });
-      if (result.deletedCount > 0) {
+      if (result.acknowledged) {
         res.status(200).json({ message: 'Endereços deletados com sucesso' });
       } else {
         res.status(404).json({ message: 'Nenhum endereço encontrado para deletar' });
