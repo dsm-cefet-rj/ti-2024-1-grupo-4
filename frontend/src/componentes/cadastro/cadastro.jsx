@@ -35,7 +35,7 @@ function Register_page() {
     cep: yup.string().required('cep é obrigatório').matches(/^\d{5}-\d{3}$/, 'CEP deve estar no formato xxxxx-xxx'),
     logradouro: yup.string().required('Logradouro é obrigatório'),
     complemento: yup.string(),
-    numeroEndereco: yup.number().positive().required('Número é obrigatório')
+    numeroEndereco: yup.number('Deve ser um número').positive('Não pode ser negativo').required('Número é obrigatório')
     
   });
 
@@ -132,12 +132,12 @@ function Register_page() {
             <div className="col-md-4">
               <label className="form-label">CEP</label>
               <input type="text" className="form-control" {...register("cep")}></input>
-              {errors.endereco?.cep && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.cep.message}</p>}
+              {errors.cep && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.cep.message}</p>}
             </div>
             <div className="col-8">
               <label className="form-label">Logradouro</label>
               <input type="text" className="form-control" placeholder="Ex: Rua, Avenida, etc." {...register("logradouro")}></input>
-              {errors.endereco?.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.logradouro.message}</p>}
+              {errors.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.logradouro.message}</p>}
             </div>
             <div className="col-6">
               <label className="form-label">Complemento</label>
@@ -146,7 +146,7 @@ function Register_page() {
             <div className="col-6">
               <label className="form-label">Número</label>
               <input type="number" className="form-control" {...register("numeroEndereco")}></input>
-              {errors.endereco?.numeroEndereco && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.endereco.numeroEndereco.message}</p>}
+              {errors.numeroEndereco && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numeroEndereco.message}</p>}
             </div>
 
           

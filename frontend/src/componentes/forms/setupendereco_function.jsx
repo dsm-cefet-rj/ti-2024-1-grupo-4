@@ -168,12 +168,12 @@ function setupendereco_function({ prevStep, nextStep, step }) {
                   <div className="col-md-12">
                     <label className="form-label" htmlFor='CEP'>CEP:</label>
                     <input type="text" id='CEP' className="form-control" {...registerEndereco("CEP")}></input>
-                    {enderecoErrors.endereco?.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.CEP.message}</p>}
+                    {enderecoErrors.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.CEP.message}</p>}
                   </div>
                   <div className="col-md-12">
                     <label className="form-label" htmlFor='logradouro'>Logradouro:</label>
                     <input type="text" id='logradouro' className="form-control" placeholder="Ex: Rua, Avenida, etc." {...registerEndereco("logradouro")}></input>
-                    {enderecoErrors.endereco?.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.logradouro.message}</p>}
+                    {enderecoErrors.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.logradouro.message}</p>}
                   </div>
                   <div className="col-12">
                     <label className="form-label" htmlFor='complemento'>Complemento:</label>
@@ -182,7 +182,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
                   <div className="col-12">
                     <label className="form-label" htmlFor='numero'>Número:</label>
                     <input type="number" id='numero' className="form-control" {...registerEndereco("numero")}></input>
-                    {enderecoErrors.endereco?.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.numero.message}</p>}
+                    {enderecoErrors.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.numero.message}</p>}
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>

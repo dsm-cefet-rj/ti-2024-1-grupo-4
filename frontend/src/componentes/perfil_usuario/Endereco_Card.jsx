@@ -38,7 +38,7 @@ function Endereco_Card({ endereco }) {
         CEP: yup.string().required('CEP é obrigatório'),
         logradouro: yup.string().required('Logradouro é obrigatório'),
         complemento: yup.string(),
-        numeroEndereco: yup.number().positive().required('Número é obrigatório')
+        numeroEndereco: yup.number('Deve ser um número').positive().required('Número é obrigatório')
     });
 
     const enderecoUpdate = (data) =>{
@@ -94,7 +94,7 @@ function Endereco_Card({ endereco }) {
 
                             <label className="form-label">Número</label>
                             <input type="number" className="form-control" {...register("numeroEndereco")} defaultValue={endereco.numeroEndereco}></input>
-                            {errors.endereco?.numeroEndereco && <span className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numeroEndereco.message}</span>}
+                            {errors.numeroEndereco && <span className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numeroEndereco.message}</span>}
                         </div>
                     </div>
                   </form>                    
