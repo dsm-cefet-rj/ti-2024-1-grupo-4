@@ -42,7 +42,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
     const dispatch = useDispatch();
 
     const enderecoSchema = yup.object().shape({
-        CEP: yup.string().required('CEP é obrigatório'),
+        CEP: yup.string().required('CEP é obrigatório').matches(/^\d{5}-\d{3}$/, 'CEP deve estar no formato xxxxx-xxx'),
         logradouro: yup.string().required('Logradouro é obrigatório'),
         complemento: yup.string(),
         numero: yup.number().positive().required('Número é obrigatório')

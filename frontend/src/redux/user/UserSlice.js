@@ -166,7 +166,18 @@ export const userSlice = createSlice({
                 })
             }
           })
+          .addCase(changeSenhaServer.rejected, (state, action) =>{
+            
+            state.status = 'failed';
+            toast.error("A senha está incorreta", {
+              position: "bottom-left",
+              className: "text-spicy-mix bg-banana-mania shadow",
+              autoClose: 2000,
+              })
+            
+          })
           .addCase(changeSenhaServer.fulfilled, (state, action) =>{
+
             state.status = 'saved';
             userAdapter.addOne(state, action.payload);
             console.log(action);
