@@ -28,6 +28,9 @@ const Header = () => {
         history('/');
         dispatch(deslogarUser());
         dispatch(pedidoSetStatusServer());
+
+        window.location.reload();
+        
     };
     const handleLogin = () => {
         history('/login');

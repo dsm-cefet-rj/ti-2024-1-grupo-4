@@ -36,7 +36,6 @@ function Lista(ped) {
   const dispatch = useDispatch();
   const status = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
   const entrega = useSelector((rootReducer) => rootReducer.entregaSlice.entrega[ped.id]);
-  console.log(entrega);
 
   useEffect(() => {
     if (!entrega || (status === 'not_loaded' || status === 'saved' || status === 'deleted')) {

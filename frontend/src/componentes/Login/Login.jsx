@@ -38,10 +38,7 @@ function Login_page () {
    * @param {Object} e - Informações do 
    */
   const onSubmit= (e) => {
-    console.log(e);
     dispatch(logUser(e)).then((result) => {
-      console.log("Este é o result payload do login");
-      console.log(result.payload)
       if(result.payload){
         if(location.pathname === '/login'){
           history('/');

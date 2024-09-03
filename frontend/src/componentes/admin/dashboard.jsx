@@ -37,7 +37,6 @@ function Dashboard() {
     const statusClientes = useSelector((rootReducer) => rootReducer.userSlice.status);
     const statusPedidos = useSelector((rootReducer) => rootReducer.pedidoSlice.status);
     const error = useSelector((rootReducer) => rootReducer.produtosSlice.error);
-    console.log(pedidos)
     
     useEffect(() => {
         if (statusProdutos === 'not_loaded' || statusProdutos === 'updated'  || statusProdutos === 'saved' || statusProdutos === 'deleted'  )

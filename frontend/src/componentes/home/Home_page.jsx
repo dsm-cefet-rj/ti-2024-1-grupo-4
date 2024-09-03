@@ -34,7 +34,6 @@ function Home_Page() {
     useEffect(() => {
         if (statusProdutos === 'not_loaded' || statusProdutos === 'updated'  || statusProdutos === 'saved' || statusProdutos === 'deleted'  )
             dispatch(fetchProduto());
-        console.log(localStorage.getItem('token'));
     }, [statusProdutos, dispatch]);
 
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
@@ -80,7 +79,7 @@ function Home_Page() {
                     <main>
                         <section className="container-fluid m-0">
                             <h2 className="mb-4 text-left">Loja</h2>
-                            { status === 'loading' ? <h1>Carregando...</h1> :
+                            { statusProdutos === 'loading' ? <h1>Carregando...</h1> :
                                 <div className="row g-3">
                                     {Object.values(produtosLoja).map((item) => (
                                         <div key={item.id} className="col-md-4 col-lg-3 d-flex">
