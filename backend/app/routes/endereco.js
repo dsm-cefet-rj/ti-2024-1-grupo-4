@@ -23,15 +23,14 @@ router.route('/')
  * @function
  * @description Função de deleção de todos os endereços associados a um usuário
  */
-router.post('/delete-enderecos', cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
+router.post('/delete-enderecos',  cors.corsWithOptions, authenticate.verifyUser, async (req, res, next) => {
     try {
-      const userKey = req.user._id;
-      console.log(userKey)
-      const result = await endereco.deleteMany({ userKey: userKey });
+      const userKey = req.body.userKey;
+      const result = await endereco.deleteMany({ 'userKey': userKey });
       if (result.deletedCount > 0) {
-        res.status(200).json({result, msg: 'Todos os endereços foram deletados'});
+        res.status(200).json({ message: 'Endereços deletados com sucesso' });
       } else {
-        res.status(404).json({msg: 'Erro ao deletar endereços'});
+        res.status(404).json({ message: 'Nenhum endereço encontrado para deletar' });
       }
     } catch (error) {
       next(error);

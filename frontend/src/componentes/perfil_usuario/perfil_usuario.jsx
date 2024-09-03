@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
  */
 
 function Perfil_Usuario() {
-  const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
+  const currentUser = useSelector((rootReducer) => rootReducer.userSlice.currentUser) || {};
   const enderecoState = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
   const { enderecos } = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
   const status = enderecoState.status;
@@ -94,25 +94,6 @@ function Perfil_Usuario() {
       })
   }
 
-  /**
-   * Dashboard que atualiza, deleta e adiciona as informações do endereco do usuário
-   * @param {Object} data -  Informações do formulário do endereco 
-   */
-  const enderecoUpdate = (data) => {
-    const { CEP, logradouro, numero, complemento } = data;
-    const userKey = currentUser;
-    enderecoSchema.validate(data).then((validData) => {
-      dispatch(updateEnderecoServer({ CEP, logradouro, numero, complemento, userKey }))
-
-    })
-      .catch((error) => {
-        toast.error("Erro: " + error, {
-          position: "bottom-left",
-          className: "text-spicy-mix bg-banana-mania shadow",
-          autoClose: 2000,
-        });
-      })
-  }
 
   /**
    * Formulário que atualiza as informações de senha do usuário
@@ -130,20 +111,22 @@ function Perfil_Usuario() {
    */
   const handleRemove = async () => {
     try {
-      const id = currentUser;
-
-      const deleteEnderecosResult = await dispatch(deleteAllenderecosByUser()).unwrap();
-      if (deleteEnderecosResult) {
-        const deleteUserResult = await dispatch(deleteUserServer(id)).unwrap();
+      const id = {userKey: currentUser};
+      try{
+        await dispatch(deleteAllenderecosByUser(id)).unwrap();
+      } catch(error){
+        console.error('Error while deleting addresses:', error);
+      }
+      
+      const deleteUserResult = await dispatch(deleteUserServer(currentUser)).unwrap();
         
-        if (deleteUserResult) {
+      if (deleteUserResult) {
           history('/');
           toast.info("Conta deletada", {
             position: "bottom-left",
             className: "text-spicy-mix bg-banana-mania shadow",
             autoClose: 2000,
           });
-        }
       }
     } catch (error) {
       console.error('Error while deleting the user or addresses:', error);
@@ -225,8 +208,8 @@ function Perfil_Usuario() {
 
         <button type="button" data-bs-toggle="modal" data-bs-target="#criarProduto"
           className="col-sm botao btn btn-primary m-3 bg-tacao btn-tacao border-tacao shadow w-50 "
-        ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+        ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
           </svg></button>
 
 

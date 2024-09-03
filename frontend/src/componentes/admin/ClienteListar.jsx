@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteUserServer} from '../../redux/user/UserSlice';
+import { deleteAllenderecosByUser} from '../../redux/endereco/enderecoSlice';
 import { toast } from 'react-toastify';
 
 /**
@@ -25,17 +26,28 @@ function ClienteListar({ user }) {
     const dispatch = useDispatch();
 
 
-    const handleRemove = () => {
-        const id = user.id;
-        dispatch(deleteUserServer(id)).then((user)=>{
-            if(user.payload){
-                toast.info("Usuário deletado", {
-                    position: "bottom-left",
-                    className: "text-spicy-mix bg-banana-mania shadow",
-                    autoClose: 2000,
-                }); 
+    const handleRemove = async () => {
+        const id = {userKey:user.id};
+        try {
+            try{
+              await dispatch(deleteAllenderecosByUser(id)).unwrap();
+            } catch(error){
+              console.error('Error while deleting addresses:', error);
             }
-        })
+            
+            const deleteUserResult = await dispatch(deleteUserServer(user.id)).unwrap();
+              
+            if (deleteUserResult) {
+                toast.info("Usuário deletado", {
+                  position: "bottom-left",
+                  className: "text-spicy-mix bg-banana-mania shadow",
+                  autoClose: 2000,
+                });
+            }
+          } catch (error) {
+            console.error('Error while deleting the user or addresses:', error);
+        }
+        
     }
     return (
         <>
