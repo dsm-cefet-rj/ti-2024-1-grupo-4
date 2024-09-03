@@ -1,21 +1,33 @@
 # language: pt
 Funcionalidade: Realizar um pedido estando autenticado como cliente
+
     Contexto: Me cadastrar
       Quando Eu estou na tela de login
       Então Eu clico no link de "Registre-se"
         E Eu preencho os dados requisitados
       Quando Clico no botão de "Cadastre-se"
         E é exibida uma mensagemm de confirmação
+        E eu já estou autenticado
 
-    Contexto: Adicionar items ao carrinho
+    Contexto: Adicionar items ao carrinho e confirmar para pedido os mesmos
       Quando Eu estou na tela homepage
-      Então eu clico em "Adicionar" um card de produto
+      Então eu clico em "Adicionar" em um card de produto
         E é exibida uma mensagem de confirmação
       Quando Clico no icone de carrinho contido na header
         E é exibido a tela de carrinho na tela
       Então eu clico no botão de "Confirmar"
 
     Contexto: Realizar um pedido
+      Dado que os items do carrinho foram confirmados
+        E eu já estou autenticado
+      Quando estou na etapa de Endereço
+      Então eu escolho o endereço a ser usado
+      Quando clico no botão "Próximo"
+      Então eu deveria ser jogado para etapa de pagamento
+      Quando estou na etapa de pagamento
+      Então preencho o formulário de pagamento
+
+
     Contexto: Acompanhar pedido
 Funcionalidade: Realizar operações de criar, alterar, deletar e ler estando autenticado como administrador
   Contexto: Como administrador gostaria de criar produtos
