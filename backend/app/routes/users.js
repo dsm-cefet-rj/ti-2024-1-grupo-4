@@ -109,13 +109,13 @@ router.post('/change-password', cors.corsWithOptions, authenticate.verifyUser, a
     }
     user1.changePassword(SenhaAtual, SenhaNova, (err) => {
       if (err) {
-        return res.status(400).send('A senha atual está incorreta, tente novamente!');
+        return res.status(400).json({msg:'A senha atual está incorreta, tente novamente!'});
       }
 
       res.send('Senha modificada com sucesso');
     });
   } catch (err) {
-    res.status(500).send('Um erro ocorreu ao tentar modificar a senha');
+    res.status(500).json({msg:'Um erro ocorreu ao tentar modificar a senha'});
   }
 });
 

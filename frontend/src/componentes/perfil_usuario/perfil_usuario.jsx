@@ -18,7 +18,6 @@ function Perfil_Usuario() {
   const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
   const enderecoState = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
   const { enderecos } = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
-  console.log(enderecos)
   const status = enderecoState.status;
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -40,14 +39,14 @@ function Perfil_Usuario() {
   });
 
   const enderecoSchema = yup.object().shape({
-    CEP: yup.string().required('CEP é obrigatório'),
+    CEP: yup.string().required('CEP é obrigatório').matches(/^\d{5}-\d{3}$/, 'CEP deve estar no formato xxxxx-xxx'),
     logradouro: yup.string().required('Logradouro é obrigatório'),
     complemento: yup.string(),
     numero: yup.number().positive().required('Número é obrigatório')
   });
 
   const senhaSchema = yup.object().shape({
-    novaSenha: yup.string().required('A Nova senha deve ser preenchida').min(5, 'A quantidade mínima é de 5 dígitos'),
+    novaSenha: yup.string().required('A Nova senha deve ser preenchida').min(5, 'A quantidade mínima é de 5 dígitos').notOneOf([yup.ref('SenhaAtual')], 'A nova senha deve ser diferente da senha atual'),
     repSenha: yup.string().oneOf([yup.ref('novaSenha'), null], 'As senhas devem ser iguais').required(),
     SenhaAtual: yup.string().required('A Senha Atual deve ser preenchida')
   });
@@ -70,9 +69,7 @@ function Perfil_Usuario() {
   const userUpdate = (data) => {
     const {nome, email} = data;
     userSchema.validate(data).then(()=>{
-      dispatch(updateUserServer({nome: nome, username: email})).then((payload)=>{
-        console.log(payload);
-      })
+      dispatch(updateUserServer({nome: nome, username: email}))
     })
   }
   const createEndereco = (data) => {
@@ -124,10 +121,7 @@ function Perfil_Usuario() {
   const passUpdate = (data) => {
     const {novaSenha, repSenha, SenhaAtual} = data;
     senhaSchema.validate(data).then(() => {
-      dispatch(changeSenhaServer({SenhaAtual: SenhaAtual, SenhaNova: novaSenha})).then((payload) =>
-      {
-        console.log(payload);
-      })
+      dispatch(changeSenhaServer({SenhaAtual: SenhaAtual, SenhaNova: novaSenha}))
     })
   }
 
@@ -139,7 +133,6 @@ function Perfil_Usuario() {
       const id = currentUser;
 
       const deleteEnderecosResult = await dispatch(deleteAllenderecosByUser()).unwrap();
-      console.log(deleteEnderecosResult)
       if (deleteEnderecosResult) {
         const deleteUserResult = await dispatch(deleteUserServer(id)).unwrap();
         
@@ -202,12 +195,12 @@ function Perfil_Usuario() {
                   <div className="col-md-12">
                     <label className="form-label" htmlFor='CEP'>CEP:</label>
                     <input type="text" id='CEP' className="form-control" {...registerEndereco("CEP")}></input>
-                    {enderecoErrors.endereco?.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.CEP.message}</p>}
+                    {enderecoErrors.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.CEP.message}</p>}
                   </div>
                   <div className="col-md-12">
                     <label className="form-label" htmlFor='logradouro'>Logradouro:</label>
                     <input type="text" id='logradouro' className="form-control" placeholder="Ex: Rua, Avenida, etc." {...registerEndereco("logradouro")}></input>
-                    {enderecoErrors.endereco?.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.logradouro.message}</p>}
+                    {enderecoErrors.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.logradouro.message}</p>}
                   </div>
                   <div className="col-12">
                     <label className="form-label" htmlFor='complemento'>Complemento:</label>
@@ -216,7 +209,7 @@ function Perfil_Usuario() {
                   <div className="col-12">
                     <label className="form-label" htmlFor='numero'>Número:</label>
                     <input type="number" id='numero' className="form-control" {...registerEndereco("numero")}></input>
-                    {enderecoErrors.endereco?.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.numero.message}</p>}
+                    {enderecoErrors.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.numero.message}</p>}
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>

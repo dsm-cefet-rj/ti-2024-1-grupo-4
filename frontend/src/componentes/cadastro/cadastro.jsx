@@ -28,11 +28,11 @@ function Register_page() {
   
 
   const schema = yup.object().shape({
-    username: yup.string().email('Precisa ser um e-mail').required(),
+    username: yup.string().email('Precisa ser um e-mail').matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Email deve ter uma expansão de domínio como .com ou .br').required(),
     nome: yup.string().max(50).required(),
     password: yup.string().min(5, 'A quantidade de caracteres da senha é de no mínimo 5').required(),
     repSenha: yup.string().oneOf([yup.ref('password'), null], 'As senhas devem ser iguais').required('Este campo deve ser preenchido'),
-    cep: yup.string().required('cep é obrigatório'),
+    cep: yup.string().required('cep é obrigatório').matches(/^\d{5}-\d{3}$/, 'CEP deve estar no formato xxxxx-xxx'),
     logradouro: yup.string().required('Logradouro é obrigatório'),
     complemento: yup.string(),
     numeroEndereco: yup.number().positive().required('Número é obrigatório')
@@ -52,12 +52,6 @@ function Register_page() {
       username: data.username,
       password: data.password,
       nome: data.nome,
-    }
-    const end = {
-      cep: data.CEP,
-      logradouro: data.logradouro,
-      complemento: data.complemento,
-      numeroEndereco: data.numeroEndereco,
     }
 
       dispatch(addUserServer(user)).then((result) => {
