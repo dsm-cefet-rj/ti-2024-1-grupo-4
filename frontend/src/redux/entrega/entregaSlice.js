@@ -93,7 +93,7 @@ export const entregaSlice = createSlice({
         resetInfoEntrega: (state, action) =>{
           state.endereco = null,
           state.instrucoes= null,
-          state.status =  'saved'
+          state.status =  'not_loaded'
 
         }
     },

@@ -7,7 +7,7 @@ import qrcode from '../../assets/img/qr-code-plus.png'
 import {setInfo,resetInfo,addPedidoServer,setStatus} from "../../redux/compra/compraSlice"
 import {useSelector,useDispatch} from "react-redux";
 import { Link,useNavigate,Navigate } from 'react-router-dom';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 import { addEntregaServer, resetInfoEntrega } from '../../redux/entrega/entregaSlice.js'
 
@@ -35,6 +35,7 @@ function setupConfirmacao({step,value}) {
     const user = useSelector((rootReducer) => rootReducer.compraSlice.user) || {};
     const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
+    const [isComplete, setIsComplete] = useState(false);
 
     console.log(status)
     console.log(value)
@@ -62,6 +63,8 @@ function setupConfirmacao({step,value}) {
             if (entregaId) {
                 dispatch(resetInfo());
                 dispatch(resetInfoEntrega());
+                setIsComplete(true);
+
             }
             
         } catch (error) {
@@ -79,7 +82,7 @@ function setupConfirmacao({step,value}) {
     const renderStatus = (value)=>{
 
         if(value == 'pix'){
-            if( status_ent == 'saved'){
+            if(isComplete){
                 return(
                     <>
                         <svg className="path_icon bs-tacao-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" height={'200px'} width={"200px"} >
@@ -104,7 +107,7 @@ function setupConfirmacao({step,value}) {
             }
         }else{
             //cartao
-            if( status_ent == 'saved'){
+            if(isComplete){
         
                return(
                     <>

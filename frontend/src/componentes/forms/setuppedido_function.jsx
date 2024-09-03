@@ -71,12 +71,12 @@ function setuppedido_function({ prevStep, nextStep, step }) {
 
                 {products.map(product =>
 
-                  <a href="#" className="list-group-item list-group-item-action py-3 lh-tight">
+                  <a href="#"  key = {product.id} className="list-group-item list-group-item-action py-3 lh-tight">
                     <div className="d-flex align-items-center justify-content-between ps-3 pe-3">
 
 
                       <div className='grid gap-2 row-gap-2 mb-1'>
-                        <CartItem key={product.id} product={product} />
+                        <CartItem product={product} />
                       </div>
 
                     </div>
