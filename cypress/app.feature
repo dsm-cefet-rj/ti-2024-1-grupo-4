@@ -19,12 +19,62 @@ Funcionalidade: Realizar um pedido estando autenticado como cliente
     Contexto: Acompanhar pedido
 Funcionalidade: Realizar operações de criar, alterar, deletar e ler estando autenticado como administrador
   Contexto: Como administrador gostaria de criar produtos
+    Quando eu estou na tela principal
+    Então eu clico no link de "Dashboard"
+      Quando Eu estou na tela de Dashboard
+        Então eu clico no link de "Criar produto"
+        E eu preencho os dados requisitados
+        Então eu clico no link "Adicionar produto" 
+          E é exibido mensagem de confirmação da criação
+
   Contexto: Como administrador gostaria de deletar produtos
+    Quando eu estou na tela principal
+    Então eu clico no link de "Dashboard"
+      Quando Eu estou na tela de Dashboard
+        Então eu clico no link de "Deletar produto"
+        E eu clico em "Deletar" do produto em questão que deseja deletar
+          E é exibido mensagem de confirmação da deletação
+
+
   Contexto: Como administrador gostaria de alterar produtos
+    Quando eu estou na tela principal
+    Então eu clico no link de "Dashboard"
+      Quando Eu estou na tela de Dashboard
+        Então eu clico no link de "Atualizar produto"
+        E eu clico em "Atualizar" do produto em questão que deseja atualizar
+          E é exibido mensagem de confirmação da alteração
+
   Contexto: Como administrador gostaria de ler produtos
+    Quando eu estou na tela principal
+    Então eu clico no link de "Dashboard"
+      Quando Eu estou na tela de Dashboard
+       Então eu clico no link de "Atualizar produto"
+       E eu clico em "Mostrar mais" do produto em questão que deseja ler
+
   Contexto: Como administrador gostaria de cancelar entrega
+    Quando eu estou na tela principal
+    Então eu clico no link de "Dashboard"
+      Quando Eu estou na tela de Dashboard
+        Então eu clico no link de "Listar pedidos"
+        E eu clico em "Mostrar mais" do produto em questão que deseja cancelar
+          Então altero o status do pedido para "Pedido Cancelado"
+            E é exibido mensagem de confirmação da cancelação
+
   Contexto: Como administrador gostaria de alterar status da entrega
+    Quando eu estou na tela principal
+    Então eu clico no link de "Dashboard"
+      Quando Eu estou na tela de Dashboard
+        Então eu clico no link de "Listar pedidos"
+        E eu clico em "Mostrar mais" da entrega em questão que deseja cancelar
+          Então altero o status da entrega para o seu status novo alterado.
+            E é exibido mensagem de confirmação da alteração de status
+
   Contexto: Como administrador gostaria de ler entrega
+    Quando eu estou na tela principal
+    Então eu clico no link de "Dashboard"
+      Quando Eu estou na tela de Dashboard
+        Então eu clico no link de "Listar pedidos"
+        E eu clico em "Mostrar mais" da entrega em questão que deseja ler
 
 
 
