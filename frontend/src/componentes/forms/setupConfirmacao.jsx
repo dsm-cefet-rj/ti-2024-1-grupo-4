@@ -120,7 +120,7 @@ function setupConfirmacao({step,value}) {
                             </Link>
                     </>
                )
-            }else if(status_ent == 'loading'){
+            }else {
                 //loading
                 return(
                     <>
@@ -134,23 +134,6 @@ function setupConfirmacao({step,value}) {
                     </>
 
                 )
-            }else{
-                //failed
-                return(
-                    <>
-                        <div className="d-flex justify-content-center">
-                            <div className='py-1 my-1 px-3 rounded border border-brick-red bg-tacao-400'>
-                                <h3 className='text-brick-red pb-3 pt-3'>Falha no Pagamento</h3>
-                                <Link to="/">
-                                <span className="btn btn-brick-red w-100 mb-2 pb-2">Fechar</span>
-                            </Link>
-                            </div>
-                         
-                        </div>
-                    </>
-
-                )
-
             }
         }  
     }
