@@ -89,7 +89,13 @@ export const entregaSlice = createSlice({
         },
         setInstrucoes: (state, action)=>{
           state.instrucoes = action.payload;
-          },
+        },
+        resetInfoEntrega: (state, action) =>{
+          state.endereco = null,
+          state.instrucoes= null,
+          state.status =  'saved'
+
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -147,7 +153,9 @@ export const entregaSlice = createSlice({
 
 export const {
   setEndereco,
-  setInstrucoes
+  setInstrucoes,
+  resetInfoEntrega
+
 } = entregaSlice.actions;
 
 export const {
