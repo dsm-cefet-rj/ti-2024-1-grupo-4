@@ -94,7 +94,7 @@ function Endereco_Card({ endereco }) {
 
                             <label className="form-label">Número</label>
                             <input type="number" className="form-control" {...register("numeroEndereco")} defaultValue={endereco.numeroEndereco}></input>
-                            {errors.numeroEndereco && <span className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numeroEndereco.message}</span>}
+                            {errors.endereco?.numeroEndereco && <span className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.numeroEndereco.message}</span>}
                         </div>
                     </div>
                   </form>                    

@@ -53,6 +53,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
       });
 
     const onSubmit = (data) => {
+      console.log(data)
         const { instrucaoPedido } = data;
         const selectedEndereco = enderecos.find((endereco) => endereco.id === enderecoSelecionado);
 
@@ -103,6 +104,12 @@ function setupendereco_function({ prevStep, nextStep, step }) {
           setTimeout(() => dispatch(fetchEnderecoByUser(currentUser)))
         }
       }, [endereco_status, enderecos.size])
+      const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(onSubmit)();
+        }
+    };
 
     return (
         <>
@@ -112,7 +119,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
 
 
         <div className='container-fluid'>
-    <form className='form' onSubmit={handleSubmit(onSubmit)}> {/* HOOKFORM ONSUBMIT */}
+    <form className='form' onSubmit={handleSubmit(onSubmit)}onKeyDown={handleKeyDown}>
         <div className="align-items-center row bg-banana-mania text-center m-1 ">
         <h2>Endereco</h2>
         <span>Escolha o endereço ou cadastre um novo</span>
@@ -168,12 +175,12 @@ function setupendereco_function({ prevStep, nextStep, step }) {
                   <div className="col-md-12">
                     <label className="form-label" htmlFor='CEP'>CEP:</label>
                     <input type="text" id='CEP' className="form-control" {...registerEndereco("CEP")}></input>
-                    {enderecoErrors.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.CEP.message}</p>}
+                    {enderecoErrors.endereco?.CEP && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.CEP.message}</p>}
                   </div>
                   <div className="col-md-12">
                     <label className="form-label" htmlFor='logradouro'>Logradouro:</label>
                     <input type="text" id='logradouro' className="form-control" placeholder="Ex: Rua, Avenida, etc." {...registerEndereco("logradouro")}></input>
-                    {enderecoErrors.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.logradouro.message}</p>}
+                    {enderecoErrors.endereco?.logradouro && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.logradouro.message}</p>}
                   </div>
                   <div className="col-12">
                     <label className="form-label" htmlFor='complemento'>Complemento:</label>
@@ -182,7 +189,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
                   <div className="col-12">
                     <label className="form-label" htmlFor='numero'>Número:</label>
                     <input type="number" id='numero' className="form-control" {...registerEndereco("numero")}></input>
-                    {enderecoErrors.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.numero.message}</p>}
+                    {enderecoErrors.endereco?.numero && <p className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{enderecoErrors.numero.message}</p>}
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-brick-red" data-bs-dismiss="modal">Cancelar</button>

@@ -91,19 +91,23 @@ function Register_page() {
       })
 
   };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Previne a submissão padrão
+      handleSubmit(onSubmit)(); // Submete o formulário manualmente
+    }
+  };
   
   
 
   return (
-    <>
-
-      
+    <>      
       <div className='container d-flex'>
 
       <div className="bg-banana-mania row classe-login bg-banana-mania text-center m-5 p-3 rounded-4 shadow-lg" style= {{width:"900px"}} >
 
           <h2 className='p-0 m-0'>Cadastro</h2>
-          <form className="row g-3 col" onSubmit={handleSubmit(onSubmit)}>
+          <form className="row g-3 col form" onSubmit={handleSubmit(onSubmit)} onKeyDown={handleKeyDown}>
             <div className="col-md-6">
               <label className="form-label" htmlFor='email'>Email</label>
               <input type="email" id = 'email' {...register("username")} className="form-control"></input>

@@ -7,7 +7,7 @@ import qrcode from '../../assets/img/qr-code-plus.png'
 import {resetInfo,addPedidoServer,setStatus} from "../../redux/compra/compraSlice"
 import {useSelector,useDispatch} from "react-redux";
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useRef} from 'react'
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
 import { addEntregaServer, resetInfoEntrega } from '../../redux/entrega/entregaSlice.js'
 
@@ -38,6 +38,7 @@ function setupConfirmacao({step,value}) {
     const [isComplete, setIsComplete] = useState(false);
 
     const dispatch = useDispatch();
+    const closeButtonRef = useRef(null);
 
 
    
@@ -85,7 +86,7 @@ function setupConfirmacao({step,value}) {
                         <h3 className='text-verde-certo pt-3'>Pagamento Realizado</h3>
 
                         <Link to="/">
-                                <span className="btn btn-brick-red w-100 mb-2 pb-2" onClick={setStatus('not_loaded')}>Fechar</span>
+                                <span className="btn btn-brick-red w-100 mb-2 pb-2" ref={closeButtonRef} onClick={handleClose}>Fechar</span> {/**onClick={setStatus('not_loaded')} */}
                             </Link>
                         
                     </>
@@ -110,7 +111,7 @@ function setupConfirmacao({step,value}) {
                         </svg>
                         <h3 className='text-verde-certo pt-3'>Pagamento Realizado</h3>
                         <Link to="/">
-                                <span className="btn btn-brick-red w-100 mb-2 pb-2">Fechar</span>
+                                <span className="btn btn-brick-red w-100 mb-2 pb-2" ref={closeButtonRef} onClick={handleClose} >Fechar</span> {/**onClick={setStatus('not_loaded')} */}
                             </Link>
                     </>
                )
@@ -148,6 +149,25 @@ function setupConfirmacao({step,value}) {
     useEffect(() => {
       handleSetStatusLoading();
     }, [step])
+
+    const handleClose = () => {
+        // Função que será chamada tanto pelo botão quanto pelo Enter
+        setStatus('not_loaded');
+    };
+
+    useEffect(() => {
+        const handleKeyPress = (event) => {
+            if (event.key === 'Enter' && closeButtonRef.current) {
+                closeButtonRef.current.click();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, []);
+
 
   return (
       <>
