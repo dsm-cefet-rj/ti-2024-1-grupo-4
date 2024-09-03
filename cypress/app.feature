@@ -1,5 +1,32 @@
-Feature: Cadastro de Cliente
-    Scenario: 
+# language: pt
+Funcionalidade: Realizar um pedido estando autenticado como cliente
+    Contexto: Me cadastrar
+      Quando Eu estou na tela de login
+      Então Eu clico no link de "Registre-se"
+        E Eu preencho os dados requisitados
+      Quando Clico no botão de "Cadastre-se"
+        E é exibida uma mensagemm de confirmação
+
+    Contexto: Adicionar items ao carrinho
+      Quando Eu estou na tela homepage
+      Então eu clico em "Adicionar" um card de produto
+        E é exibida uma mensagem de confirmação
+      Quando Clico no icone de carrinho contido na header
+        E é exibido a tela de carrinho na tela
+      Então eu clico no botão de "Confirmar"
+
+    Contexto: Realizar um pedido
+    Contexto: Acompanhar pedido
+Funcionalidade: Realizar operações de criar, alterar, deletar e ler estando autenticado como administrador
+  Contexto: Como administrador gostaria de criar produtos
+  Contexto: Como administrador gostaria de deletar produtos
+  Contexto: Como administrador gostaria de alterar produtos
+  Contexto: Como administrador gostaria de ler produtos
+  Contexto: Como administrador gostaria de cancelar entrega
+  Contexto: Como administrador gostaria de alterar status da entrega
+  Contexto: Como administrador gostaria de ler entrega
+
+
 
 Feature: Image Registration
 
