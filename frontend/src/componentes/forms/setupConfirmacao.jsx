@@ -9,7 +9,7 @@ import {useSelector,useDispatch} from "react-redux";
 import { Link,useNavigate,Navigate } from 'react-router-dom';
 import { useEffect } from 'react'
 import { selectProductsTotalPrice } from '../../redux/cart/cart.selector.js';
-import { addEntregaServer } from '../../redux/entrega/entregaSlice.js'
+import { addEntregaServer, resetInfoEntrega } from '../../redux/entrega/entregaSlice.js'
 
 /**
  * @module forms/setupConfirmacao
@@ -31,8 +31,8 @@ function setupConfirmacao({step,value}) {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userSlice) || {};
     const { endereco } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
     const { status_entrega } = useSelector((rootReducer) => rootReducer.entregaSlice) || {};
-    const { pagamento } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
-    const { user } = useSelector((rootReducer) => rootReducer.compraSlice) || {};
+    const pagamento = useSelector((rootReducer) => rootReducer.compraSlice.pagamento) || {};
+    const user = useSelector((rootReducer) => rootReducer.compraSlice.user) || {};
     const { products } = useSelector((rootReducer) => rootReducer.cartSlicer);
     const productsTotalPrice = useSelector(selectProductsTotalPrice);
 
@@ -46,13 +46,12 @@ function setupConfirmacao({step,value}) {
         try {
 
             await new Promise((resolve) => setTimeout(resolve, 5000));
-            console.log({ user, products, pagamento, valorTotal: productsTotalPrice })
             const pedidoResponse = await dispatch(
                 addPedidoServer({ user, products, pagamento, valorTotal: productsTotalPrice })
             ).unwrap();
             const pedidoId = pedidoResponse.id;
 
-            await dispatch(addEntregaServer({
+            const entregaId = await dispatch(addEntregaServer({
                 endereco,
                 status: status_entrega,
                 userKey: currentUser,
@@ -60,8 +59,9 @@ function setupConfirmacao({step,value}) {
                 instrucoes: instrucoes,
             })).unwrap();
             
-            if (status_ent === 'saved') {
+            if (entregaId) {
                 dispatch(resetInfo());
+                dispatch(resetInfoEntrega());
             }
             
         } catch (error) {
@@ -79,7 +79,7 @@ function setupConfirmacao({step,value}) {
     const renderStatus = (value)=>{
 
         if(value == 'pix'){
-            if( status == 'saved'){
+            if( status_ent == 'saved'){
                 return(
                     <>
                         <svg className="path_icon bs-tacao-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" height={'200px'} width={"200px"} >
@@ -104,7 +104,7 @@ function setupConfirmacao({step,value}) {
             }
         }else{
             //cartao
-            if( status == 'saved'){
+            if( status_ent == 'saved'){
         
                return(
                     <>
@@ -117,7 +117,7 @@ function setupConfirmacao({step,value}) {
                             </Link>
                     </>
                )
-            }else if(status == 'loading'){
+            }else if(status_ent == 'loading'){
                 //loading
                 return(
                     <>
@@ -164,11 +164,11 @@ function setupConfirmacao({step,value}) {
             dispatch(resetInfo());
         }
     }, [status]);
-/*
+
     useEffect(() => {
       handleSetStatusLoading();
     }, [step])
-*/  
+
 
 
 

@@ -26,7 +26,7 @@ const initialState = compraAdapter.getInitialState({
  * @returns {Object} - O novo estado
  */
 function setStatusReducer(state,payload){
-    return {...state.status,status:payload};
+    return {...state,status:payload};
 }
 
 /**
@@ -89,7 +89,9 @@ const compraSlice = createSlice({
          * @param {Object} state - O estado atual
          * @param {Object} action - A ação despachada
          */
-        setStatus:(state,action)=> setStatusReducer(state,action.payload),
+        setStatus:(state,action)=> {
+            state.status = action.payload
+        },
        
     },
     extraReducers:
