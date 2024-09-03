@@ -33,20 +33,21 @@ function setuppagamento_function({ prevStep, nextStep, step,value,handleSetData 
   const { register, handleSubmit, setValue,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)});
   const [parametroNumCartao, setParametroNumCartao] = useState('');
   const [toggleValue, setToggleValue] = useState(false);
-  const [toggle_botao, setToggleBotao] = useState(false);
+  const [toggle_botao, setToggleBotaoPagamento] = useState(false);
 
   const dispatch = useDispatch();
 
 
   const onSubmit = data => {
     //a
-    dispatch(setPagamento(data))
-    setToggleBotao(true);
-  }
-  const handleSubmitStep = data => {
+    dispatch(setPagamento(data));
     nextStep();
-    handleSubmit(data)();
+    setToggleBotaoPagamento(true);
   }
+  const handleSubmitStep = () => {
+    handleSubmit(onSubmit)();
+  }
+  /*
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -61,6 +62,7 @@ function setuppagamento_function({ prevStep, nextStep, step,value,handleSetData 
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+  */
 
 
   const handleNumeroCartao = (value) => {
@@ -200,14 +202,6 @@ function setuppagamento_function({ prevStep, nextStep, step,value,handleSetData 
 
 
   }, [value, setValue]);
-
-  
-  useEffect(() => {
-    if (toggle_botao) {
-        
-      nextStep();
-    }
-  }, [toggle_botao, nextStep]);
 
   return (
     <>

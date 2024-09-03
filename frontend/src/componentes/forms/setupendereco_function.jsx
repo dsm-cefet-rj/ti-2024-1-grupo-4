@@ -36,7 +36,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
     const [toggle_botao, setToggleBotao] = useState(false);
     const endereco_status = useSelector((rootReducer) => rootReducer.enderecoSlice.status) || {};
     const { enderecos } = useSelector((rootReducer) => rootReducer.enderecoSlice) || {};
-    const { register, handleSubmit,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)});
+    const { register, handleSubmit,formState:{errors}} = useForm({resolver:yupResolver(formsSchema)} );{/***/}
     const [enderecoSelecionado, setEnderecoSelecionado] = useState(null);
     
     const dispatch = useDispatch();
@@ -94,6 +94,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
       useEffect(() => {
         if (toggle_botao) { 
           nextStep();
+          setToggleBotao(false); 
         }
       }, [toggle_botao, nextStep]);
 
@@ -106,7 +107,6 @@ function setupendereco_function({ prevStep, nextStep, step }) {
       }, [endereco_status, enderecos.size])
       const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
             handleSubmit(onSubmit)();
         }
     };
@@ -119,7 +119,7 @@ function setupendereco_function({ prevStep, nextStep, step }) {
 
 
         <div className='container-fluid'>
-    <form className='form' onSubmit={handleSubmit(onSubmit)}onKeyDown={handleKeyDown}>
+    <form className='form' onSubmit={handleSubmit(onSubmit)} onKeyDown={handleKeyDown}>
         <div className="align-items-center row bg-banana-mania text-center m-1 ">
         <h2>Endereco</h2>
         <span>Escolha o endereço ou cadastre um novo</span>
