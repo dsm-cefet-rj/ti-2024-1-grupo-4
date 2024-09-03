@@ -46,6 +46,9 @@ function setuppedido_function({ prevStep, nextStep, step }) {
   const handleSubmitStepConfirmacao = () => {
 
     nextStep();
+    for (var produto in products) {
+      produto.imgUrl = '';
+    }
     onSubmit(products);
   }
   useEffect(() => {
