@@ -64,7 +64,6 @@ router.route('/:userKey').options(cors.corsWithOptions, (req, res) => {res.sendS
  * @description Função de seleção de pedidos por id de usuário
  */
 .get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
-  console.log(req.params)
   pedido.find({ 'user.userKey' : req.params.userKey})
     .then((pedidosBanco) => {
       if(pedidosBanco) {
@@ -91,7 +90,6 @@ router.route('/')
  * @description Função de seleção de todos os pedidos
  */
 .get(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
-    console.log(req.params)
     pedido.find({})
       .then((pedidosBanco) => {
         if(pedidosBanco) {

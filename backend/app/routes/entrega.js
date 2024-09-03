@@ -38,7 +38,6 @@ router.route('/:id')
  * @description Função de atualização de uma entrega por id e suas atualizações
  */
 .put(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => { 
-  console.log(req.body)
   entrega.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
     .then((pedidoAlterado) => {
       console.log(pedidoAlterado)
