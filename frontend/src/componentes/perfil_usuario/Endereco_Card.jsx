@@ -79,8 +79,8 @@ function Endereco_Card({ endereco }) {
                             <button type="button" className="btn btn-brick-red" onClick={handleRemove}>Deletar</button>    
                         </div>
                     </div>
-                    <div class="collapse" id={endereco.id}>
-                        <div class="card card-body">
+                    <div className="collapse" id={endereco.id}>
+                        <div className="card card-body">
                             <label className="form-label">CEP</label>
                             <input type="text" className="form-control" {...register("CEP")} defaultValue={endereco.CEP}></input>
                             {errors.CEP && <span className='bg-brick-red m-1 p-1 text-banana-mania rounded-3'>{errors.CEP.message}</span>}
