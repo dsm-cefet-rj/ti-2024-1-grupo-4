@@ -45,7 +45,7 @@ function Dashboard() {
         if ((statusPedidos === 'not_loaded' || statusPedidos === 'saved' || statusPedidos === 'deleted')) {
               dispatch(fetchPedido());
         }
-    }, [statusProdutos, dispatch]);
+    }, [statusProdutos, dispatch, statusPedidos]);
 
     const [img, setImg] = useState("/img/food.jpg");
 
